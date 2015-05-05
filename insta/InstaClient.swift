@@ -19,6 +19,7 @@ class InstaClient : NSObject {
     /* Authentication state */
     var sessionID : String? = nil
     var userID : Int? = nil
+    var accessToken: String? = nil
     
     override init() {
         session = NSURLSession.sharedSession()
@@ -31,7 +32,7 @@ class InstaClient : NSObject {
         
         /* 1. Set the parameters */
         var mutableParameters = parameters
-        mutableParameters[ParameterKeys.ApiKey] = Constants.ApiKey
+        mutableParameters["access_token"] = self.accessToken!
         
         /* 2/3. Build the URL and configure the request */
         let urlString = Constants.BaseURLSecure + method + InstaClient.escapedParameters(mutableParameters)

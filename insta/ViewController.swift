@@ -13,10 +13,16 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        loginWithToken(self){
+        InstaClient.sharedInstance().loginWithToken(self){
             success,errorString in
             if success{
                 println(success)
+                InstaClient.sharedInstance().getLocations( 40.632178, longitude: 22.940604, distance: 1000, completionHandler: { (result, error) -> Void in
+                    println(result)
+                    for ra in result!{
+                        println(ra.id)
+                    }
+                })
             }else{
                 println(errorString)
             }
@@ -28,29 +34,6 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    /* This function opens a TMDBAuthViewController to handle Step 2a of the auth flow */
-    func loginWithToken(hostViewController: UIViewController, completionHandler: (success: Bool, errorString: String?) -> Void) {
-        
-
-//        NSString *fullURL = [NSString stringWithFormat:@"%@%@&redirect_uri= %@&response_type=token",KAUTHURL,KCLIENTID,kREDIRECTURI];
-        
-        var modifiedURLString = String(format:"%@?client_id=%@&redirect_uri=%@&response_type=token", InstaClient.Constants.AuthorizationURL,InstaClient.Constants.ClientID,InstaClient.Constants.RedirectURI)
-
-        let authorizationURL = NSURL(string: modifiedURLString)
-        
-        let request = NSURLRequest(URL: authorizationURL!)
-        let webAuthViewController = hostViewController.storyboard!.instantiateViewControllerWithIdentifier("InstaAuthViewController") as! InstaAuthViewController
-        webAuthViewController.urlRequest = request
-        
-        webAuthViewController.completionHandler = completionHandler
-        
-        let webAuthNavigationController = UINavigationController()
-        webAuthNavigationController.pushViewController(webAuthViewController, animated: false)
-        
-        dispatch_async(dispatch_get_main_queue(), {
-            hostViewController.presentViewController(webAuthNavigationController, animated: true, completion: nil)
-        })
-    }
     
     
     

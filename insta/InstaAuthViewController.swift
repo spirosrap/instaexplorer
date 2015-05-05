@@ -14,7 +14,7 @@ class InstaAuthViewController: UIViewController, UIWebViewDelegate {
     
     var urlRequest: NSURLRequest? = nil
     var accessToken: String? = nil
-    var completionHandler : ((success: Bool, errorString: String?) -> Void)? = nil
+    var completionHandler : ((success: Bool, accessToken: String?, errorString: String?) -> Void)? = nil
     
     // MARK: - Lifecycle
     
@@ -54,21 +54,20 @@ class InstaAuthViewController: UIViewController, UIWebViewDelegate {
 
     }
     
+    //http://technet.weblineindia.com/mobile/instagram-api-integration-in-ios-application/2/
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        var urlString = request.URL?.absoluteString
-        println("URL String \(urlString)")
-        var accessToken = urlString!.rangeOfString("#access_token=")
-        if(accessToken != nil){
-            println(urlString!.substringFromIndex(accessToken!.endIndex))
+        if (request.URL!.scheme == "instaplaces"){
+            var urlString = request.URL?.absoluteString
+            var accessToken = urlString!.rangeOfString("#access_token=")
+            if(accessToken != nil){
+                self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                    self.completionHandler!(success: true,accessToken: urlString!.substringFromIndex(accessToken!.endIndex),errorString: nil)
+                })
+            }else{
+                completionHandler!(success: false,accessToken: nil,errorString: "Couldn't get Access Token")
+            }
         }
         
-        //http://technet.weblineindia.com/mobile/instagram-api-integration-in-ios-application/2/
-        var urlParts:NSArray = urlString!.componentsSeparatedByString(String(format:"%@/",InstaClient.Constants.RedirectURI))
-        if urlParts.count > 1{
-            urlString = urlParts.objectAtIndex(1) as? String
-            var accessToken = urlString!.rangeOfString("#access_token=")
-            println(accessToken)
-        }
         return true
     }
     
