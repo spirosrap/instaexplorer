@@ -7,41 +7,53 @@
 //
 
 import UIKit
-import OAuthSwift
 
-class InstaAuthViewController: OAuthWebViewController,UIWebViewDelegate {
-
+class InstaAuthViewController: UIViewController, UIWebViewDelegate {
+    
     @IBOutlet weak var webView: UIWebView!
     
-    var targetURL : NSURL = NSURL()
-
+    var urlRequest: NSURLRequest? = nil
+    var accessToken: String? = nil
+    var completionHandler : ((success: Bool, errorString: String?) -> Void)? = nil
+    
+    // MARK: - Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.webView.frame = UIScreen.mainScreen().applicationFrame
-        self.webView.scalesPageToFit = true
-        self.webView.delegate = self
-        self.view.addSubview(self.webView)
-        loadAddressURL()
-    }
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-    }
-    override func setUrl(url: NSURL) {
-        targetURL = url
-    }
-    func loadAddressURL() {
-        let req = NSURLRequest(URL: targetURL)
-        self.webView.loadRequest(req)
+        
+        webView.delegate = self
+        
+        self.navigationItem.title = "Instagram Auth"
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "cancelAuth")
     }
     
-    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        if (request.URL!.scheme == "instaplaces"){
-            println(request.URL)
+    override func viewWillAppear(animated: Bool) {
+        
+        super.viewWillAppear(animated)
+        
+        if urlRequest != nil {
+            self.webView.loadRequest(urlRequest!)
+        }
+    }
+    
+    // MARK: - UIWebViewDelegate
+    
+    func webViewDidFinishLoad(webView: UIWebView) {
+        
+        //        if(webView.request!.URL!.absoluteString! == "\(TMDBClient.Constants.AuthorizationURL)\(requestToken!)/allow") {
+        //
+        //            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+        //                self.completionHandler!(success: true, errorString: nil)
+        //            })
+        //        }
+           println(webView.request!.URL!.absoluteString!)
+        if (urlRequest!.URL!.scheme == "instaplaces"){
+            println(webView.request!.URL!.absoluteString!)
             self.dismissViewControllerAnimated(true, completion: nil)
         }
-        return true
-    }
 
+    }
+    
     func cancelAuth() {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
