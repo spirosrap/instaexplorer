@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D471B8661AF6870900651865"
-               BuildableName = "insta.app"
-               BlueprintName = "insta"
-               ReferencedContainer = "container:insta.xcodeproj">
+               BuildableName = "instaplaces.app"
+               BlueprintName = "instaplaces"
+               ReferencedContainer = "container:instaplaces.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D471B87E1AF6870900651865"
-               BuildableName = "instaTests.xctest"
-               BlueprintName = "instaTests"
-               ReferencedContainer = "container:insta.xcodeproj">
+               BuildableName = "instaplacesTests.xctest"
+               BlueprintName = "instaplacesTests"
+               ReferencedContainer = "container:instaplaces.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -47,9 +47,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D471B87E1AF6870900651865"
-               BuildableName = "instaTests.xctest"
-               BlueprintName = "instaTests"
-               ReferencedContainer = "container:insta.xcodeproj">
+               BuildableName = "instaplacesTests.xctest"
+               BlueprintName = "instaplacesTests"
+               ReferencedContainer = "container:instaplaces.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -57,9 +57,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D471B8661AF6870900651865"
-            BuildableName = "insta.app"
-            BlueprintName = "insta"
-            ReferencedContainer = "container:insta.xcodeproj">
+            BuildableName = "instaplaces.app"
+            BlueprintName = "instaplaces"
+            ReferencedContainer = "container:instaplaces.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -77,9 +77,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D471B8661AF6870900651865"
-            BuildableName = "insta.app"
-            BlueprintName = "insta"
-            ReferencedContainer = "container:insta.xcodeproj">
+            BuildableName = "instaplaces.app"
+            BlueprintName = "instaplaces"
+            ReferencedContainer = "container:instaplaces.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -96,9 +96,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D471B8661AF6870900651865"
-            BuildableName = "insta.app"
-            BlueprintName = "insta"
-            ReferencedContainer = "container:insta.xcodeproj">
+            BuildableName = "instaplaces.app"
+            BlueprintName = "instaplaces"
+            ReferencedContainer = "container:instaplaces.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -1,20 +1,18 @@
 //
-//  TMDBAuthViewController.swift
-//  TheMovieManager
+//  WebView.swift
+//  OAuthSwift
 //
-//  Created by Jarrod Parkes on 2/11/15.
-//  Copyright (c) 2015 Jarrod Parkes. All rights reserved.
+//  Created by Dongri Jin on 2/11/15.
+//  Copyright (c) 2015 Dongri Jin. All rights reserved.
 //
 
 import UIKit
 import OAuthSwift
 
-class InstaAuthViewController: OAuthWebViewController,UIWebViewDelegate {
+class WebViewController: OAuthWebViewController, UIWebViewDelegate {
 
-    @IBOutlet weak var webView: UIWebView!
-    
     var targetURL : NSURL = NSURL()
-
+    let webView : UIWebView = UIWebView()
     override func viewDidLoad() {
         super.viewDidLoad()
         self.webView.frame = UIScreen.mainScreen().applicationFrame
@@ -33,16 +31,10 @@ class InstaAuthViewController: OAuthWebViewController,UIWebViewDelegate {
         let req = NSURLRequest(URL: targetURL)
         self.webView.loadRequest(req)
     }
-    
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
-        if (request.URL!.scheme == "instaplaces"){
-            println(request.URL)
+        if (request.URL!.scheme == "oauth-swift"){
             self.dismissViewControllerAnimated(true, completion: nil)
         }
         return true
-    }
-
-    func cancelAuth() {
-        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }

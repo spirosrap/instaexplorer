@@ -17,6 +17,8 @@
 		D471B8901AF74C6500651865 /* InstaAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471B88F1AF74C6500651865 /* InstaAuthViewController.swift */; };
 		D471B8921AF7539D00651865 /* InstaConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471B8911AF7539D00651865 /* InstaConstants.swift */; };
 		D471B8941AF753C300651865 /* InstaClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471B8931AF753C300651865 /* InstaClient.swift */; };
+		D4C8A3051AF7CC28000D9F54 /* OAuthSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4C8A3041AF7CC12000D9F54 /* OAuthSwift.framework */; };
+		D4C8A3061AF7CC28000D9F54 /* OAuthSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D4C8A3041AF7CC12000D9F54 /* OAuthSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,10 +29,45 @@
 			remoteGlobalIDString = D471B8661AF6870900651865;
 			remoteInfo = insta;
 		};
+		D4C8A3011AF7CC12000D9F54 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4C8A2FC1AF7CC12000D9F54 /* OAuthSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F451E3C5195B8CD80051434C;
+			remoteInfo = OAuthSwiftDemo;
+		};
+		D4C8A3031AF7CC12000D9F54 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4C8A2FC1AF7CC12000D9F54 /* OAuthSwift.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = F435027A1A6791B200038A29;
+			remoteInfo = OAuthSwift;
+		};
+		D4C8A3071AF7CC28000D9F54 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4C8A2FC1AF7CC12000D9F54 /* OAuthSwift.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = F43502791A6791B200038A29;
+			remoteInfo = OAuthSwift;
+		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		D4C8A3091AF7CC28000D9F54 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D4C8A3061AF7CC28000D9F54 /* OAuthSwift.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		D471B8671AF6870900651865 /* insta.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = insta.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D471B8671AF6870900651865 /* instaplaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = instaplaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D471B86B1AF6870900651865 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D471B86C1AF6870900651865 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D471B86F1AF6870900651865 /* insta.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = insta.xcdatamodel; sourceTree = "<group>"; };
@@ -38,12 +75,13 @@
 		D471B8741AF6870900651865 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D471B8761AF6870900651865 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D471B8791AF6870900651865 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
-		D471B87F1AF6870900651865 /* instaTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = instaTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D471B87F1AF6870900651865 /* instaplacesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = instaplacesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D471B8841AF6870900651865 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D471B8851AF6870900651865 /* instaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = instaTests.swift; sourceTree = "<group>"; };
 		D471B88F1AF74C6500651865 /* InstaAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaAuthViewController.swift; sourceTree = "<group>"; };
 		D471B8911AF7539D00651865 /* InstaConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaConstants.swift; sourceTree = "<group>"; };
 		D471B8931AF753C300651865 /* InstaClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaClient.swift; sourceTree = "<group>"; };
+		D4C8A2FC1AF7CC12000D9F54 /* OAuthSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuthSwift.xcodeproj; path = "OAuthSwift-master/OAuthSwift.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -51,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4C8A3051AF7CC28000D9F54 /* OAuthSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,7 +106,8 @@
 		D471B85E1AF6870900651865 = {
 			isa = PBXGroup;
 			children = (
-				D471B8691AF6870900651865 /* insta */,
+				D4C8A2FC1AF7CC12000D9F54 /* OAuthSwift.xcodeproj */,
+				D471B8691AF6870900651865 /* instaplaces */,
 				D471B8821AF6870900651865 /* instaTests */,
 				D471B8681AF6870900651865 /* Products */,
 			);
@@ -76,13 +116,13 @@
 		D471B8681AF6870900651865 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D471B8671AF6870900651865 /* insta.app */,
-				D471B87F1AF6870900651865 /* instaTests.xctest */,
+				D471B8671AF6870900651865 /* instaplaces.app */,
+				D471B87F1AF6870900651865 /* instaplacesTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D471B8691AF6870900651865 /* insta */ = {
+		D471B8691AF6870900651865 /* instaplaces */ = {
 			isa = PBXGroup;
 			children = (
 				D471B86C1AF6870900651865 /* AppDelegate.swift */,
@@ -96,6 +136,7 @@
 				D471B86E1AF6870900651865 /* insta.xcdatamodeld */,
 				D471B86A1AF6870900651865 /* Supporting Files */,
 			);
+			name = instaplaces;
 			path = insta;
 			sourceTree = "<group>";
 		};
@@ -124,29 +165,40 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		D4C8A2FD1AF7CC12000D9F54 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D4C8A3021AF7CC12000D9F54 /* OAuthSwiftDemo.app */,
+				D4C8A3041AF7CC12000D9F54 /* OAuthSwift.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D471B8661AF6870900651865 /* insta */ = {
+		D471B8661AF6870900651865 /* instaplaces */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D471B8891AF6870900651865 /* Build configuration list for PBXNativeTarget "insta" */;
+			buildConfigurationList = D471B8891AF6870900651865 /* Build configuration list for PBXNativeTarget "instaplaces" */;
 			buildPhases = (
 				D471B8631AF6870900651865 /* Sources */,
 				D471B8641AF6870900651865 /* Frameworks */,
 				D471B8651AF6870900651865 /* Resources */,
+				D4C8A3091AF7CC28000D9F54 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				D4C8A3081AF7CC28000D9F54 /* PBXTargetDependency */,
 			);
-			name = insta;
+			name = instaplaces;
 			productName = insta;
-			productReference = D471B8671AF6870900651865 /* insta.app */;
+			productReference = D471B8671AF6870900651865 /* instaplaces.app */;
 			productType = "com.apple.product-type.application";
 		};
-		D471B87E1AF6870900651865 /* instaTests */ = {
+		D471B87E1AF6870900651865 /* instaplacesTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D471B88C1AF6870900651865 /* Build configuration list for PBXNativeTarget "instaTests" */;
+			buildConfigurationList = D471B88C1AF6870900651865 /* Build configuration list for PBXNativeTarget "instaplacesTests" */;
 			buildPhases = (
 				D471B87B1AF6870900651865 /* Sources */,
 				D471B87C1AF6870900651865 /* Frameworks */,
@@ -157,9 +209,9 @@
 			dependencies = (
 				D471B8811AF6870900651865 /* PBXTargetDependency */,
 			);
-			name = instaTests;
+			name = instaplacesTests;
 			productName = instaTests;
-			productReference = D471B87F1AF6870900651865 /* instaTests.xctest */;
+			productReference = D471B87F1AF6870900651865 /* instaplacesTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -180,7 +232,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D471B8621AF6870900651865 /* Build configuration list for PBXProject "insta" */;
+			buildConfigurationList = D471B8621AF6870900651865 /* Build configuration list for PBXProject "instaplaces" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -191,13 +243,36 @@
 			mainGroup = D471B85E1AF6870900651865;
 			productRefGroup = D471B8681AF6870900651865 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = D4C8A2FD1AF7CC12000D9F54 /* Products */;
+					ProjectRef = D4C8A2FC1AF7CC12000D9F54 /* OAuthSwift.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
-				D471B8661AF6870900651865 /* insta */,
-				D471B87E1AF6870900651865 /* instaTests */,
+				D471B8661AF6870900651865 /* instaplaces */,
+				D471B87E1AF6870900651865 /* instaplacesTests */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		D4C8A3021AF7CC12000D9F54 /* OAuthSwiftDemo.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = OAuthSwiftDemo.app;
+			remoteRef = D4C8A3011AF7CC12000D9F54 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D4C8A3041AF7CC12000D9F54 /* OAuthSwift.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = OAuthSwift.framework;
+			remoteRef = D4C8A3031AF7CC12000D9F54 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		D471B8651AF6870900651865 /* Resources */ = {
@@ -246,8 +321,13 @@
 /* Begin PBXTargetDependency section */
 		D471B8811AF6870900651865 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D471B8661AF6870900651865 /* insta */;
+			target = D471B8661AF6870900651865 /* instaplaces */;
 			targetProxy = D471B8801AF6870900651865 /* PBXContainerItemProxy */;
+		};
+		D4C8A3081AF7CC28000D9F54 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = OAuthSwift;
+			targetProxy = D4C8A3071AF7CC28000D9F54 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -360,7 +440,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = insta/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = instaplaces;
 			};
 			name = Debug;
 		};
@@ -370,7 +450,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = insta/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = instaplaces;
 			};
 			name = Release;
 		};
@@ -388,8 +468,7 @@
 				);
 				INFOPLIST_FILE = instaTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/insta.app/insta";
+				PRODUCT_NAME = instaplacesTests;
 			};
 			name = Debug;
 		};
@@ -403,15 +482,14 @@
 				);
 				INFOPLIST_FILE = instaTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/insta.app/insta";
+				PRODUCT_NAME = instaplacesTests;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D471B8621AF6870900651865 /* Build configuration list for PBXProject "insta" */ = {
+		D471B8621AF6870900651865 /* Build configuration list for PBXProject "instaplaces" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D471B8871AF6870900651865 /* Debug */,
@@ -420,21 +498,23 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D471B8891AF6870900651865 /* Build configuration list for PBXNativeTarget "insta" */ = {
+		D471B8891AF6870900651865 /* Build configuration list for PBXNativeTarget "instaplaces" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D471B88A1AF6870900651865 /* Debug */,
 				D471B88B1AF6870900651865 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
-		D471B88C1AF6870900651865 /* Build configuration list for PBXNativeTarget "instaTests" */ = {
+		D471B88C1AF6870900651865 /* Build configuration list for PBXNativeTarget "instaplacesTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D471B88D1AF6870900651865 /* Debug */,
 				D471B88E1AF6870900651865 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

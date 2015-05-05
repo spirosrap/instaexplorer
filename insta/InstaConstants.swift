@@ -20,7 +20,8 @@ extension InstaClient {
 
         static let ClientID: String = "bd0da3c658554f279ec783ddc9c5f71a"
         static let AuthorizationURL : String = "https://api.instagram.com/oauth/authorize/"
-        static let RedirectURI: String = "photobombers://auth/instagram"
+        static let RedirectURI: String = "instaplaces://auth/instagram"
+        static let ClientSecret: String = "8673c1be285b486d993aa588086574f2"
         
     }
     
