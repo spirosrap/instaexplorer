@@ -54,6 +54,24 @@ class InstaAuthViewController: UIViewController, UIWebViewDelegate {
 
     }
     
+    func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
+        var urlString = request.URL?.absoluteString
+        println("URL String \(urlString)")
+        var accessToken = urlString!.rangeOfString("#access_token=")
+        if(accessToken != nil){
+            println(urlString!.substringFromIndex(accessToken!.endIndex))
+        }
+        
+        //http://technet.weblineindia.com/mobile/instagram-api-integration-in-ios-application/2/
+        var urlParts:NSArray = urlString!.componentsSeparatedByString(String(format:"%@/",InstaClient.Constants.RedirectURI))
+        if urlParts.count > 1{
+            urlString = urlParts.objectAtIndex(1) as? String
+            var accessToken = urlString!.rangeOfString("#access_token=")
+            println(accessToken)
+        }
+        return true
+    }
+    
     func cancelAuth() {
         self.dismissViewControllerAnimated(true, completion: nil)
     }

@@ -20,7 +20,7 @@
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>2045D86BC5D391C299DCC498309E722E037BFF4E</key>
-		<string>../..OAuth2/</string>
+		<string>../..OAuth2</string>
 		<key>7B2D867B420E101FFBC6CC8189ECB5BDA745C580</key>
 		<string>../..</string>
 	</dict>
@@ -46,7 +46,7 @@
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>2045D86BC5D391C299DCC498309E722E037BFF4E</string>
 			<key>IDESourceControlWCCName</key>
-			<string>OAuth2</string>
+			<string>instaOAuth2</string>
 		</dict>
 	</array>
 </dict>

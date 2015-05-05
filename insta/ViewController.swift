@@ -31,7 +31,12 @@ class ViewController: UIViewController {
     /* This function opens a TMDBAuthViewController to handle Step 2a of the auth flow */
     func loginWithToken(hostViewController: UIViewController, completionHandler: (success: Bool, errorString: String?) -> Void) {
         
-        let authorizationURL = NSURL(string: "\(InstaClient.Constants.AuthorizationURL)?client_id=\(InstaClient.Constants.ClientID)&redirect_uri=\(InstaClient.Constants.RedirectURI)&response_type=token")
+
+//        NSString *fullURL = [NSString stringWithFormat:@"%@%@&redirect_uri= %@&response_type=token",KAUTHURL,KCLIENTID,kREDIRECTURI];
+        
+        var modifiedURLString = String(format:"%@?client_id=%@&redirect_uri=%@&response_type=token", InstaClient.Constants.AuthorizationURL,InstaClient.Constants.ClientID,InstaClient.Constants.RedirectURI)
+
+        let authorizationURL = NSURL(string: modifiedURLString)
         
         let request = NSURLRequest(URL: authorizationURL!)
         let webAuthViewController = hostViewController.storyboard!.instantiateViewControllerWithIdentifier("InstaAuthViewController") as! InstaAuthViewController
