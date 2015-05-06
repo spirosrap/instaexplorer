@@ -18,9 +18,10 @@ class ViewController: UIViewController {
             if success{
                 println(success)
                 InstaClient.sharedInstance().getLocations( 40.632178, longitude: 22.940604, distance: 1000, completionHandler: { (result, error) -> Void in
-                    println(result)
                     for ra in result!{
-                        println(ra.id)
+                        InstaClient.sharedInstance().getMediaFromLocation(ra, completionHandler: { (result, error) -> Void in
+//                            println(result)
+                        })
                     }
                 })
             }else{
@@ -33,9 +34,6 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    
-    
-    
+
 }
 

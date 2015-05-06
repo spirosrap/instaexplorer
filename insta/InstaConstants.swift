@@ -30,6 +30,8 @@ extension InstaClient {
         
         // MARK: Account
         static let Locations = "locations/search"
+        static let MediaLocation = "locations/{id}/media/recent"
+
         static let Account = "account"
         static let AccountIDFavoriteMovies = "account/{id}/favorite/movies"
         static let AccountIDFavorite = "account/{id}/favorite"
@@ -50,6 +52,10 @@ extension InstaClient {
         // MARK: Movie
         static let MovieIDRating = "movie/{id}/rating"
 
+    }
+    
+    struct LocationKeys{
+        static let LocationID = "id"
     }
 
     // MARK: - URL Keys

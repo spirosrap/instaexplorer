@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D40496B91AF9251A003E8BD2 /* InstaLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40496B81AF9251A003E8BD2 /* InstaLocation.swift */; };
+		D43032E21AFA160D00AEB7DC /* InstaMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43032E11AFA160D00AEB7DC /* InstaMedia.swift */; };
 		D471B86D1AF6870900651865 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471B86C1AF6870900651865 /* AppDelegate.swift */; };
 		D471B8701AF6870900651865 /* insta.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D471B86E1AF6870900651865 /* insta.xcdatamodeld */; };
 		D471B8721AF6870900651865 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471B8711AF6870900651865 /* ViewController.swift */; };
@@ -70,6 +71,7 @@
 
 /* Begin PBXFileReference section */
 		D40496B81AF9251A003E8BD2 /* InstaLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaLocation.swift; sourceTree = "<group>"; };
+		D43032E11AFA160D00AEB7DC /* InstaMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaMedia.swift; sourceTree = "<group>"; };
 		D471B8671AF6870900651865 /* instaplaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = instaplaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D471B86B1AF6870900651865 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D471B86C1AF6870900651865 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -112,7 +114,6 @@
 			children = (
 				D4C8A2FC1AF7CC12000D9F54 /* OAuthSwift.xcodeproj */,
 				D471B8691AF6870900651865 /* instaplaces */,
-				D471B8821AF6870900651865 /* instaTests */,
 				D471B8681AF6870900651865 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -136,6 +137,8 @@
 				D471B88F1AF74C6500651865 /* InstaAuthViewController.swift */,
 				D4C8A30C1AF90F17000D9F54 /* InstaConvenience.swift */,
 				D40496B81AF9251A003E8BD2 /* InstaLocation.swift */,
+				D43032E11AFA160D00AEB7DC /* InstaMedia.swift */,
+				D471B8821AF6870900651865 /* instaTests */,
 				D471B8731AF6870900651865 /* Main.storyboard */,
 				D471B8761AF6870900651865 /* Images.xcassets */,
 				D471B8781AF6870900651865 /* LaunchScreen.xib */,
@@ -161,7 +164,7 @@
 				D471B8831AF6870900651865 /* Supporting Files */,
 			);
 			path = instaTests;
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		D471B8831AF6870900651865 /* Supporting Files */ = {
 			isa = PBXGroup;
@@ -307,6 +310,7 @@
 			files = (
 				D4C8A30D1AF90F17000D9F54 /* InstaConvenience.swift in Sources */,
 				D471B8901AF74C6500651865 /* InstaAuthViewController.swift in Sources */,
+				D43032E21AFA160D00AEB7DC /* InstaMedia.swift in Sources */,
 				D471B8721AF6870900651865 /* ViewController.swift in Sources */,
 				D471B86D1AF6870900651865 /* AppDelegate.swift in Sources */,
 				D471B8941AF753C300651865 /* InstaClient.swift in Sources */,

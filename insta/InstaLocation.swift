@@ -26,13 +26,13 @@ struct InstaLocation {
     
     /* Helper: Given an array of dictionaries, convert them to an array of TMDBMovie objects */
     static func locationsFromResults(results: [[String : AnyObject]]) -> [InstaLocation] {
-        var movies = [InstaLocation]()
+        var locations = [InstaLocation]()
         
         for result in results {
-            movies.append(InstaLocation(dictionary: result))
+            locations.append(InstaLocation(dictionary: result))
         }
         
-        return movies
+        return locations
     }
 
 }

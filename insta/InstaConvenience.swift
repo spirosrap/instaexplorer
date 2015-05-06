@@ -25,6 +25,8 @@ extension InstaClient {
         })
     }
     
+    
+    
     /* This function opens a TMDBAuthViewController to handle Step 2a of the auth flow */
     func getAccessToken(hostViewController: UIViewController, completionHandler: (success: Bool,accessToken:String?, errorString: String?) -> Void) {
         
@@ -59,7 +61,6 @@ extension InstaClient {
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
-                println(JSONResult)
                 if let results = JSONResult.valueForKey("data") as? [[String : AnyObject]] {
                     
                     var locations = InstaLocation.locationsFromResults(results)
@@ -70,6 +71,39 @@ extension InstaClient {
             }
         }
     }
+    
+    
+    func getMediaFromLocation(var location:InstaLocation,completionHandler: (result: [InstaMedia]?, error: NSError?) -> Void) {
+        
+        /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
+        let parameters = [String : AnyObject]()
+        var mutableMethod : String = Methods.MediaLocation
+        mutableMethod = InstaClient.subtituteKeyInMethod(mutableMethod, key: InstaClient.LocationKeys.LocationID, value: String(location.id))!
+        
+        /* 2. Make the request */
+        taskForGETMethod(mutableMethod, parameters: parameters ) { JSONResult, error in
+            
+            /* 3. Send the desired value(s) to completion handler */
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                if let results = JSONResult.valueForKey("data") as? [[String : AnyObject]] {
+//                    println(results[0]["location"])
+//                    if let t = JSONResult.valueForKey("data")!.valueForKey("type") as? String{
+//                        println("image \(t)")
+//                    }
+                    
+                    var media = InstaMedia.imagesFromResults(results)
+                    completionHandler(result: media, error: nil)
+                } else {
+                    completionHandler(result: nil, error: NSError(domain: "getMediaFromLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getMediaFromLocation"]))
+                }
+            }
+            
+        }
+    }
+    
+
 
 
 }
