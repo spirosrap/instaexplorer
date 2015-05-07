@@ -29,6 +29,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         super.viewDidLoad()
         self.mapView.delegate = self
         self.navigationController?.navigationBarHidden = true
+        self.navigationItem.hidesBackButton = true
         restoreMapRegion(false) //Remembers where the user scrolled in the map.
         longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressed:")
         self.view.addGestureRecognizer(longPressRecognizer)

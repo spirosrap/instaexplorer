@@ -24,7 +24,7 @@
             </objects>
             <point key="canvasLocation" x="2022" y="-123"/>
         </scene>
-        <!--Map View Controller-->
+        <!--Instaplaces-->
         <scene sceneID="W2U-5w-zU0">
             <objects>
                 <viewController storyboardIdentifier="MapViewController" id="YsU-ak-0hI" customClass="MapViewController" customModule="instaplaces" customModuleProvider="target" sceneMemberID="viewController">
@@ -92,8 +92,8 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="N6Z-pP-Ph3"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <navigationItem key="navigationItem" title="Instaplaces" id="N6Z-pP-Ph3"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="mapView" destination="wxO-6M-MK7" id="ku3-vo-ei8"/>
                         <outlet property="searchBar" destination="ogv-Vu-jEe" id="5Xc-iE-ELF"/>
@@ -102,12 +102,13 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iCw-6G-eBT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1891" y="-824"/>
+            <point key="canvasLocation" x="1891" y="-829"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="zv2-pQ-Hv3">
             <objects>
                 <tabBarController storyboardIdentifier="TabBarController" id="U4c-oJ-f77" sceneMemberID="viewController">
+                    <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="S5Z-N2-SAH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -151,6 +152,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="sKD-iJ-o6L"/>
+                    <nil key="simulatedTopBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
@@ -192,8 +194,9 @@
         <!--Navigation Controller-->
         <scene sceneID="tgh-Ui-8Jy">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="VVo-jE-Uaw" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="VVo-jE-Uaw" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="tRG-Dp-CMw">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
