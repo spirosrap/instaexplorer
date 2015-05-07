@@ -13,16 +13,29 @@ import Foundation
 
 extension InstaClient {
     
+    var accessTokenfilePath : String {
+        let manager = NSFileManager.defaultManager()
+        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
+        return url.URLByAppendingPathComponent("accessToken").path!
+    }
+
+    
     func loginWithToken(hostViewController: UIViewController,completionHandler:(success: Bool,errorString:String?) -> Void){
-        getAccessToken(hostViewController, completionHandler: { (success, accessToken, errorString) -> Void in
-            if success {
-                self.accessToken = accessToken
-                println(accessToken!)
-                completionHandler(success: success, errorString: nil)
-            }else{
-                completionHandler(success: false, errorString: "Couldn't get access Token")
-            }
-        })
+        if(NSKeyedUnarchiver.unarchiveObjectWithFile(accessTokenfilePath) == nil){
+            getAccessToken(hostViewController, completionHandler: { (success, accessToken, errorString) -> Void in
+                if success {
+                    self.accessToken = accessToken
+                    NSKeyedArchiver.archiveRootObject(accessToken!, toFile: self.accessTokenfilePath)
+                    println(accessToken!)
+                    completionHandler(success: success, errorString: nil)
+                }else{
+                    completionHandler(success: false, errorString: "Couldn't get access Token")
+                }
+            })
+        }else{
+            self.accessToken = NSKeyedUnarchiver.unarchiveObjectWithFile(accessTokenfilePath) as? String
+            completionHandler(success: true, errorString: nil)
+        }
     }
     
     

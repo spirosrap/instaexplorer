@@ -8,9 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		D40496B91AF9251A003E8BD2 /* InstaLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40496B81AF9251A003E8BD2 /* InstaLocation.swift */; };
+		D424C9A71AFB7383003E7B8A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D424C9A61AFB7383003E7B8A /* MapViewController.swift */; };
+		D424C9AB1AFB9BEA003E7B8A /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D424C9AA1AFB9BEA003E7B8A /* CoreDataStackManager.swift */; };
+		D424C9AE1AFB9C0E003E7B8A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D424C9AC1AFB9C0E003E7B8A /* Model.xcdatamodeld */; };
 		D43032E21AFA160D00AEB7DC /* InstaMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43032E11AFA160D00AEB7DC /* InstaMedia.swift */; };
 		D471B86D1AF6870900651865 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471B86C1AF6870900651865 /* AppDelegate.swift */; };
-		D471B8701AF6870900651865 /* insta.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D471B86E1AF6870900651865 /* insta.xcdatamodeld */; };
 		D471B8721AF6870900651865 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471B8711AF6870900651865 /* ViewController.swift */; };
 		D471B8751AF6870900651865 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D471B8731AF6870900651865 /* Main.storyboard */; };
 		D471B8771AF6870900651865 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D471B8761AF6870900651865 /* Images.xcassets */; };
@@ -71,11 +73,13 @@
 
 /* Begin PBXFileReference section */
 		D40496B81AF9251A003E8BD2 /* InstaLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaLocation.swift; sourceTree = "<group>"; };
+		D424C9A61AFB7383003E7B8A /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		D424C9AA1AFB9BEA003E7B8A /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
+		D424C9AD1AFB9C0E003E7B8A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		D43032E11AFA160D00AEB7DC /* InstaMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaMedia.swift; sourceTree = "<group>"; };
 		D471B8671AF6870900651865 /* instaplaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = instaplaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D471B86B1AF6870900651865 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D471B86C1AF6870900651865 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D471B86F1AF6870900651865 /* insta.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = insta.xcdatamodel; sourceTree = "<group>"; };
 		D471B8711AF6870900651865 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D471B8741AF6870900651865 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D471B8761AF6870900651865 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -109,6 +113,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D424C9A91AFB937C003E7B8A /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				D471B8711AF6870900651865 /* ViewController.swift */,
+				D424C9A61AFB7383003E7B8A /* MapViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		D471B85E1AF6870900651865 = {
 			isa = PBXGroup;
 			children = (
@@ -130,19 +143,20 @@
 		D471B8691AF6870900651865 /* instaplaces */ = {
 			isa = PBXGroup;
 			children = (
+				D424C9A91AFB937C003E7B8A /* Controllers */,
 				D471B86C1AF6870900651865 /* AppDelegate.swift */,
-				D471B8711AF6870900651865 /* ViewController.swift */,
 				D471B8911AF7539D00651865 /* InstaConstants.swift */,
 				D471B8931AF753C300651865 /* InstaClient.swift */,
 				D471B88F1AF74C6500651865 /* InstaAuthViewController.swift */,
 				D4C8A30C1AF90F17000D9F54 /* InstaConvenience.swift */,
+				D424C9AA1AFB9BEA003E7B8A /* CoreDataStackManager.swift */,
 				D40496B81AF9251A003E8BD2 /* InstaLocation.swift */,
 				D43032E11AFA160D00AEB7DC /* InstaMedia.swift */,
+				D424C9AC1AFB9C0E003E7B8A /* Model.xcdatamodeld */,
 				D471B8821AF6870900651865 /* instaTests */,
 				D471B8731AF6870900651865 /* Main.storyboard */,
 				D471B8761AF6870900651865 /* Images.xcassets */,
 				D471B8781AF6870900651865 /* LaunchScreen.xib */,
-				D471B86E1AF6870900651865 /* insta.xcdatamodeld */,
 				D471B86A1AF6870900651865 /* Supporting Files */,
 			);
 			name = instaplaces;
@@ -310,13 +324,15 @@
 			files = (
 				D4C8A30D1AF90F17000D9F54 /* InstaConvenience.swift in Sources */,
 				D471B8901AF74C6500651865 /* InstaAuthViewController.swift in Sources */,
+				D424C9AB1AFB9BEA003E7B8A /* CoreDataStackManager.swift in Sources */,
 				D43032E21AFA160D00AEB7DC /* InstaMedia.swift in Sources */,
+				D424C9A71AFB7383003E7B8A /* MapViewController.swift in Sources */,
 				D471B8721AF6870900651865 /* ViewController.swift in Sources */,
 				D471B86D1AF6870900651865 /* AppDelegate.swift in Sources */,
 				D471B8941AF753C300651865 /* InstaClient.swift in Sources */,
 				D471B8921AF7539D00651865 /* InstaConstants.swift in Sources */,
 				D40496B91AF9251A003E8BD2 /* InstaLocation.swift in Sources */,
-				D471B8701AF6870900651865 /* insta.xcdatamodeld in Sources */,
+				D424C9AE1AFB9C0E003E7B8A /* Model.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -531,13 +547,13 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		D471B86E1AF6870900651865 /* insta.xcdatamodeld */ = {
+		D424C9AC1AFB9C0E003E7B8A /* Model.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				D471B86F1AF6870900651865 /* insta.xcdatamodel */,
+				D424C9AD1AFB9C0E003E7B8A /* Model.xcdatamodel */,
 			);
-			currentVersion = D471B86F1AF6870900651865 /* insta.xcdatamodel */;
-			path = insta.xcdatamodeld;
+			currentVersion = D424C9AD1AFB9C0E003E7B8A /* Model.xcdatamodel */;
+			path = Model.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};
