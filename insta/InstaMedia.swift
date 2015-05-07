@@ -38,14 +38,6 @@ struct InstaMedia {
 
             var dictionary = [String:AnyObject]()
             
-//            println(result["caption"]!.valueForKey("text")!) //text
-//            println(result["caption"]!.valueForKey("from")!.valueForKey("username")!) //userName
-//            println(result["caption"]!.valueForKey("from")!.valueForKey("full_name")!) //fullName
-//            println(result["caption"]!.valueForKey("from")!.valueForKey("profile_picture")!) //profileImagePath
-//            println(result["images"]!.valueForKey("thumbnail")!.valueForKey("url")!) // thumbnailPath
-//            println(result["images"]!.valueForKey("standard_resolution")!.valueForKey("url")!)//imagePath
-//            println(result["link"]!) //link
-            
             if ( result["type"]! as! String == "image"){
                 
                 dictionary["username"] = result["caption"]!.valueForKey("from")!.valueForKey("username")!
@@ -63,7 +55,11 @@ struct InstaMedia {
                 }
                 
             }
-            images.append(InstaMedia(dictionary: dictionary))
+            
+            if(dictionary["imagePath"] != nil){ //Don't create and entry to images if the InstaMedia doesn't have an imagePath(deleted image)
+                images.append(InstaMedia(dictionary: dictionary))
+            }
+            
         }
         
         if !images.isEmpty {

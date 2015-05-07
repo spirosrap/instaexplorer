@@ -88,10 +88,6 @@ extension InstaClient {
                 completionHandler(result: nil, error: error)
             } else {
                 if let results = JSONResult.valueForKey("data") as? [[String : AnyObject]] {
-//                    println(results[0]["location"])
-//                    if let t = JSONResult.valueForKey("data")!.valueForKey("type") as? String{
-//                        println("image \(t)")
-//                    }
                     
                     var media = InstaMedia.imagesFromResults(results)
                     completionHandler(result: media, error: nil)
