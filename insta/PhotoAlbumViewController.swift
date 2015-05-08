@@ -40,12 +40,13 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
     }
     
     override func viewWillDisappear(animated: Bool) {
-        self.navigationController?.navigationBarHidden = true
-        self.navigationController?.toolbarHidden = true
+//        self.navigationController?.navigationBarHidden = true
+//        self.navigationController?.toolbarHidden = true
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBarHidden = false
         self.navigationController?.toolbarHidden = true
         
         setRegion() //Set the region on the top map based on the selected Location
