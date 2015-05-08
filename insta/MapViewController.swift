@@ -176,7 +176,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
             firstDrop = false
             //Create the new Location and save it to the variable selectedLocation
             selectedLocation = Location(dictionary: ["latitude":self.annotation.coordinate.latitude,"longitude":self.annotation.coordinate.longitude], context: sharedContext)
-            InstaClient.sharedInstance().getLocations(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 500, completionHandler: { (result, error) -> Void in
+            InstaClient.sharedInstance().getLocations(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 100, completionHandler: { (result, error) -> Void in
                 
                 println(result)
                 for il in result!{
