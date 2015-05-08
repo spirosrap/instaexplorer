@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreData
 
 class InstaClient : NSObject {
     
@@ -27,6 +28,11 @@ class InstaClient : NSObject {
     }
     
     // MARK: - GET
+    
+    var sharedContext: NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+    }
+
     
     func taskForGETMethod(method: String, parameters: [String : AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         

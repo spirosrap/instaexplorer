@@ -76,7 +76,7 @@ extension InstaClient {
             } else {
                 if let results = JSONResult.valueForKey("data") as? [[String : AnyObject]] {
                     
-                    var locations = InstaLocation.locationsFromResults(results)
+                    var locations = InstaLocation.locationsFromResults(results,context:self.sharedContext)
                     completionHandler(result: locations, error: nil)
                 } else {
                     completionHandler(result: nil, error: NSError(domain: "getLocations parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getLocations"]))
