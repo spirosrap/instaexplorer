@@ -16,9 +16,9 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     @IBOutlet weak var searchBar: UISearchBar!
     
     var tapRecognizer: UITapGestureRecognizer? = nil //Recognizer for the search bar
-    var locations = [InstaLocation]() // Array of locations in map view.
-    var selectedLocation:InstaLocation! // The selected location or the just created location using the pin.
-    var annotationsLocations = [Int:InstaLocation]() //This dictionary is used to save the location together with annotations hash. When a user selects an annotation we can then determine which location was.
+    var locations = [Location]() // Array of locations in map view.
+    var selectedLocation:Location! // The selected location or the just created location using the pin.
+    var annotationsLocations = [Int:Location]() //This dictionary is used to save the location together with annotations hash. When a user selects an annotation we can then determine which location was.
     var fetchedPhotos = [InstaMedia]()
     
     var firstDrop = true // This is a variable to determine when it is the first time the user long clicks in order to avoid having the effect of creating an annotation. (In order to create the drag effect we create and remove annotations very fast).(The effect seems like the pin is dropping from outside the phone(up))
@@ -53,11 +53,21 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         searchBar.delegate = self
         tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
         tapRecognizer?.numberOfTapsRequired = 1
-        
     }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.navigationBarHidden = false
+        self.tabBarController!.tabBar.hidden = true;
+    }
+
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.navigationBarHidden = true
+        self.tabBarController!.tabBar.hidden = false;
+
+
 //        var frcf = fetchedResultsController
 //        frcf.performFetch(nil)
 //        let sectionInfo = frcf.sections![0] as! NSFetchedResultsSectionInfo
@@ -165,7 +175,27 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         } else if (sender.state == .Ended){//The user has lifted the finger.
             firstDrop = false
             //Create the new Location and save it to the variable selectedLocation
-//            selectedLocation = Location(dictionary: ["latitude":self.annotation.coordinate.latitude,"longitude":self.annotation.coordinate.longitude], context: sharedContext)
+            selectedLocation = Location(dictionary: ["latitude":self.annotation.coordinate.latitude,"longitude":self.annotation.coordinate.longitude], context: sharedContext)
+            InstaClient.sharedInstance().getLocations(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 500, completionHandler: { (result, error) -> Void in
+                
+                println(result)
+                for il in result!{
+                    il.location = self.selectedLocation
+                }
+
+                CoreDataStackManager.sharedInstance().saveContext()
+                //instantiate the controller and pass the parameter location.
+                let tableController = self.storyboard!.instantiateViewControllerWithIdentifier("InstaLocationsTableViewController")! as! InstaLocationsTableViewController
+                tableController.instaLocations = result! as [InstaLocation]
+                self.annotationsLocations[self.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
+                    
+                dispatch_async(dispatch_get_main_queue()) {
+        //                self.informationBox(nil,animate:false)
+                    self.navigationController!.pushViewController(tableController, animated: true)
+                }
+                
+            })
+            
 //            applicationDelegate.stats.locationsAdded += 1 //Location Added. For Stats.
 //            informationBox("Connecting to Flickr",animate:true)
 //            Flickr.sharedInstance().populateLocationPhotos(selectedLocation) { (success,photosArray, errorString) in
@@ -275,7 +305,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
         if(newState == .Starting){
             if let l = annotationsLocations[view.annotation.hash]{
-                CoreDataStackManager.sharedInstance().deleteObject(l)
+//                CoreDataStackManager.sharedInstance().deleteObject(l)
             }
         }
         if(newState == .Ending){

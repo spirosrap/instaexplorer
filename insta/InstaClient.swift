@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 class InstaClient : NSObject {
     
@@ -254,4 +255,41 @@ class InstaClient : NSObject {
         
         return Singleton.sharedInstance
     }
+    
+    //MARK:Saving Related
+    //It returns the actual path in the iOS readable format
+    func imagePath(var selectedFilename:String) ->String{
+        let manager = NSFileManager.defaultManager()
+        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
+        return url.URLByAppendingPathComponent(selectedFilename).path!
+    }
+
+    //It downloads the images from the already saved image paths to be in turn saved too in the CoreData
+    func downloadImageAndSetCell(let imagePath:String,let cell:CollectionViewCell,completionHandler: (success: Bool, errorString: String?) -> Void){
+        let imgURL = NSURL(string: imagePath)
+        let request: NSURLRequest = NSURLRequest(URL: imgURL!)
+        let mainQueue = NSOperationQueue.mainQueue()
+        
+        NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
+            if error == nil {
+                // Convert the downloaded data in to a UIImage object
+                let image = UIImage(data: data)
+                
+                NSKeyedArchiver.archiveRootObject(image!,toFile: self.imagePath(imagePath.lastPathComponent))
+                
+                cell.photo.image = image
+                completionHandler(success: true, errorString: nil)
+            }
+            else {
+                completionHandler(success: false, errorString: "Could not download image \(imagePath)")
+            }
+        })
+    }
+
+    // MARK: - Shared Image Cache
+    
+    struct Caches {
+        static let imageCache = ImageCache()
+    }
+
 }

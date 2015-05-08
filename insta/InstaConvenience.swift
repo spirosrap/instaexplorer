@@ -102,7 +102,7 @@ extension InstaClient {
             } else {
                 if let results = JSONResult.valueForKey("data") as? [[String : AnyObject]] {
                     
-                    var media = InstaMedia.imagesFromResults(results)
+                    var media = InstaMedia.imagesFromResults(results,context:self.sharedContext)
                     completionHandler(result: media, error: nil)
                 } else {
                     completionHandler(result: nil, error: NSError(domain: "getMediaFromLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getMediaFromLocation"]))

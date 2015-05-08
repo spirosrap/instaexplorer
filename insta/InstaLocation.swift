@@ -13,12 +13,14 @@ import CoreData
 
 
 class InstaLocation: NSManagedObject{
+    
     @NSManaged var latitude:NSNumber
     @NSManaged var id: String
     @NSManaged var longitude:NSNumber
     @NSManaged var name: String
     @NSManaged var location:Location?
-
+    @NSManaged var instaMedia: [InstaMedia]?
+    
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
     }

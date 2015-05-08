@@ -7,19 +7,31 @@
 //
 
 import Foundation
+import CoreData
+import UIKit
 
-struct InstaMedia {
-    var text:String?
-    var username:String?
-    var fullname:String?
+@objc(InstaMedia)
 
-    var thumbnailPath:String?
-    var imagePath:String?
-    var profileImagePath:String?
-    var link:String?
-    /* Construct a TMDBMovie from a dictionary */
-    init(dictionary: [String : AnyObject]) {
-        
+class InstaMedia: NSManagedObject {
+    @NSManaged var text:String?
+    @NSManaged var username:String?
+    @NSManaged var fullname:String?
+
+    @NSManaged var thumbnailPath:String?
+    @NSManaged var imagePath:String?
+    @NSManaged var profileImagePath:String?
+    @NSManaged var link:String?
+    @NSManaged var instaLocation: InstaLocation?
+    
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+    }
+
+    
+    init(dictionary: [String : AnyObject],context: NSManagedObjectContext) {
+        let entity =  NSEntityDescription.entityForName("InstaMedia", inManagedObjectContext: context)!
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
+
         text = dictionary["text"] as? String
         username = dictionary["username"] as? String
         fullname = dictionary["fullname"] as? String
@@ -31,7 +43,7 @@ struct InstaMedia {
     }
     
     /* Helper: Given an array of dictionaries, convert them to an array of TMDBMovie objects */
-    static func imagesFromResults(results: [[String : AnyObject]]) -> [InstaMedia] {
+    static func imagesFromResults(results: [[String : AnyObject]], context: NSManagedObjectContext) -> [InstaMedia] {
         var images = [InstaMedia]()
         
         for result in results {
@@ -57,7 +69,7 @@ struct InstaMedia {
             }
             
             if(dictionary["imagePath"] != nil){ //Don't create and entry to images if the InstaMedia doesn't have an imagePath(deleted image)
-                images.append(InstaMedia(dictionary: dictionary))
+                images.append(InstaMedia(dictionary: dictionary,context: context))
             }
             
         }
@@ -78,5 +90,34 @@ struct InstaMedia {
         
         return images
     }
+    
+    var image: UIImage? {
+        get {
+            return InstaClient.Caches.imageCache.imageWithIdentifier(imagePath!)
+        }
+        set {
+            InstaClient.Caches.imageCache.storeImage(image, withIdentifier: imagePath!)
+        }
+    }
+    
+    var thumbnail: UIImage? {
+        get {
+            return InstaClient.Caches.imageCache.imageWithIdentifier(thumbnailPath!)
+        }
+        set {
+            InstaClient.Caches.imageCache.storeImage(image, withIdentifier: thumbnailPath!)
+        }
+    }
+    
+    var profileImage: UIImage? {
+        get {
+            return InstaClient.Caches.imageCache.imageWithIdentifier(profileImagePath!)
+        }
+        set {
+            InstaClient.Caches.imageCache.storeImage(image, withIdentifier: profileImagePath!)
+        }
+    }
+
+
 
 }

@@ -17,19 +17,20 @@ class ViewController: UIViewController {
             success,errorString in
             if success{
                 println(success)
-                InstaClient.sharedInstance().getLocations( 40.632178, longitude: 22.940604, distance: 1000, completionHandler: { (result, error) -> Void in
-                    for ra in result!{
-                        InstaClient.sharedInstance().getMediaFromLocation(ra, completionHandler: { (result, error) -> Void in
-                            println(result)
-                        })
-                    }
-                    let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController")! as! UITabBarController
-                    
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.navigationController!.pushViewController(detailController, animated: true)
-                    }
+                let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController")! as! UITabBarController
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.navigationController!.pushViewController(detailController, animated: true)
+                }
 
-                })
+//                InstaClient.sharedInstance().getLocations( 40.632178, longitude: 22.940604, distance: 1000, completionHandler: { (result, error) -> Void in
+//                    for ra in result!{
+//                        InstaClient.sharedInstance().getMediaFromLocation(ra, completionHandler: { (result, error) -> Void in
+//                            println(result)
+//                        })
+//                    }
+//
+//                })
             }else{
                 println(errorString)
             }

@@ -1,19 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
-    <entity name="InstaLocation" syncable="YES">
+    <entity name="InstaLocation" representedClassName="InstaLocation" syncable="YES">
         <attribute name="id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="longitude" optional="YES" syncable="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="instaMedia" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InstaMedia" inverseName="instaLocation" inverseEntity="InstaMedia" syncable="YES"/>
         <relationship name="location" maxCount="1" deletionRule="Cascade" destinationEntity="Location" inverseName="instaLocation" inverseEntity="Location" syncable="YES"/>
     </entity>
-    <entity name="Location" syncable="YES">
+    <entity name="InstaMedia" representedClassName="InstaMedia" syncable="YES">
+        <attribute name="fullname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imagePath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="profileImagePath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="thumbnailPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="instaLocation" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="InstaLocation" inverseName="instaMedia" inverseEntity="InstaLocation" syncable="YES"/>
+    </entity>
+    <entity name="Location" representedClassName="Location" syncable="YES">
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
         <relationship name="instaLocation" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="InstaLocation" inverseName="location" inverseEntity="InstaLocation" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Location" positionX="-63" positionY="-18" width="128" height="30"/>
-        <element name="InstaLocation" positionX="-54" positionY="-9" width="128" height="30"/>
+        <element name="Location" positionX="-63" positionY="-18" width="128" height="90"/>
+        <element name="InstaLocation" positionX="-54" positionY="-9" width="128" height="135"/>
+        <element name="InstaMedia" positionX="-45" positionY="54" width="128" height="165"/>
     </elements>
 </model>
