@@ -133,8 +133,8 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
         }else{
             cell.indicator.startAnimating()
             cell.photo.image = UIImage(named: "PlaceHolder") //Default placeholder
-            InstaClient.sharedInstance().downloadImageAndSetCell(prefetchedPhotos![indexPath.row].thumbnailPath!,cell: cell,completionHandler: { (success, errorString) in
-                if success {
+            InstaClient.sharedInstance().downloadImageAndSetCell(prefetchedPhotos![indexPath.row].thumbnailPath!,photo: cell.photo,completionHandler: { (success, errorString) in
+                if success {                    
                     dispatch_async(dispatch_get_main_queue(), {
                         cell.indicator.stopAnimating()
                     })
@@ -151,8 +151,43 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
     //It is used for deleting the image from the collection view and the underlying core data context
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath:NSIndexPath){
         let photo = fetchedResultsController.objectAtIndexPath(indexPath) as! InstaMedia
-        println(photo.imagePath)
-        CoreDataStackManager.sharedInstance().deleteObject(photo)
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
+        let paController = self.storyboard!.instantiateViewControllerWithIdentifier("ImageDetailViewController")! as! ImageDetailViewController
+        println(paController.view)
+
+        var changedPath = prefetchedPhotos![indexPath.row].imagePath!.stringByReplacingOccurrencesOfString("/", withString: "")
+
+        if let p = NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().imagePath(changedPath)) as? UIImage {
+//            cell.indicator.stopAnimating()
+            paController.imageView.image = p
+            if let t = photo.text{
+                paController.titleLabel.text = t
+            }
+            
+        }else{
+            cell.indicator.startAnimating()
+            cell.photo.image = UIImage(named: "PlaceHolder") //Default placeholder
+            InstaClient.sharedInstance().downloadImageAndSetCell(prefetchedPhotos![indexPath.row].imagePath!,photo: paController.imageView,completionHandler: { (success, errorString) in
+                if success {
+                    dispatch_async(dispatch_get_main_queue(), {
+//                        cell.indicator.stopAnimating()
+                    })
+                }else{
+                    dispatch_async(dispatch_get_main_queue(), {
+//                        cell.indicator.stopAnimating()
+                    })
+                }
+            })
+        }
+
+        dispatch_async(dispatch_get_main_queue()) {
+            self.navigationController!.pushViewController(paController, animated: true)
+        }
+
+
+        println()
+        
+//        CoreDataStackManager.sharedInstance().deleteObject(photo)
     }
     
     func collectionView(collectionView: UICollectionView,

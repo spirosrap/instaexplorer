@@ -217,8 +217,6 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                 }
                 self.annotationsLocations[self.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
 
-                
-                
             })
             
 //            applicationDelegate.stats.locationsAdded += 1 //Location Added. For Stats.

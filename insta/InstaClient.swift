@@ -265,19 +265,24 @@ class InstaClient : NSObject {
     }
 
     //It downloads the images from the already saved image paths to be in turn saved too in the CoreData
-    func downloadImageAndSetCell(let imagePath:String,let cell:CollectionViewCell,completionHandler: (success: Bool, errorString: String?) -> Void){
+    func downloadImageAndSetCell(let imagePath:String,let photo:UIImageView,completionHandler: (success: Bool, errorString: String?) -> Void){
         let imgURL = NSURL(string: imagePath)
         let request: NSURLRequest = NSURLRequest(URL: imgURL!)
         let mainQueue = NSOperationQueue.mainQueue()
-        
+
         NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
             if error == nil {
                 // Convert the downloaded data in to a UIImage object
                 let image = UIImage(data: data)
+                var changedPath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "")
+                NSKeyedArchiver.archiveRootObject(image!,toFile: self.imagePath(changedPath))
+                println(self.imagePath(changedPath))
                 
-                NSKeyedArchiver.archiveRootObject(image!,toFile: self.imagePath(imagePath.lastPathComponent))
+                if (NSKeyedUnarchiver.unarchiveObjectWithFile(self.imagePath(changedPath)) != nil){
+                    println("ok")
+                }
                 
-                cell.photo.image = image
+                photo.image = image
                 completionHandler(success: true, errorString: nil)
             }
             else {

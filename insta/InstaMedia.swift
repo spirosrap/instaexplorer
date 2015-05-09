@@ -54,6 +54,7 @@ class InstaMedia: NSManagedObject {
             if ( result["type"]! as! String == "image"){
                 
                 dictionary["username"] = result["caption"]!.valueForKey("from")!.valueForKey("username")!
+                
                 dictionary["profileImagePath"] = result["caption"]!.valueForKey("from")!.valueForKey("profile_picture")!
                 dictionary["thumbnailPath"] = result["images"]!.valueForKey("thumbnail")!.valueForKey("url")!
                 dictionary["imagePath"] = result["images"]!.valueForKey("standard_resolution")!.valueForKey("url")!
@@ -97,6 +98,7 @@ class InstaMedia: NSManagedObject {
             return InstaClient.Caches.imageCache.imageWithIdentifier(imagePath!)
         }
         set {
+            
             InstaClient.Caches.imageCache.storeImage(image, withIdentifier: imagePath!)
         }
     }
