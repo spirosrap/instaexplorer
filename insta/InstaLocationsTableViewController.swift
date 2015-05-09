@@ -68,7 +68,7 @@ class InstaLocationsTableViewController: UITableViewController {
                 let paController = self.storyboard!.instantiateViewControllerWithIdentifier("PhotoAlbumViewController")! as! PhotoAlbumViewController
                 paController.title = self.instaLocations[indexPath.row].name
                 
-                paController.location = self.instaLocations[indexPath.row]
+//                paController.location = self.instaLocations[indexPath.row]
                 
                 dispatch_async(dispatch_get_main_queue()) {
                     self.navigationController!.pushViewController(paController, animated: true)

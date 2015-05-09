@@ -19,7 +19,7 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
     
     var prefetchedPhotos: [InstaMedia]!//We put the Photo Objects in a variable to use in NSFetchedResultsControllerDelegate methods
     var newCollectionButton:UIBarButtonItem!
-    var location:InstaLocation!
+    var location:Location!
     
     override func viewDidLoad() {
         
@@ -35,6 +35,7 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
         imageInfoView?.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.70)
         imageInfoView.hidden = true
         infoLabel.hidden = true
+        
         
         
     }
@@ -71,7 +72,7 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
         let fetchRequest = NSFetchRequest(entityName: "InstaMedia")
         
         fetchRequest.sortDescriptors = [NSSortDescriptor(key: "username", ascending: true)]
-        fetchRequest.predicate = NSPredicate(format: "instaLocation == %@", self.location);
+        fetchRequest.predicate = NSPredicate(format: "location == %@", self.location);
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
             managedObjectContext: self.sharedContext,
@@ -114,7 +115,9 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
     //MARK: Collection View Related
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         self.prefetchedPhotos = self.fetchedResultsController.fetchedObjects as! [InstaMedia]
-        
+        for pf in (prefetchedPhotos!){
+            print(pf.location)
+        }
         return prefetchedPhotos!.count
     }
 
@@ -124,13 +127,13 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
         
         //If the photo image(imagepaths and titles are saved in Core Data) is saved using NSKeyedArchiver / NSKeyedUnarchiver we display it right away else we download it using its imagepath
-        if let photo = NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().imagePath(prefetchedPhotos![indexPath.row].imagePath!.lastPathComponent)) as? UIImage {
+        if let photo = NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().imagePath(prefetchedPhotos![indexPath.row].thumbnailPath!.lastPathComponent)) as? UIImage {
             cell.indicator.stopAnimating()
             cell.photo.image = photo
         }else{
             cell.indicator.startAnimating()
             cell.photo.image = UIImage(named: "PlaceHolder") //Default placeholder
-            InstaClient.sharedInstance().downloadImageAndSetCell(prefetchedPhotos![indexPath.row].imagePath!,cell: cell,completionHandler: { (success, errorString) in
+            InstaClient.sharedInstance().downloadImageAndSetCell(prefetchedPhotos![indexPath.row].thumbnailPath!,cell: cell,completionHandler: { (success, errorString) in
                 if success {
                     dispatch_async(dispatch_get_main_queue(), {
                         cell.indicator.stopAnimating()

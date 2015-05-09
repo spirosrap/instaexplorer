@@ -190,23 +190,34 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
             firstDrop = false
             //Create the new Location and save it to the variable selectedLocation
             selectedLocation = Location(dictionary: ["latitude":self.annotation.coordinate.latitude,"longitude":self.annotation.coordinate.longitude], context: sharedContext)
-            InstaClient.sharedInstance().getLocations(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 100, completionHandler: { (result, error) -> Void in
+            InstaClient.sharedInstance().getMedia(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 100, completionHandler: { (result, error) -> Void in
                 
-                println(result)
                 for il in result!{
                     il.location = self.selectedLocation
                 }
-
+                println(result!.count)
                 CoreDataStackManager.sharedInstance().saveContext()
                 //instantiate the controller and pass the parameter location.
-                let tableController = self.storyboard!.instantiateViewControllerWithIdentifier("InstaLocationsTableViewController")! as! InstaLocationsTableViewController
-                tableController.instaLocations = result! as [InstaLocation]
-                self.annotationsLocations[self.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
-                    
+//                let tableController = self.storyboard!.instantiateViewControllerWithIdentifier("InstaLocationsTableViewController")! as! InstaLocationsTableViewController
+//                tableController.instaLocations = result! as [InstaLocation]
+//                self.annotationsLocations[self.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
+//                
+//                dispatch_async(dispatch_get_main_queue()) {
+//                    //                self.informationBox(nil,animate:false)
+//                    self.navigationController!.pushViewController(tableController, animated: true)
+//                }
+                
+                let paController = self.storyboard!.instantiateViewControllerWithIdentifier("PhotoAlbumViewController")! as! PhotoAlbumViewController
+//                paController.title = self.instaLocations[indexPath.row].name
+//                
+                paController.location = self.selectedLocation
+                
                 dispatch_async(dispatch_get_main_queue()) {
-        //                self.informationBox(nil,animate:false)
-                    self.navigationController!.pushViewController(tableController, animated: true)
+                    self.navigationController!.pushViewController(paController, animated: true)
                 }
+                self.annotationsLocations[self.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
+
+                
                 
             })
             

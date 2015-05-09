@@ -20,6 +20,7 @@ class Location:NSManagedObject{
     @NSManaged var latitude: NSNumber
     @NSManaged var longitude: NSNumber
     @NSManaged var instaLocations: [InstaLocation]?
+    @NSManaged var instaMedia: [InstaMedia]?
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
