@@ -26,6 +26,8 @@
 		D471B8901AF74C6500651865 /* InstaAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471B88F1AF74C6500651865 /* InstaAuthViewController.swift */; };
 		D471B8921AF7539D00651865 /* InstaConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471B8911AF7539D00651865 /* InstaConstants.swift */; };
 		D471B8941AF753C300651865 /* InstaClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471B8931AF753C300651865 /* InstaClient.swift */; };
+		D4B4BB5E1AFE396700B281B2 /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B4BB5D1AFE396700B281B2 /* ImageDetailViewController.swift */; };
+		D4B4BB601AFE3BC000B281B2 /* FavoritesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B4BB5F1AFE3BC000B281B2 /* FavoritesTableViewController.swift */; };
 		D4C8A3051AF7CC28000D9F54 /* OAuthSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4C8A3041AF7CC12000D9F54 /* OAuthSwift.framework */; };
 		D4C8A3061AF7CC28000D9F54 /* OAuthSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D4C8A3041AF7CC12000D9F54 /* OAuthSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D4C8A30D1AF90F17000D9F54 /* InstaConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8A30C1AF90F17000D9F54 /* InstaConvenience.swift */; };
@@ -100,6 +102,8 @@
 		D471B88F1AF74C6500651865 /* InstaAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaAuthViewController.swift; sourceTree = "<group>"; };
 		D471B8911AF7539D00651865 /* InstaConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaConstants.swift; sourceTree = "<group>"; };
 		D471B8931AF753C300651865 /* InstaClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaClient.swift; sourceTree = "<group>"; };
+		D4B4BB5D1AFE396700B281B2 /* ImageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
+		D4B4BB5F1AFE3BC000B281B2 /* FavoritesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewController.swift; sourceTree = "<group>"; };
 		D4C8A2FC1AF7CC12000D9F54 /* OAuthSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuthSwift.xcodeproj; path = "OAuthSwift-master/OAuthSwift.xcodeproj"; sourceTree = "<group>"; };
 		D4C8A30C1AF90F17000D9F54 /* InstaConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaConvenience.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -131,6 +135,8 @@
 				D45167B21AFCBD8E00C78A19 /* InstaLocationsTableViewController.swift */,
 				D45167B61AFCDE9200C78A19 /* CollectionViewCell.swift */,
 				D45167B41AFCDCC500C78A19 /* PhotoAlbumViewController.swift */,
+				D4B4BB5D1AFE396700B281B2 /* ImageDetailViewController.swift */,
+				D4B4BB5F1AFE3BC000B281B2 /* FavoritesTableViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -341,6 +347,7 @@
 				D4C8A30D1AF90F17000D9F54 /* InstaConvenience.swift in Sources */,
 				D45167B51AFCDCC500C78A19 /* PhotoAlbumViewController.swift in Sources */,
 				D45167B91AFCE64D00C78A19 /* ImageCache.swift in Sources */,
+				D4B4BB601AFE3BC000B281B2 /* FavoritesTableViewController.swift in Sources */,
 				D471B8901AF74C6500651865 /* InstaAuthViewController.swift in Sources */,
 				D424C9AB1AFB9BEA003E7B8A /* CoreDataStackManager.swift in Sources */,
 				D45167B31AFCBD8E00C78A19 /* InstaLocationsTableViewController.swift in Sources */,
@@ -352,6 +359,7 @@
 				D471B8941AF753C300651865 /* InstaClient.swift in Sources */,
 				D471B8921AF7539D00651865 /* InstaConstants.swift in Sources */,
 				D40496B91AF9251A003E8BD2 /* InstaLocation.swift in Sources */,
+				D4B4BB5E1AFE396700B281B2 /* ImageDetailViewController.swift in Sources */,
 				D45167B01AFCAEF700C78A19 /* Location.swift in Sources */,
 				D424C9AE1AFB9C0E003E7B8A /* Model.xcdatamodeld in Sources */,
 			);
