@@ -112,6 +112,35 @@ extension InstaClient {
         }
     }
     
+    //The default time span is set to 5 days.
+    func getMedia(var latitude:Double,var longitude:Double,var distance:Int,completionHandler: (result: [InstaMedia]?, error: NSError?) -> Void) {
+        
+        /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
+        let parameters = ["lat":latitude,"lng":longitude,"distance":distance]
+        var mutableMethod : String = Methods.MediaSearch
+
+        
+        /* 2. Make the request */
+        taskForGETMethod(mutableMethod, parameters: parameters as! [String : AnyObject] ) { JSONResult, error in
+            
+            /* 3. Send the desired value(s) to completion handler */
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                if let results = JSONResult.valueForKey("data") as? [[String : AnyObject]] {
+                    
+                    var media = InstaMedia.imagesFromResults(results,context:self.sharedContext)
+                    completionHandler(result: media, error: nil)
+                } else {
+                    completionHandler(result: nil, error: NSError(domain: "getMediaFromLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getMediaFromLocation"]))
+                }
+            }
+            
+        }
+    }
+    
+
+    
 
 
 
