@@ -43,9 +43,13 @@
                                 <rect key="frame" x="0.0" y="64" width="600" height="29"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <segments>
-                                    <segment title="Instagram"/>
-                                    <segment title="Flickr"/>
+                                    <segment title="Standard"/>
+                                    <segment title="Satellite"/>
+                                    <segment title="Hybrid"/>
                                 </segments>
+                                <connections>
+                                    <action selector="segmentedControlChanged:" destination="YsU-ak-0hI" eventType="valueChanged" id="haY-qY-oDb"/>
+                                </connections>
                             </segmentedControl>
                             <searchBar contentMode="redraw" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ogv-Vu-jEe">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>

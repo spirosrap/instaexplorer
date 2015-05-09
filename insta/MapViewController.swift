@@ -49,10 +49,24 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
 //                self.mapView.addAnnotation(annotation)
 //            }
 //        }
-        
         searchBar.delegate = self
         tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
         tapRecognizer?.numberOfTapsRequired = 1
+    }
+
+    @IBAction func segmentedControlChanged(sender: UISegmentedControl) {
+
+        switch (sender.selectedSegmentIndex) {
+          case 0:
+            mapView.mapType = .Standard
+          case 1:
+            mapView.mapType = .Satellite
+          case 2:
+            mapView.mapType = .Hybrid
+          default:
+            break;
+        }
+        
     }
     
     override func viewWillDisappear(animated: Bool) {

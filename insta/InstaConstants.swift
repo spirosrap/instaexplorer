@@ -31,7 +31,8 @@ extension InstaClient {
         // MARK: Account
         static let Locations = "locations/search"
         static let MediaLocation = "locations/{id}/media/recent"
-
+        static let MediaSearch = "media/search"
+        
         static let Account = "account"
         static let AccountIDFavoriteMovies = "account/{id}/favorite/movies"
         static let AccountIDFavorite = "account/{id}/favorite"
