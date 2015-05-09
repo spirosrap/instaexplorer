@@ -72,7 +72,6 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBarHidden = false
-        self.tabBarController!.tabBar.hidden = true;
     }
 
     
@@ -213,6 +212,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                 paController.location = self.selectedLocation
                 
                 dispatch_async(dispatch_get_main_queue()) {
+                    self.tabBarController!.tabBar.hidden = true;
                     self.navigationController!.pushViewController(paController, animated: true)
                 }
                 self.annotationsLocations[self.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
