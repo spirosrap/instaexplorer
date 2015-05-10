@@ -73,9 +73,9 @@ class ImageDetailViewController: UIViewController {
     
     func tags(var searchString:String) -> [String]{
         var retValue = [String]()
-//        println(searchString)
-        while(true){
-            if let tag = searchString.rangeOfString("[#][A-Za-z0-9]*",options: .RegularExpressionSearch){
+//        http://stackoverflow.com/questions/7534665/the-best-regex-to-parse-twitter-hashtags-and-users
+        while(true){ // for username:  "((?:^|\\s)(?:@){1}[0-9a-zA-Z_]{1,15})"
+            if let tag = searchString.rangeOfString("((?:#){1}[\\w\\d]{1,140})",options: .RegularExpressionSearch){
                 retValue.append(searchString.substringWithRange(tag))
                 searchString = searchString.substringFromIndex(tag.endIndex)
             }else{
