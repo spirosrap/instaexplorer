@@ -194,7 +194,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                 for il in result!{
                     il.location = self.selectedLocation
                 }
-                println(result!.count)
+//                println(result!.count)
                 CoreDataStackManager.sharedInstance().saveContext()
                 //instantiate the controller and pass the parameter location.
 //                let tableController = self.storyboard!.instantiateViewControllerWithIdentifier("InstaLocationsTableViewController")! as! InstaLocationsTableViewController
@@ -333,7 +333,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         }
         if(newState == .Ending){
             
-            println("change")
+//            println("change")
             
 //            let loc = Location(dictionary: ["latitude":view.annotation.coordinate.latitude,"longitude":view.annotation.coordinate.longitude], context: sharedContext)
             

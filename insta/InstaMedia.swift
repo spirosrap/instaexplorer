@@ -76,18 +76,18 @@ class InstaMedia: NSManagedObject {
             
         }
         
-        if !images.isEmpty {
-            for i in images{
-                if i.link == nil{
-                    println(i.fullname)
-                    println(i.imagePath)
-                    println(i.profileImagePath)
-                    println(i.text)
-                    println(i.thumbnailPath)
-                    println(i.username)
-                }
-            }
-        }
+//        if !images.isEmpty {
+//            for i in images{
+//                if i.link == nil{
+//                    println(i.fullname)
+//                    println(i.imagePath)
+//                    println(i.profileImagePath)
+//                    println(i.text)
+//                    println(i.thumbnailPath)
+//                    println(i.username)
+//                }
+//            }
+//        }
 
         
         return images

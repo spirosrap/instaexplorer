@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 import CoreData
 
-class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetchedResultsControllerDelegate {
+class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetchedResultsControllerDelegate,UICollectionViewDelegateFlowLayout {
     @IBOutlet var collectionView: UICollectionView!
 
     @IBOutlet var indicator: UIActivityIndicatorView! //The activity Indicator for the informationBox(not an alert view)
@@ -38,6 +38,18 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
         
         
         
+        
+    }
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        var kCellsPerRow:CGFloat = 3
+
+        
+        var flowLayout:UICollectionViewFlowLayout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        var availableWidthForCells:CGFloat = CGRectGetWidth(self.collectionView.frame) - flowLayout.sectionInset.left - flowLayout.sectionInset.right - flowLayout.minimumInteritemSpacing * (kCellsPerRow - 1);
+        var cellWidth:CGFloat = availableWidthForCells / kCellsPerRow;
+        flowLayout.itemSize = CGSizeMake(cellWidth, flowLayout.itemSize.height);
+
+        return flowLayout.itemSize
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -130,6 +142,7 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
         if let photo = NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().imagePath(prefetchedPhotos![indexPath.row].thumbnailPath!.lastPathComponent)) as? UIImage {
             cell.indicator.stopAnimating()
             cell.photo.image = photo
+
         }else{
             cell.indicator.startAnimating()
             cell.photo.image = UIImage(named: "PlaceHolder") //Default placeholder
@@ -153,20 +166,23 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
         let photo = fetchedResultsController.objectAtIndexPath(indexPath) as! InstaMedia
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
         let paController = self.storyboard!.instantiateViewControllerWithIdentifier("ImageDetailViewController")! as! ImageDetailViewController
-        println(paController.view)
+        
+        if let t = photo.text{
+            paController.userComment = t
+            println("comment1: \(t)")
+        }
+        var a = paController.view//Important. fatal error if not present. We need to first allocate the view.(Whole view present in memory)
 
         var changedPath = prefetchedPhotos![indexPath.row].imagePath!.stringByReplacingOccurrencesOfString("/", withString: "")
 
         if let p = NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().imagePath(changedPath)) as? UIImage {
 //            cell.indicator.stopAnimating()
             paController.imageView.image = p
-            if let t = photo.text{
-                paController.titleLabel.text = t
-            }
             
         }else{
             cell.indicator.startAnimating()
             cell.photo.image = UIImage(named: "PlaceHolder") //Default placeholder
+
             InstaClient.sharedInstance().downloadImageAndSetCell(prefetchedPhotos![indexPath.row].imagePath!,photo: paController.imageView,completionHandler: { (success, errorString) in
                 if success {
                     dispatch_async(dispatch_get_main_queue(), {
@@ -181,6 +197,7 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
         }
 
         dispatch_async(dispatch_get_main_queue()) {
+
             self.navigationController!.pushViewController(paController, animated: true)
         }
 

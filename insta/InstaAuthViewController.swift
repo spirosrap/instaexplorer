@@ -46,9 +46,9 @@ class InstaAuthViewController: UIViewController, UIWebViewDelegate {
         //                self.completionHandler!(success: true, errorString: nil)
         //            })
         //        }
-           println(webView.request!.URL!.absoluteString!)
+//           println(webView.request!.URL!.absoluteString!)
         if (urlRequest!.URL!.scheme == "instaplaces"){
-            println(webView.request!.URL!.absoluteString!)
+//            println(webView.request!.URL!.absoluteString!)
             self.dismissViewControllerAnimated(true, completion: nil)
         }
 

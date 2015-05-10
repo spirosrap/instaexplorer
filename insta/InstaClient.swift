@@ -276,7 +276,7 @@ class InstaClient : NSObject {
                 let image = UIImage(data: data)
                 var changedPath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "")
                 NSKeyedArchiver.archiveRootObject(image!,toFile: self.imagePath(changedPath))
-                println(self.imagePath(changedPath))
+//                println(self.imagePath(changedPath))
                 
                 if (NSKeyedUnarchiver.unarchiveObjectWithFile(self.imagePath(changedPath)) != nil){
                     println("ok")
