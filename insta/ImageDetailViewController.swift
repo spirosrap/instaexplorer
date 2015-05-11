@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class ImageDetailViewController: UIViewController {
     @IBOutlet var imageView: UIImageView!
@@ -18,14 +19,18 @@ class ImageDetailViewController: UIViewController {
     
     @IBOutlet weak var LocationTextView: UITextView!
     
+    var mediaID:String!
     
     var userComment:String!
     
     var attributedString = NSMutableAttributedString(string: "")
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        println("mediaID \(mediaID)")
         println("comment2: \(userComment)")
+        
+
+
         if let userComment = userComment{
             var paragraph  = NSMutableParagraphStyle()
             paragraph.alignment = .Justified
@@ -53,6 +58,8 @@ class ImageDetailViewController: UIViewController {
         
     }
     
+
+    
     func clickableTouched(recognizer:UITapGestureRecognizer) -> Void{
         var textView = recognizer.view as! UITextView
         var layoutManager = textView.layoutManager
@@ -78,6 +85,25 @@ class ImageDetailViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        fetchedResultsController.performFetch(nil)
+        let sectionInfo = fetchedResultsController.sections![0] as! NSFetchedResultsSectionInfo
+        var instaMedia:InstaMedia
+        
+        if  !sectionInfo.objects.isEmpty{
+            instaMedia = sectionInfo.objects[0] as! InstaMedia
+            println(instaMedia.text)
+            
+            profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 10
+            
+            profileImageView.clipsToBounds = true
+            usernameTextView.text = "@" + instaMedia.username!
+//            LocationTextView.text = instaMedia.instaLocation!.name
+            setImage(instaMedia.imagePath!,imageView:imageView)
+            setImage(instaMedia.profileImagePath!,imageView: profileImageView)
+        
+        }
+
     }
     
     func tags(var searchString:String) -> [String]{
@@ -106,5 +132,50 @@ class ImageDetailViewController: UIViewController {
         return retValue
     }
     
+    // MARK: - Core Data Convenience. This will be useful for fetching. And for adding and saving objects as well.
+    var sharedContext: NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+    }
+
     
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        
+        let fetchRequest = NSFetchRequest(entityName: "InstaMedia")
+        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "username", ascending: true)]
+        fetchRequest.predicate = NSPredicate(format: "mediaID == %@", self.mediaID);
+        
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+            managedObjectContext: self.sharedContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        return fetchedResultsController
+        
+        }()
+    
+    func setImage(let imagePath:String,let imageView:UIImageView){
+        
+        var changedPath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "")
+        if let p = NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().imagePath(changedPath)) as? UIImage {
+            //            cell.indicator.stopAnimating()
+            imageView.image = p
+        }else{
+            //            cell.indicator.startAnimating()
+            imageView.image = UIImage(named: "PlaceHolder") //Default placeholder
+            
+            InstaClient.sharedInstance().downloadImageAndSetCell(imagePath,photo: imageView,completionHandler: { (success, errorString) in
+                if success {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        //                        cell.indicator.stopAnimating()
+                    })
+                }else{
+                    dispatch_async(dispatch_get_main_queue(), {
+                        //                        cell.indicator.stopAnimating()
+                    })
+                }
+            })
+        }
+
+    }
 }

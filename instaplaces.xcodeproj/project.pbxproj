@@ -115,6 +115,19 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
+		D45F786B1B01122C00A534CA /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				D424C9AA1AFB9BEA003E7B8A /* CoreDataStackManager.swift */,
+				D40496B81AF9251A003E8BD2 /* InstaLocation.swift */,
+				D45167AF1AFCAEF700C78A19 /* Location.swift */,
+				D43032E11AFA160D00AEB7DC /* InstaMedia.swift */,
+				D45167B81AFCE64D00C78A19 /* ImageCache.swift */,
+				D424C9AC1AFB9C0E003E7B8A /* Model.xcdatamodeld */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		D471B85E1AF6870900651865 = {
 			isa = PBXGroup;
 			children = (
@@ -135,18 +148,13 @@
 		D471B8691AF6870900651865 /* instaplaces */ = {
 			isa = PBXGroup;
 			children = (
+				D45F786B1B01122C00A534CA /* Model */,
 				D424C9A91AFB937C003E7B8A /* Controllers */,
 				D471B86C1AF6870900651865 /* AppDelegate.swift */,
 				D471B8911AF7539D00651865 /* InstaConstants.swift */,
 				D471B8931AF753C300651865 /* InstaClient.swift */,
 				D471B88F1AF74C6500651865 /* InstaAuthViewController.swift */,
 				D4C8A30C1AF90F17000D9F54 /* InstaConvenience.swift */,
-				D424C9AA1AFB9BEA003E7B8A /* CoreDataStackManager.swift */,
-				D40496B81AF9251A003E8BD2 /* InstaLocation.swift */,
-				D45167AF1AFCAEF700C78A19 /* Location.swift */,
-				D43032E11AFA160D00AEB7DC /* InstaMedia.swift */,
-				D45167B81AFCE64D00C78A19 /* ImageCache.swift */,
-				D424C9AC1AFB9C0E003E7B8A /* Model.xcdatamodeld */,
 				D471B8821AF6870900651865 /* instaTests */,
 				D471B8731AF6870900651865 /* Main.storyboard */,
 				D471B8761AF6870900651865 /* Images.xcassets */,

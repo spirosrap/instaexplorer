@@ -126,11 +126,11 @@ class CoreDataStackManager {
         }
     }
     
-    func deleteObject(var location:InstaLocation){
+    func deleteObject(var location:Location){
         if let context = self.managedObjectContext {
             
             var error: NSError? = nil
-//            context.deleteObject(location)
+            context.deleteObject(location)
             if context.hasChanges && !context.save(&error) {
                 NSLog("Unresolved error \(error), \(error!.userInfo)")
                 abort()

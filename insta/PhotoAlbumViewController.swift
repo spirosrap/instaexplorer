@@ -141,13 +141,16 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
         
         //If the photo image(imagepaths and titles are saved in Core Data) is saved using NSKeyedArchiver / NSKeyedUnarchiver we display it right away else we download it using its imagepath
-        if let photo = NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().imagePath(prefetchedPhotos![indexPath.row].thumbnailPath!.lastPathComponent)) as? UIImage {
+        var changedPath = prefetchedPhotos![indexPath.row].thumbnailPath!.stringByReplacingOccurrencesOfString("/", withString: "")
+
+        if let photo = NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().imagePath(changedPath)) as? UIImage {
             cell.indicator.stopAnimating()
             cell.photo.image = photo
 
         }else{
             cell.indicator.startAnimating()
             cell.photo.image = UIImage(named: "PlaceHolder") //Default placeholder
+            
             InstaClient.sharedInstance().downloadImageAndSetCell(prefetchedPhotos![indexPath.row].thumbnailPath!,photo: cell.photo,completionHandler: { (success, errorString) in
                 if success {                    
                     dispatch_async(dispatch_get_main_queue(), {
@@ -173,33 +176,12 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
             paController.userComment = t
             println("comment1: \(t)")
         }
+        paController.mediaID = photo.mediaID!
         var a = paController.view//Important. fatal error if not present. We need to first allocate the view.(Whole view present in memory)
 
-        var changedPath = prefetchedPhotos![indexPath.row].imagePath!.stringByReplacingOccurrencesOfString("/", withString: "")
 
-        if let p = NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().imagePath(changedPath)) as? UIImage {
-//            cell.indicator.stopAnimating()
-            paController.imageView.image = p
-            
-        }else{
-            cell.indicator.startAnimating()
-            cell.photo.image = UIImage(named: "PlaceHolder") //Default placeholder
-
-            InstaClient.sharedInstance().downloadImageAndSetCell(prefetchedPhotos![indexPath.row].imagePath!,photo: paController.imageView,completionHandler: { (success, errorString) in
-                if success {
-                    dispatch_async(dispatch_get_main_queue(), {
-//                        cell.indicator.stopAnimating()
-                    })
-                }else{
-                    dispatch_async(dispatch_get_main_queue(), {
-//                        cell.indicator.stopAnimating()
-                    })
-                }
-            })
-        }
 
         dispatch_async(dispatch_get_main_queue()) {
-
             self.navigationController!.pushViewController(paController, animated: true)
         }
 

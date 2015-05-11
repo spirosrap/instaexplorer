@@ -35,20 +35,20 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         self.view.addGestureRecognizer(longPressRecognizer)
         
 //        // Step 2: invoke fetchedResultsController.performFetch(nil) here
-//        fetchedResultsController.performFetch(nil)
-//        let sectionInfo = self.fetchedResultsController.sections![0] as! NSFetchedResultsSectionInfo
-//        
+        fetchedResultsController.performFetch(nil)
+        let sectionInfo = self.fetchedResultsController.sections![0] as! NSFetchedResultsSectionInfo
+//
 //        //Recreate the saved(from Core Data) annotations
-//        if  !sectionInfo.objects.isEmpty{
-////            self.locations = sectionInfo.objects as! [InstaLocation]
-//            for l in locations{
-//                let annotation = MKPointAnnotation()
-//                var tapPoint = CLLocationCoordinate2D(latitude: Double(l.latitude), longitude: Double(l.longitude)) //We need to cast to double because the parameters were NSNumber
-//                annotation.coordinate = tapPoint
-//                annotationsLocations[annotation.hash] = l //Setting the dictionary that will enable us to segway to photo album
-//                self.mapView.addAnnotation(annotation)
-//            }
-//        }
+        if  !sectionInfo.objects.isEmpty{
+            self.locations = sectionInfo.objects as! [Location]
+            for l in locations{
+                let annotation = MKPointAnnotation()
+                var tapPoint = CLLocationCoordinate2D(latitude: Double(l.latitude), longitude: Double(l.longitude)) //We need to cast to double because the parameters were NSNumber
+                annotation.coordinate = tapPoint
+                annotationsLocations[annotation.hash] = l //Setting the dictionary that will enable us to segway to photo album
+                self.mapView.addAnnotation(annotation)
+            }
+        }
         searchBar.delegate = self
         tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
         tapRecognizer?.numberOfTapsRequired = 1
@@ -81,13 +81,13 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         self.tabBarController!.tabBar.hidden = false;
 
 
-//        var frcf = fetchedResultsController
-//        frcf.performFetch(nil)
-//        let sectionInfo = frcf.sections![0] as! NSFetchedResultsSectionInfo
-//        
-//        if  !sectionInfo.objects.isEmpty{
-////            self.locations = sectionInfo.objects as! [InstaLocation]
-//        }
+        var frcf = fetchedResultsController
+        frcf.performFetch(nil)
+        let sectionInfo = frcf.sections![0] as! NSFetchedResultsSectionInfo
+        
+        if  !sectionInfo.objects.isEmpty{
+            self.locations = sectionInfo.objects as! [Location]
+        }
         
 //        imageInfoView?.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.70)
 //        imageInfoView.hidden = true
@@ -100,9 +100,9 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     //variable to fetch the ,existing saved in core data,locations
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
-        let fetchRequest = NSFetchRequest(entityName: "InstaLocation")
+        let fetchRequest = NSFetchRequest(entityName: "Location")
         
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "latitude", ascending: true)]
         
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
             managedObjectContext: self.sharedContext,
@@ -217,6 +217,9 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                 }
                 self.annotationsLocations[self.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
 
+                self.mapView.deselectAnnotation(self.annotation, animated: false)
+                
+                
             })
             
 //            applicationDelegate.stats.locationsAdded += 1 //Location Added. For Stats.
@@ -264,47 +267,47 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     
     //Select Annotation
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
-//        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("CollectionView")! as! PhotoAlbumViewController
-//        if let l = annotationsLocations[view.annotation.hash]{//Determine the location instance from the hash of selected annotation
-//            detailController.location = l
-//            selectedLocation = l //Set The selected location as a global variable
-//            
-//            if let p = l.photos{
-//                if p.isEmpty{ //If all the photos of the album were deleted we fetch another batch of Photos.
+        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("PhotoAlbumViewController")! as! PhotoAlbumViewController
+        if let l = annotationsLocations[view.annotation.hash]{//Determine the location instance from the hash of selected annotation
+            detailController.location = l
+            selectedLocation = l //Set The selected location as a global variable
+            
+            if let p = l.instaMedia{
+                if p.isEmpty{ //If all the photos of the album were deleted we fetch another batch of Photos.
 //                    informationBox("Connecting to Flickr",animate:true)
-//                    Flickr.sharedInstance().populateLocationPhotos(selectedLocation) { (success,photosArray, errorString) in
-//                        if success {
-//                            dispatch_async(dispatch_get_main_queue()) {
+                    InstaClient.sharedInstance().getMedia(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 100) { (result, error) -> Void in
+                        
+                        if error == nil {
+                            dispatch_async(dispatch_get_main_queue()) {
 //                                self.informationBox(nil,animate:false)
-//                                //instantiate the controller and pass the parameter location.
-//                                let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("CollectionView")! as! PhotoAlbumViewController
-//                                detailController.location = l
-//                                
-//                                if let pd = photosArray{//We create the Photo instances from the photosArray and save them.The actual files aren't downloaded yet.
-//                                    for p in pd{
-//                                        let photo = Photo(dictionary: ["title":p[0],"imagePath":p[1]], context: self.sharedContext)
-//                                        photo.location = self.selectedLocation
-//                                        CoreDataStackManager.sharedInstance().saveContext()
-//                                    }
-//                                }
-//                                self.navigationController!.pushViewController(detailController, animated: true)
-//                            }
-//                        } else {
-//                            dispatch_async(dispatch_get_main_queue(), {
+                                //instantiate the controller and pass the parameter location.
+                                detailController.location = l
+                                
+                                for il in result!{
+                                    il.location = self.selectedLocation
+                                }
+                                
+                                CoreDataStackManager.sharedInstance().saveContext()
+                                self.tabBarController!.tabBar.hidden = true;
+                                self.navigationController!.pushViewController(detailController, animated: true)
+                            }
+                        } else {
+                            dispatch_async(dispatch_get_main_queue(), {
 //                                self.informationBox(nil,animate:false)
-//                                self.displayMessageBox("No available Photos Found")//Its appropriate at this point to display an Alert
-//                                self.mapView.removeAnnotation(view.annotation)
-//                                CoreDataStackManager.sharedInstance().deleteObject(self.selectedLocation)
-//                                println(errorString!)
-//                            })
-//                        }
-//                    }
-//                }else{
-//                    self.navigationController!.pushViewController(detailController, animated: true)
-//                }
-//            }
-//        }
-//        self.mapView.deselectAnnotation(view.annotation, animated: false)
+                                self.displayMessageBox("No available Photos Found")//Its appropriate at this point to display an Alert
+                                self.mapView.removeAnnotation(view.annotation)
+                                CoreDataStackManager.sharedInstance().deleteObject(self.selectedLocation)
+                                println(error)
+                            })
+                        }
+                    }
+                }else{
+                    self.tabBarController!.tabBar.hidden = true;
+                    self.navigationController!.pushViewController(detailController, animated: true)
+                }
+            }
+        }
+        self.mapView.deselectAnnotation(view.annotation, animated: false)
     }
     
     
@@ -436,6 +439,10 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
 //            indicator.stopAnimating() //It doesn't hurt to stop animation in case it didn't start before
 //        }
 //    }
+    
+    //MARK: Core Data related
+    //variable to fetch the ,existing saved in core data,locations
+    
     
     
 }
