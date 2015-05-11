@@ -12,9 +12,11 @@
         <attribute name="fullname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="imagePath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mediaID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="profileImagePath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="text" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="thumbnailPath" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="instaLocation" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="InstaLocation" inverseName="instaMedia" inverseEntity="InstaLocation" syncable="YES"/>
         <relationship name="location" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="instaMedia" inverseEntity="Location" syncable="YES"/>
@@ -27,7 +29,7 @@
     </entity>
     <elements>
         <element name="InstaLocation" positionX="-54" positionY="-9" width="128" height="135"/>
-        <element name="InstaMedia" positionX="-45" positionY="54" width="128" height="180"/>
+        <element name="InstaMedia" positionX="-45" positionY="54" width="128" height="210"/>
         <element name="Location" positionX="-63" positionY="-18" width="128" height="105"/>
     </elements>
 </model>

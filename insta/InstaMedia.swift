@@ -14,15 +14,21 @@ import UIKit
 
 class InstaMedia: NSManagedObject {
     @NSManaged var text:String?
-    @NSManaged var username:String?
     @NSManaged var fullname:String?
-
     @NSManaged var thumbnailPath:String?
     @NSManaged var imagePath:String?
+    @NSManaged var mediaID:String?
+    
+    @NSManaged var username:String?
     @NSManaged var profileImagePath:String?
+    @NSManaged var userID:String?
+    
+
+    
     @NSManaged var link:String?
     @NSManaged var instaLocation: InstaLocation?
     @NSManaged var location: Location?
+    
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)
@@ -36,7 +42,8 @@ class InstaMedia: NSManagedObject {
         text = dictionary["text"] as? String
         username = dictionary["username"] as? String
         fullname = dictionary["fullname"] as? String
-        
+        userID = dictionary["userID"] as? String
+        mediaID = dictionary["mediaID"] as? String
         thumbnailPath = dictionary["thumbnailPath"] as? String
         imagePath = dictionary["imagePath"] as? String
         profileImagePath = dictionary["profileImagePath"] as? String
@@ -53,12 +60,17 @@ class InstaMedia: NSManagedObject {
             
             if ( result["type"]! as! String == "image"){
                 
-                dictionary["username"] = result["caption"]!.valueForKey("from")!.valueForKey("username")!
+                dictionary["username"] = result["user"]!.valueForKey("username")!
                 
-                dictionary["profileImagePath"] = result["caption"]!.valueForKey("from")!.valueForKey("profile_picture")!
+                dictionary["profileImagePath"] = result["user"]!.valueForKey("profile_picture")!
                 dictionary["thumbnailPath"] = result["images"]!.valueForKey("thumbnail")!.valueForKey("url")!
                 dictionary["imagePath"] = result["images"]!.valueForKey("standard_resolution")!.valueForKey("url")!
                 dictionary["link"] = result["link"]!
+                
+                dictionary["userID"] = result["user"]!.valueForKey("id")!
+                println(dictionary["userID"])
+                dictionary["mediaID"] = result["id"]!
+                println(dictionary["mediaID"])
                 
                 if let text: AnyObject = result["caption"]!.valueForKey("text"){
                     dictionary["text"] = text
