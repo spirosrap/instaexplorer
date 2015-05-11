@@ -28,8 +28,6 @@
 		D471B8941AF753C300651865 /* InstaClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471B8931AF753C300651865 /* InstaClient.swift */; };
 		D4B4BB5E1AFE396700B281B2 /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B4BB5D1AFE396700B281B2 /* ImageDetailViewController.swift */; };
 		D4B4BB601AFE3BC000B281B2 /* FavoritesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B4BB5F1AFE3BC000B281B2 /* FavoritesTableViewController.swift */; };
-		D4C8A3051AF7CC28000D9F54 /* OAuthSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D4C8A3041AF7CC12000D9F54 /* OAuthSwift.framework */; };
-		D4C8A3061AF7CC28000D9F54 /* OAuthSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D4C8A3041AF7CC12000D9F54 /* OAuthSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D4C8A30D1AF90F17000D9F54 /* InstaConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8A30C1AF90F17000D9F54 /* InstaConvenience.swift */; };
 /* End PBXBuildFile section */
 
@@ -41,27 +39,6 @@
 			remoteGlobalIDString = D471B8661AF6870900651865;
 			remoteInfo = insta;
 		};
-		D4C8A3011AF7CC12000D9F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D4C8A2FC1AF7CC12000D9F54 /* OAuthSwift.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F451E3C5195B8CD80051434C;
-			remoteInfo = OAuthSwiftDemo;
-		};
-		D4C8A3031AF7CC12000D9F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D4C8A2FC1AF7CC12000D9F54 /* OAuthSwift.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = F435027A1A6791B200038A29;
-			remoteInfo = OAuthSwift;
-		};
-		D4C8A3071AF7CC28000D9F54 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = D4C8A2FC1AF7CC12000D9F54 /* OAuthSwift.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = F43502791A6791B200038A29;
-			remoteInfo = OAuthSwift;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -71,7 +48,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D4C8A3061AF7CC28000D9F54 /* OAuthSwift.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -104,7 +80,6 @@
 		D471B8931AF753C300651865 /* InstaClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaClient.swift; sourceTree = "<group>"; };
 		D4B4BB5D1AFE396700B281B2 /* ImageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		D4B4BB5F1AFE3BC000B281B2 /* FavoritesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesTableViewController.swift; sourceTree = "<group>"; };
-		D4C8A2FC1AF7CC12000D9F54 /* OAuthSwift.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = OAuthSwift.xcodeproj; path = "OAuthSwift-master/OAuthSwift.xcodeproj"; sourceTree = "<group>"; };
 		D4C8A30C1AF90F17000D9F54 /* InstaConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaConvenience.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -113,7 +88,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D4C8A3051AF7CC28000D9F54 /* OAuthSwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,7 +118,6 @@
 		D471B85E1AF6870900651865 = {
 			isa = PBXGroup;
 			children = (
-				D4C8A2FC1AF7CC12000D9F54 /* OAuthSwift.xcodeproj */,
 				D471B8691AF6870900651865 /* instaplaces */,
 				D471B8681AF6870900651865 /* Products */,
 			);
@@ -209,15 +182,6 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		D4C8A2FD1AF7CC12000D9F54 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				D4C8A3021AF7CC12000D9F54 /* OAuthSwiftDemo.app */,
-				D4C8A3041AF7CC12000D9F54 /* OAuthSwift.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -233,7 +197,6 @@
 			buildRules = (
 			);
 			dependencies = (
-				D4C8A3081AF7CC28000D9F54 /* PBXTargetDependency */,
 			);
 			name = instaplaces;
 			productName = insta;
@@ -288,12 +251,6 @@
 			mainGroup = D471B85E1AF6870900651865;
 			productRefGroup = D471B8681AF6870900651865 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = D4C8A2FD1AF7CC12000D9F54 /* Products */;
-					ProjectRef = D4C8A2FC1AF7CC12000D9F54 /* OAuthSwift.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				D471B8661AF6870900651865 /* instaplaces */,
@@ -301,23 +258,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		D4C8A3021AF7CC12000D9F54 /* OAuthSwiftDemo.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = OAuthSwiftDemo.app;
-			remoteRef = D4C8A3011AF7CC12000D9F54 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		D4C8A3041AF7CC12000D9F54 /* OAuthSwift.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = OAuthSwift.framework;
-			remoteRef = D4C8A3031AF7CC12000D9F54 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		D471B8651AF6870900651865 /* Resources */ = {
@@ -380,11 +320,6 @@
 			isa = PBXTargetDependency;
 			target = D471B8661AF6870900651865 /* instaplaces */;
 			targetProxy = D471B8801AF6870900651865 /* PBXContainerItemProxy */;
-		};
-		D4C8A3081AF7CC28000D9F54 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = OAuthSwift;
-			targetProxy = D4C8A3071AF7CC28000D9F54 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
