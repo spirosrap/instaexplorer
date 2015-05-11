@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import CoreData
+import UIKit
 
 class InstaClient : NSObject {
     
@@ -19,6 +21,7 @@ class InstaClient : NSObject {
     /* Authentication state */
     var sessionID : String? = nil
     var userID : Int? = nil
+    var accessToken: String? = nil
     
     override init() {
         session = NSURLSession.sharedSession()
@@ -27,11 +30,16 @@ class InstaClient : NSObject {
     
     // MARK: - GET
     
+    var sharedContext: NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().managedObjectContext!
+    }
+
+    
     func taskForGETMethod(method: String, parameters: [String : AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
         
         /* 1. Set the parameters */
         var mutableParameters = parameters
-        mutableParameters[ParameterKeys.ApiKey] = Constants.ApiKey
+        mutableParameters["access_token"] = self.accessToken!
         
         /* 2/3. Build the URL and configure the request */
         let urlString = Constants.BaseURLSecure + method + InstaClient.escapedParameters(mutableParameters)
@@ -247,4 +255,46 @@ class InstaClient : NSObject {
         
         return Singleton.sharedInstance
     }
+    
+    //MARK:Saving Related
+    //It returns the actual path in the iOS readable format
+    func imagePath(var selectedFilename:String) ->String{
+        let manager = NSFileManager.defaultManager()
+        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
+        return url.URLByAppendingPathComponent(selectedFilename).path!
+    }
+
+    //It downloads the images from the already saved image paths to be in turn saved too in the CoreData
+    func downloadImageAndSetCell(let imagePath:String,let photo:UIImageView,completionHandler: (success: Bool, errorString: String?) -> Void){
+        let imgURL = NSURL(string: imagePath)
+        let request: NSURLRequest = NSURLRequest(URL: imgURL!)
+        let mainQueue = NSOperationQueue.mainQueue()
+
+        NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
+            if error == nil {
+                // Convert the downloaded data in to a UIImage object
+                let image = UIImage(data: data)
+                var changedPath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "")
+                NSKeyedArchiver.archiveRootObject(image!,toFile: self.imagePath(changedPath))
+//                println(self.imagePath(changedPath))
+                
+                if (NSKeyedUnarchiver.unarchiveObjectWithFile(self.imagePath(changedPath)) != nil){
+                    println("ok")
+                }
+                
+                photo.image = image
+                completionHandler(success: true, errorString: nil)
+            }
+            else {
+                completionHandler(success: false, errorString: "Could not download image \(imagePath)")
+            }
+        })
+    }
+
+    // MARK: - Shared Image Cache
+    
+    struct Caches {
+        static let imageCache = ImageCache()
+    }
+
 }
