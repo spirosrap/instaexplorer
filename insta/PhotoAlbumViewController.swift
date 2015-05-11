@@ -40,6 +40,7 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
         
         
     }
+    
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         var kCellsPerRow:CGFloat = 3
 
@@ -47,7 +48,8 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
         var flowLayout:UICollectionViewFlowLayout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
         var availableWidthForCells:CGFloat = CGRectGetWidth(self.collectionView.frame) - flowLayout.sectionInset.left - flowLayout.sectionInset.right - flowLayout.minimumInteritemSpacing * (kCellsPerRow - 1);
         var cellWidth:CGFloat = availableWidthForCells / kCellsPerRow;
-        flowLayout.itemSize = CGSizeMake(cellWidth, flowLayout.itemSize.height);
+        flowLayout.itemSize = CGSizeMake(flowLayout.itemSize.height, cellWidth);
+        flowLayout.itemSize.width = flowLayout.itemSize.height
 
         return flowLayout.itemSize
     }

@@ -9,23 +9,32 @@
 import UIKit
 
 class ImageDetailViewController: UIViewController {
-    @IBOutlet var titleLabel: UILabel!
     @IBOutlet var imageView: UIImageView!
     @IBOutlet var clickableText: UITextView!
+    
+    @IBOutlet weak var profileImageView: UIImageView!
+    
+    @IBOutlet weak var usernameTextView: UITextView!
+    
+    @IBOutlet weak var LocationTextView: UITextView!
+    
+    
     var userComment:String!
     
     var attributedString = NSMutableAttributedString(string: "")
     override func viewDidLoad() {
         super.viewDidLoad()
+
         println("comment2: \(userComment)")
         if let userComment = userComment{
             var paragraph  = NSMutableParagraphStyle()
             paragraph.alignment = .Justified
             paragraph.lineSpacing = 3
-            attributedString  = NSMutableAttributedString(string: userComment, attributes: [NSForegroundColorAttributeName:UIColor.blackColor()])
+            attributedString  = NSMutableAttributedString(string: userComment, attributes: [NSForegroundColorAttributeName:UIColor.blackColor(),                NSFontAttributeName:UIFont(name: "Helvetica Neue", size: 13)!])
+            
 
             for t in tags(userComment){
-                var tagattributedString:NSAttributedString = NSAttributedString(string: t, attributes: [t:true,NSForegroundColorAttributeName:UIColor.blueColor()])
+                var tagattributedString:NSAttributedString = NSAttributedString(string: t, attributes: [t:true,NSForegroundColorAttributeName:UIColor.blueColor(),NSFontAttributeName:UIFont(name: "Helvetica Neue", size: 13)!])
                 var range = NSString(string: attributedString.string).rangeOfString(t)
                 attributedString.replaceCharactersInRange(range, withAttributedString: tagattributedString)
             }
@@ -73,6 +82,8 @@ class ImageDetailViewController: UIViewController {
     
     func tags(var searchString:String) -> [String]{
         var retValue = [String]()
+        var searchforusernames = searchString
+
 //        http://stackoverflow.com/questions/7534665/the-best-regex-to-parse-twitter-hashtags-and-users
         while(true){ // for username:  "((?:^|\\s)(?:@){1}[0-9a-zA-Z_]{1,15})"
             if let tag = searchString.rangeOfString("((?:#){1}[\\w\\d]{1,140})",options: .RegularExpressionSearch){
@@ -82,6 +93,16 @@ class ImageDetailViewController: UIViewController {
                 break
             }
         }
+        while(true){ // for username:  "((?:^|\\s)(?:@){1}[0-9a-zA-Z_]{1,15})"
+            if let tag = searchforusernames.rangeOfString("((?:^|\\s)(?:@){1}[0-9a-zA-Z_]{1,50})",options: .RegularExpressionSearch){
+                retValue.append(searchforusernames.substringWithRange(tag))
+                searchforusernames = searchforusernames.substringFromIndex(tag.endIndex)
+            }else{
+                break
+            }
+        }
+
+        
         return retValue
     }
     
