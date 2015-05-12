@@ -26,8 +26,6 @@ class ImageDetailViewController: UIViewController {
     var attributedString = NSMutableAttributedString(string: "")
     override func viewDidLoad() {
         super.viewDidLoad()
-        println("mediaID \(mediaID)")
-        println("comment2: \(userComment)")
         
 
 
@@ -54,7 +52,6 @@ class ImageDetailViewController: UIViewController {
     }
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        println("Clickable : \(userComment)")
         
     }
     
@@ -98,7 +95,11 @@ class ImageDetailViewController: UIViewController {
             
             profileImageView.clipsToBounds = true
             usernameTextView.text = "@" + instaMedia.username!
-//            LocationTextView.text = instaMedia.instaLocation!.name
+
+            
+            if let locationName = instaMedia.instaLocation?.name {
+                LocationTextView.text = locationName
+            }
             setImage(instaMedia.imagePath!,imageView:imageView)
             setImage(instaMedia.profileImagePath!,imageView: profileImageView)
         

@@ -48,6 +48,7 @@ class InstaMedia: NSManagedObject {
         imagePath = dictionary["imagePath"] as? String
         profileImagePath = dictionary["profileImagePath"] as? String
         link = dictionary["link"] as? String
+        instaLocation = dictionary["instaLocation"] as? InstaLocation
     }
     
     /* Helper: Given an array of dictionaries, convert them to an array of TMDBMovie objects */
@@ -78,6 +79,10 @@ class InstaMedia: NSManagedObject {
                 
                 if let fullname: AnyObject = result["caption"]!.valueForKey("from")!.valueForKey("full_name"){
                     dictionary["fullname"] = fullname
+                }
+                
+                if let lat: AnyObject =  result["location"]!.valueForKey("latitude"),let lng: AnyObject = result["location"]!.valueForKey("longitude"),let name: AnyObject = result["location"]!.valueForKey("name"),let id: AnyObject = result["location"]!.valueForKey("id"){
+                    dictionary["instaLocation"] = InstaLocation(dictionary: ["name":name as! String,"id":"\(id as! Double)","longitude":lng as! Double,"latitude":lat as! Double], context: context)
                 }
                 
             }

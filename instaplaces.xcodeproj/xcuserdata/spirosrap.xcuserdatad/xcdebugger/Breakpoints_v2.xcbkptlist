@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "insta/ImageDetailViewController.swift"
-            timestampString = "453062335.469898"
+            timestampString = "453105302.559675"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
+            startingLineNumber = "112"
+            endingLineNumber = "112"
             landmarkName = "tags(_:)"
             landmarkType = "5">
          </BreakpointContent>
