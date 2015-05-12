@@ -20,30 +20,40 @@ class ImageDetailViewController: UIViewController {
     var mediaID:String!
     var userComment:String!
     var attributedString = NSMutableAttributedString(string: "")
-    
+    var ct:UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         if let userComment = userComment{
             
-            attributedString  = NSMutableAttributedString(string: userComment, attributes: [NSForegroundColorAttributeName:UIColor.blackColor(), NSFontAttributeName:UIFont(name: "HelveticaNeue", size: 14)!])
+            attributedString  = atex(userComment,fontname: "HelveticaNeue",textColor:UIColor.blackColor(),linkColor: UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00),size: 14)
             
-            for t in tags(userComment){
-                var tagattributedString:NSAttributedString = NSAttributedString(string: t, attributes: [t:true,NSForegroundColorAttributeName:UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00),NSFontAttributeName:UIFont(name: "HelveticaNeue", size: 14)!])
-                var range = NSString(string: attributedString.string).rangeOfString(t)
-                attributedString.replaceCharactersInRange(range, withAttributedString: tagattributedString)
-            }
-            
+
             //Bug that prevents to change the font (but not color) of attributed text in xcode 6: http://openradar.appspot.com/radar?id=5117089870249984 forces me to create a text view programmatically on top of the storyboard one.
 
-            var ct = UITextView(frame: self.view.frame)
+            ct = UITextView(frame: self.view.frame)
             ct.attributedText = attributedString
             self.clickableText.addSubview(ct)
             
             var  tap = UITapGestureRecognizer(target: self, action: "clickableTouched:")
-            self.clickableText.addGestureRecognizer(tap)
+            ct.addGestureRecognizer(tap)
+            ct.editable = false
+            ct.selectable = false
         }
 
+    }
+    
+    func atex(let string:String,let fontname:String,let textColor:UIColor,let linkColor:UIColor,let size:CGFloat) -> NSMutableAttributedString {
+        var attributedString  = NSMutableAttributedString(string: string, attributes: [NSForegroundColorAttributeName:textColor, NSFontAttributeName:UIFont(name: fontname, size: size)!])
+        
+        for t in tags(string){
+            var tagattributedString:NSAttributedString = NSAttributedString(string: t, attributes: [t:true,NSForegroundColorAttributeName:linkColor,NSFontAttributeName:UIFont(name: "HelveticaNeue", size: 14)!])
+            var range = NSString(string: attributedString.string).rangeOfString(t)
+            attributedString.replaceCharactersInRange(range, withAttributedString: tagattributedString)
+        }
+        
+        return attributedString
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -54,6 +64,22 @@ class ImageDetailViewController: UIViewController {
 
     
     func clickableTouched(recognizer:UITapGestureRecognizer) -> Void{
+        println(recognizer.state.rawValue)
+        
+//        if(recognizer.state == .Changed){
+//            attributedString  = atex(userComment,fontname: "HelveticaNeue",textColor:UIColor.blackColor(),linkColor: UIColor(red: 0.051, green: 0.494, blue: 0.839, alpha: 1.00),size: 14)
+//            ct.removeFromSuperview()
+//            ct = UITextView(frame: self.view.frame)
+//            ct.attributedText = attributedString
+//            self.clickableText.addSubview(ct)
+//        }else if (recognizer.state == .Ended){
+//            attributedString  = atex(userComment,fontname: "HelveticaNeue",textColor:UIColor.blackColor(),linkColor: UIColor(red: 0.051, green: 0.494, blue: 0.839, alpha: 1.00),size: 14)
+//            ct.removeFromSuperview()
+//            ct = UITextView(frame: self.view.frame)
+//            ct.attributedText = attributedString
+//            self.clickableText.addSubview(ct)
+//        }
+
         var textView = recognizer.view as! UITextView
         var layoutManager = textView.layoutManager
         var location = recognizer.locationInView(textView)
@@ -70,10 +96,12 @@ class ImageDetailViewController: UIViewController {
 
                 var value:AnyObject? = textView.textStorage.attribute(t, atIndex: characterIndex, effectiveRange: &range)
                 if(value != nil){
+
                     println("clicked: \(t)")
                 }
             }
         }
+        
     }
     
     override func viewWillAppear(animated: Bool) {

@@ -706,11 +706,6 @@
                                         <exclude reference="mkN-v7-hRF"/>
                                     </mask>
                                     <mask key="constraints">
-                                        <exclude reference="6iG-Zi-yGn"/>
-                                        <exclude reference="Cgr-0E-hhm"/>
-                                        <exclude reference="ZSI-Wg-Bc8"/>
-                                        <exclude reference="dpi-70-IQX"/>
-                                        <exclude reference="ezT-JP-XIH"/>
                                         <exclude reference="1wI-DZ-cWX"/>
                                         <exclude reference="5Q1-ba-yjt"/>
                                         <exclude reference="4OT-hQ-ZcN"/>
@@ -720,6 +715,11 @@
                                         <exclude reference="UeH-vL-eF3"/>
                                         <exclude reference="ukC-NR-q8W"/>
                                         <exclude reference="ytH-iQ-Dpa"/>
+                                        <exclude reference="6iG-Zi-yGn"/>
+                                        <exclude reference="Cgr-0E-hhm"/>
+                                        <exclude reference="ZSI-Wg-Bc8"/>
+                                        <exclude reference="dpi-70-IQX"/>
+                                        <exclude reference="ezT-JP-XIH"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
@@ -729,11 +729,6 @@
                                         <include reference="mkN-v7-hRF"/>
                                     </mask>
                                     <mask key="constraints">
-                                        <include reference="6iG-Zi-yGn"/>
-                                        <include reference="Cgr-0E-hhm"/>
-                                        <include reference="ZSI-Wg-Bc8"/>
-                                        <include reference="dpi-70-IQX"/>
-                                        <include reference="ezT-JP-XIH"/>
                                         <include reference="1wI-DZ-cWX"/>
                                         <include reference="5Q1-ba-yjt"/>
                                         <include reference="4OT-hQ-ZcN"/>
@@ -743,6 +738,11 @@
                                         <include reference="UeH-vL-eF3"/>
                                         <include reference="ukC-NR-q8W"/>
                                         <include reference="ytH-iQ-Dpa"/>
+                                        <include reference="6iG-Zi-yGn"/>
+                                        <include reference="Cgr-0E-hhm"/>
+                                        <include reference="ZSI-Wg-Bc8"/>
+                                        <include reference="dpi-70-IQX"/>
+                                        <include reference="ezT-JP-XIH"/>
                                     </mask>
                                 </variation>
                             </scrollView>
