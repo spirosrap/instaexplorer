@@ -18,6 +18,7 @@ class ImageDetailViewController: UIViewController {
     @IBOutlet weak var LocationTextView: UITextView!
     
     var mediaID:String!
+    var instaMedia:InstaMedia!
     var userComment:String!
     var attributedString = NSMutableAttributedString(string: "")
     var ct:UITextView!
@@ -27,9 +28,8 @@ class ImageDetailViewController: UIViewController {
         
         if let userComment = userComment{
             
-            attributedString  = atex(userComment,fontname: "HelveticaNeue",textColor:UIColor.blackColor(),linkColor: UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00),size: 14)
+            attributedString  = atex( "@" + instaMedia.username! + " " + userComment,fontname: "HelveticaNeue",textColor:UIColor.blackColor(),linkColor: UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00),size: 14)
             
-
             //Bug that prevents to change the font (but not color) of attributed text in xcode 6: http://openradar.appspot.com/radar?id=5117089870249984 forces me to create a text view programmatically on top of the storyboard one.
 
             ct = UITextView(frame: self.view.frame)
@@ -90,7 +90,7 @@ class ImageDetailViewController: UIViewController {
         
 
         if (characterIndex < textView.textStorage.length){
-            for t in tags(userComment){
+            for t in tags(attributedString.string){
                 
                 var range = NSString(string: attributedString.string).rangeOfString(t)
 
@@ -175,7 +175,7 @@ class ImageDetailViewController: UIViewController {
             }
         }
 
-        
+        println(retValue)
         return retValue
     }
     

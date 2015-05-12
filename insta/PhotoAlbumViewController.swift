@@ -177,7 +177,8 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
             println("comment1: \(t)")
         }
         paController.mediaID = photo.mediaID!
-        var a = paController.view//Important. fatal error if not present. We need to first allocate the view.(Whole view present in memory)
+        paController.instaMedia = photo
+        var a = paController.view//Important. fatal error if not present. We need to first allocate the view.(Whole view be present in memory)
 
 
 
