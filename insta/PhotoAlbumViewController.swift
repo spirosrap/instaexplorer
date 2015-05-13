@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 import CoreData
 
-class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetchedResultsControllerDelegate,UICollectionViewDelegateFlowLayout {
+class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITableViewDelegate,NSFetchedResultsControllerDelegate,UICollectionViewDelegateFlowLayout {
     @IBOutlet var collectionView: UICollectionView!
 
     @IBOutlet var indicator: UIActivityIndicatorView! //The activity Indicator for the informationBox(not an alert view)
@@ -17,6 +17,9 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
     @IBOutlet var imageInfoView: UIImageView!
     @IBOutlet var infoLabel: UILabel!
     
+    @IBOutlet weak var selectViewSegmentedControl: UISegmentedControl!
+    
+    @IBOutlet weak var tableView: UITableView!
     var prefetchedPhotos: [InstaMedia]!//We put the Photo Objects in a variable to use in NSFetchedResultsControllerDelegate methods
     var newCollectionButton:UIBarButtonItem!
     var location:Location!
@@ -36,9 +39,9 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
         imageInfoView.hidden = true
         infoLabel.hidden = true
         
-        
-        
-        
+        tableView.hidden = true
+        tableView.delegate = self
+        tableView.registerClass(MediaTableViewCell.self, forCellReuseIdentifier: "tablecell")
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -273,6 +276,33 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
 //        return true
 //    }
     
+    
+     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        // #warning Potentially incomplete method implementation.
+        // Return the number of sections.
+        return 1
+    }
+    
+     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        // #warning Incomplete method implementation.
+        // Return the number of rows in the section.
+        
+        
+        return 2
+    }
+    
+    
+     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("tablecell", forIndexPath: indexPath) as! MediaTableViewCell
+        println("CELL \(cell.testButton)")
+
+        var button = cell.viewWithTag(100) as! UIButton
+
+        cell.testButton = button
+        return cell
+    }
+
+    
     //MARK: Other: alert view and a custom made information Box
     
     //A simple Alert view with an OK Button
@@ -299,6 +329,19 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,NSFetc
         }
     }
     
+    @IBAction func switchViews(sender: UISegmentedControl) {
+        switch (sender.selectedSegmentIndex) {
+        case 0:
+            collectionView.hidden = false
+            tableView.hidden = true
+        case 1:
+            collectionView.hidden = true
+            tableView.hidden = false
+        default:
+            break;
+        }
+
+    }
 
 }
 

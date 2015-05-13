@@ -11,12 +11,15 @@
 		D424C9A71AFB7383003E7B8A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D424C9A61AFB7383003E7B8A /* MapViewController.swift */; };
 		D424C9AB1AFB9BEA003E7B8A /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D424C9AA1AFB9BEA003E7B8A /* CoreDataStackManager.swift */; };
 		D424C9AE1AFB9C0E003E7B8A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D424C9AC1AFB9C0E003E7B8A /* Model.xcdatamodeld */; };
+		D42883991B034EE4003E052A /* MediaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42883981B034EE4003E052A /* MediaTableViewCell.swift */; };
 		D43032E21AFA160D00AEB7DC /* InstaMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43032E11AFA160D00AEB7DC /* InstaMedia.swift */; };
 		D45167B01AFCAEF700C78A19 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45167AF1AFCAEF700C78A19 /* Location.swift */; };
 		D45167B31AFCBD8E00C78A19 /* InstaLocationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45167B21AFCBD8E00C78A19 /* InstaLocationsTableViewController.swift */; };
 		D45167B51AFCDCC500C78A19 /* PhotoAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45167B41AFCDCC500C78A19 /* PhotoAlbumViewController.swift */; };
 		D45167B71AFCDE9200C78A19 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45167B61AFCDE9200C78A19 /* CollectionViewCell.swift */; };
 		D45167B91AFCE64D00C78A19 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45167B81AFCE64D00C78A19 /* ImageCache.swift */; };
+		D456D5141B035E9700DE1C50 /* MediaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D456D5131B035E9700DE1C50 /* MediaView.swift */; };
+		D456D5161B03693700DE1C50 /* MediaView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D456D5151B03693700DE1C50 /* MediaView.xib */; };
 		D471B86D1AF6870900651865 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471B86C1AF6870900651865 /* AppDelegate.swift */; };
 		D471B8721AF6870900651865 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471B8711AF6870900651865 /* ViewController.swift */; };
 		D471B8751AF6870900651865 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D471B8731AF6870900651865 /* Main.storyboard */; };
@@ -59,12 +62,15 @@
 		D424C9A61AFB7383003E7B8A /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D424C9AA1AFB9BEA003E7B8A /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 		D424C9AD1AFB9C0E003E7B8A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		D42883981B034EE4003E052A /* MediaTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaTableViewCell.swift; sourceTree = "<group>"; };
 		D43032E11AFA160D00AEB7DC /* InstaMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaMedia.swift; sourceTree = "<group>"; };
 		D45167AF1AFCAEF700C78A19 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		D45167B21AFCBD8E00C78A19 /* InstaLocationsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaLocationsTableViewController.swift; sourceTree = "<group>"; };
 		D45167B41AFCDCC500C78A19 /* PhotoAlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbumViewController.swift; sourceTree = "<group>"; };
 		D45167B61AFCDE9200C78A19 /* CollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 		D45167B81AFCE64D00C78A19 /* ImageCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
+		D456D5131B035E9700DE1C50 /* MediaView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaView.swift; sourceTree = "<group>"; };
+		D456D5151B03693700DE1C50 /* MediaView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MediaView.xib; sourceTree = "<group>"; };
 		D471B8671AF6870900651865 /* instaplaces.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = instaplaces.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D471B86B1AF6870900651865 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D471B86C1AF6870900651865 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -111,6 +117,9 @@
 				D45167B41AFCDCC500C78A19 /* PhotoAlbumViewController.swift */,
 				D4B4BB5D1AFE396700B281B2 /* ImageDetailViewController.swift */,
 				D4B4BB5F1AFE3BC000B281B2 /* FavoritesTableViewController.swift */,
+				D42883981B034EE4003E052A /* MediaTableViewCell.swift */,
+				D456D5131B035E9700DE1C50 /* MediaView.swift */,
+				D456D5151B03693700DE1C50 /* MediaView.xib */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -155,10 +164,10 @@
 				D471B8931AF753C300651865 /* InstaClient.swift */,
 				D471B88F1AF74C6500651865 /* InstaAuthViewController.swift */,
 				D4C8A30C1AF90F17000D9F54 /* InstaConvenience.swift */,
-				D471B8821AF6870900651865 /* instaTests */,
 				D471B8731AF6870900651865 /* Main.storyboard */,
 				D471B8761AF6870900651865 /* Images.xcassets */,
 				D471B8781AF6870900651865 /* LaunchScreen.xib */,
+				D471B8821AF6870900651865 /* instaTests */,
 				D471B86A1AF6870900651865 /* Supporting Files */,
 			);
 			name = instaplaces;
@@ -273,6 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D471B8751AF6870900651865 /* Main.storyboard in Resources */,
+				D456D5161B03693700DE1C50 /* MediaView.xib in Resources */,
 				D471B87A1AF6870900651865 /* LaunchScreen.xib in Resources */,
 				D471B8771AF6870900651865 /* Images.xcassets in Resources */,
 			);
@@ -296,6 +306,7 @@
 				D45167B51AFCDCC500C78A19 /* PhotoAlbumViewController.swift in Sources */,
 				D45167B91AFCE64D00C78A19 /* ImageCache.swift in Sources */,
 				D4B4BB601AFE3BC000B281B2 /* FavoritesTableViewController.swift in Sources */,
+				D42883991B034EE4003E052A /* MediaTableViewCell.swift in Sources */,
 				D471B8901AF74C6500651865 /* InstaAuthViewController.swift in Sources */,
 				D424C9AB1AFB9BEA003E7B8A /* CoreDataStackManager.swift in Sources */,
 				D45167B31AFCBD8E00C78A19 /* InstaLocationsTableViewController.swift in Sources */,
@@ -308,6 +319,7 @@
 				D471B8921AF7539D00651865 /* InstaConstants.swift in Sources */,
 				D40496B91AF9251A003E8BD2 /* InstaLocation.swift in Sources */,
 				D4B4BB5E1AFE396700B281B2 /* ImageDetailViewController.swift in Sources */,
+				D456D5141B035E9700DE1C50 /* MediaView.swift in Sources */,
 				D45167B01AFCAEF700C78A19 /* Location.swift in Sources */,
 				D424C9AE1AFB9C0E003E7B8A /* Model.xcdatamodeld in Sources */,
 			);

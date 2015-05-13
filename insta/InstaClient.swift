@@ -263,6 +263,33 @@ class InstaClient : NSObject {
         let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
         return url.URLByAppendingPathComponent(selectedFilename).path!
     }
+    
+    
+    //It set asynchronously an imageview and start/stops indicator
+    func setImage(let imagePath:String,let imageView:UIImageView){
+        
+        var changedPath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "")
+        if let p = NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().imagePath(changedPath)) as? UIImage {
+            //            cell.indicator.stopAnimating()
+            imageView.image = p
+        }else{
+            //            cell.indicator.startAnimating()
+            imageView.image = UIImage(named: "PlaceHolder") //Default placeholder
+            
+            InstaClient.sharedInstance().downloadImageAndSetCell(imagePath,photo: imageView,completionHandler: { (success, errorString) in
+                if success {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        //                        cell.indicator.stopAnimating()
+                    })
+                }else{
+                    dispatch_async(dispatch_get_main_queue(), {
+                        //                        cell.indicator.stopAnimating()
+                    })
+                }
+            })
+        }
+    }
+
 
     //It downloads the images from the already saved image paths to be in turn saved too in the CoreData
     func downloadImageAndSetCell(let imagePath:String,let photo:UIImageView,completionHandler: (success: Bool, errorString: String?) -> Void){

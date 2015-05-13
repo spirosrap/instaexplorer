@@ -11,7 +11,6 @@ import CoreData
 class ImageDetailViewController: UIViewController {
     @IBOutlet var imageView: UIImageView!
     
-    @IBOutlet weak var bottomView: UIView!
     @IBOutlet var clickableText: UITextView!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var usernameTextView: UITextView!
@@ -21,7 +20,7 @@ class ImageDetailViewController: UIViewController {
     var instaMedia:InstaMedia!
     var userComment:String!
     var attributedString = NSMutableAttributedString(string: "")
-    var ct:UITextView!
+//    var ct:UITextView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,17 +30,24 @@ class ImageDetailViewController: UIViewController {
             attributedString  = atex( "@" + instaMedia.username! + " " + userComment,fontname: "HelveticaNeue",textColor:UIColor.blackColor(),linkColor: UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00),size: 14)
             
             //Bug that prevents to change the font (but not color) of attributed text in xcode 6: http://openradar.appspot.com/radar?id=5117089870249984 forces me to create a text view programmatically on top of the storyboard one.
-
-            ct = UITextView(frame: self.view.frame)
-            ct.attributedText = attributedString
-            self.clickableText.addSubview(ct)
-            
+            self.clickableText.attributedText = attributedString
             var  tap = UITapGestureRecognizer(target: self, action: "clickableTouched:")
-            ct.addGestureRecognizer(tap)
-            ct.editable = false
-            ct.selectable = false
+            clickableText.addGestureRecognizer(tap)
+            clickableText.editable = false
+            clickableText.selectable = false
+            
+//            ct = UITextView(frame: self.clickableText.frame)
+//            ct.attributedText = attributedString
+//
+//            self.clickableText.addSubview(ct)
+//            
+//            var  tap = UITapGestureRecognizer(target: self, action: "clickableTouched:")
+//            ct.addGestureRecognizer(tap)
+//            ct.editable = false
+//            ct.selectable = false
         }
 
+        
     }
     
     func atex(let string:String,let fontname:String,let textColor:UIColor,let linkColor:UIColor,let size:CGFloat) -> NSMutableAttributedString {
@@ -118,8 +124,6 @@ class ImageDetailViewController: UIViewController {
 //            UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00) //Username
 //            UIFont boldSystemFontOfSize:fontSize
 
-            
-            
             var usernameAttr  = NSMutableAttributedString(string: instaMedia.username!, attributes: [NSForegroundColorAttributeName:UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00), NSFontAttributeName:UIFont(name: "HelveticaNeue-Bold", size: 17)!])
             var range = NSString(string: instaMedia.username!).rangeOfString(instaMedia.username!)
             usernameAttr.replaceCharactersInRange(range, withAttributedString: usernameAttr)
@@ -146,8 +150,9 @@ class ImageDetailViewController: UIViewController {
                 ltv.attributedText = locationAttr
                 LocationTextView.attributedText = locationAttr
             }
-            setImage(instaMedia.imagePath!,imageView:imageView)
-            setImage(instaMedia.profileImagePath!,imageView: profileImageView)
+            
+            InstaClient.sharedInstance().setImage(instaMedia.imagePath!,imageView:imageView)
+            InstaClient.sharedInstance().setImage(instaMedia.profileImagePath!,imageView: profileImageView)
         
         }
 
@@ -201,28 +206,6 @@ class ImageDetailViewController: UIViewController {
         
         }()
     
-    func setImage(let imagePath:String,let imageView:UIImageView){
-        
-        var changedPath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "")
-        if let p = NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().imagePath(changedPath)) as? UIImage {
-            //            cell.indicator.stopAnimating()
-            imageView.image = p
-        }else{
-            //            cell.indicator.startAnimating()
-            imageView.image = UIImage(named: "PlaceHolder") //Default placeholder
-            
-            InstaClient.sharedInstance().downloadImageAndSetCell(imagePath,photo: imageView,completionHandler: { (success, errorString) in
-                if success {
-                    dispatch_async(dispatch_get_main_queue(), {
-                        //                        cell.indicator.stopAnimating()
-                    })
-                }else{
-                    dispatch_async(dispatch_get_main_queue(), {
-                        //                        cell.indicator.stopAnimating()
-                    })
-                }
-            })
-        }
-
-    }
+    
+    
 }
