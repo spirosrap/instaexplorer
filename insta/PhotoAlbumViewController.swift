@@ -294,11 +294,8 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
     
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("tablecell", forIndexPath: indexPath) as! MediaTableViewCell
-        println("CELL \(cell.testButton)")
 
-        var button = cell.viewWithTag(100) as! UIButton
 
-        cell.testButton = button
         return cell
     }
 
