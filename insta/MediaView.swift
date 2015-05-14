@@ -17,7 +17,6 @@ import UIKit
     @IBOutlet weak var usernameTextView: UITextView!
     @IBOutlet weak var LocationTextView: UITextView!
 
-    @IBOutlet weak var deleteLabel: UILabel!
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

@@ -9,10 +9,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MediaView" customModule="instaplaces" customModuleProvider="target">
             <connections>
-                <outlet property="clickableText" destination="PbO-Yx-HYF" id="oLK-Aa-k6I"/>
-                <outlet property="imageView" destination="Npz-eI-dBl" id="8cS-n3-UbP"/>
-                <outlet property="profileImageView" destination="TDv-3Y-xFO" id="r8p-Gs-8wb"/>
-                <outlet property="usernameTextView" destination="jgO-vW-I4n" id="CdW-kI-YtJ"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Xm9-oD-XD6"/>
             </connections>
         </placeholder>

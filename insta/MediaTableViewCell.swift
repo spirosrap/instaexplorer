@@ -10,8 +10,20 @@ import UIKit
 
 class MediaTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var mediaView: MediaView!
-    @IBOutlet weak var testButton: UIButton!
+    @IBOutlet var mainIm: UIImageView! {
+        get{
+            self.mainIm.layer.cornerRadius = self.mainIm.frame.size.width / 10
+            self.mainIm.clipsToBounds = true
+            return self.mainIm
+        }
+        set{
+            
+        }
+    }
+    @IBOutlet var profileIm: UIImageView!
+    @IBOutlet var locationLabel: UILabel!
+    @IBOutlet var usernameLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

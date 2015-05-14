@@ -41,7 +41,7 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
         
         tableView.hidden = true
         tableView.delegate = self
-        tableView.registerClass(MediaTableViewCell.self, forCellReuseIdentifier: "tablecell")
+
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
