@@ -146,6 +146,8 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
         //If the photo image(imagepaths and titles are saved in Core Data) is saved using NSKeyedArchiver / NSKeyedUnarchiver we display it right away else we download it using its imagepath
         var changedPath = prefetchedPhotos![indexPath.row].thumbnailPath!.stringByReplacingOccurrencesOfString("/", withString: "")
 
+        
+        
         if let photo = NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().imagePath(changedPath)) as? UIImage {
             cell.indicator.stopAnimating()
             cell.photo.image = photo
@@ -166,6 +168,8 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
                 }
             })
         }
+        
+        
         return cell
     }
     
@@ -287,14 +291,29 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         
-        
-        return 2
+        self.prefetchedPhotos = self.fetchedResultsController.fetchedObjects as! [InstaMedia]
+
+        return prefetchedPhotos!.count
     }
     
     
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCellWithIdentifier("tablecell", forIndexPath: indexPath) as! MediaTableViewCell
+        
+        
+        
 
+        cell.profileIm.layer.cornerRadius = cell.profileIm.frame.size.width / 2
+
+        cell.profileIm.clipsToBounds = true
+
+        InstaClient.sharedInstance().setImage(prefetchedPhotos![indexPath.row].imagePath!, imageView: cell.mainIm)
+        InstaClient.sharedInstance().setImage(prefetchedPhotos![indexPath.row].profileImagePath!, imageView: cell.profileIm)
+        cell.usernameLabel.text = "@" + prefetchedPhotos![indexPath.row].username!
+        if let il = prefetchedPhotos![indexPath.row].instaLocation{
+            cell.locationLabel.text = il.name
+        }
 
         return cell
     }

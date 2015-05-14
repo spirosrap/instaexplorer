@@ -289,6 +289,7 @@ class InstaClient : NSObject {
             })
         }
     }
+    
 
 
     //It downloads the images from the already saved image paths to be in turn saved too in the CoreData
