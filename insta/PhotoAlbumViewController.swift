@@ -304,9 +304,15 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
         
         
 
-        cell.profileIm.layer.cornerRadius = cell.profileIm.frame.size.width / 2
 
+        
+        var frame = cell.profileIm.frame
+        frame.size.height = cell.profileIm.frame.size.width
+        frame.size.width  = cell.profileIm.frame.size.width
+        cell.profileIm.frame = frame
+        cell.profileIm.layer.cornerRadius = cell.profileIm.frame.size.width / 2.0
         cell.profileIm.clipsToBounds = true
+
 
         InstaClient.sharedInstance().setImage(prefetchedPhotos![indexPath.row].imagePath!, imageView: cell.mainIm)
         InstaClient.sharedInstance().setImage(prefetchedPhotos![indexPath.row].profileImagePath!, imageView: cell.profileIm)
@@ -317,7 +323,6 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
 
         return cell
     }
-
     
     //MARK: Other: alert view and a custom made information Box
     
