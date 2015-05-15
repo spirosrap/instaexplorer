@@ -194,7 +194,6 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
         }
 
 
-        println()
         
 //        CoreDataStackManager.sharedInstance().deleteObject(photo)
     }
@@ -322,6 +321,27 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
         }
 
         return cell
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let photo = fetchedResultsController.objectAtIndexPath(indexPath) as! InstaMedia
+        let paController = self.storyboard!.instantiateViewControllerWithIdentifier("ImageDetailViewController")! as! ImageDetailViewController
+        
+        if let t = photo.text{
+            paController.userComment = t
+            println("comment1: \(t)")
+        }
+        paController.mediaID = photo.mediaID!
+        paController.instaMedia = photo
+        var a = paController.view//Important. fatal error if not present. We need to first allocate the view.(Whole view be present in memory)
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.navigationController!.pushViewController(paController, animated: true)
+        }
+
+        
     }
     
     //MARK: Other: alert view and a custom made information Box

@@ -61,6 +61,33 @@ extension InstaClient {
         })
     }
     
+    func getTags(var string:String,completionHandler: (result: [Tag]?, error: NSError?) -> Void) {
+        
+        /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
+        let parameters = ["q":string]
+        var mutableMethod : String = Methods.TagsSearch
+        
+        
+        /* 2. Make the request */
+        taskForGETMethod(mutableMethod, parameters: parameters ) { JSONResult, error in
+            
+            /* 3. Send the desired value(s) to completion handler */
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                if let results = JSONResult.valueForKey("data") as? [[String : AnyObject]] {
+                    
+                    var tags = Tag.tagsFromResults(results)
+                    completionHandler(result: tags, error: nil)
+                } else {
+                    completionHandler(result: nil, error: NSError(domain: "getTags parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getTags"]))
+                }
+            }
+            
+        }
+    }
+
+    
     func getLocations(var latitude:Double,var longitude:Double,var distance:Int,completionHandler: (result: [InstaLocation]?, error: NSError?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
@@ -85,6 +112,31 @@ extension InstaClient {
         }
     }
     
+    func getMediaFromTag(var tag:String,completionHandler: (result: [InstaMedia]?, error: NSError?) -> Void) {
+        
+        /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
+        let parameters = [String : AnyObject]()
+        var mutableMethod : String = Methods.MediaTag
+        mutableMethod = InstaClient.subtituteKeyInMethod(mutableMethod, key: "tag-name", value: tag)!
+        
+        /* 2. Make the request */
+        taskForGETMethod(mutableMethod, parameters: parameters ) { JSONResult, error in
+            
+            /* 3. Send the desired value(s) to completion handler */
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                if let results = JSONResult.valueForKey("data") as? [[String : AnyObject]] {
+                    
+                    var media = InstaMedia.imagesFromResults(results,context:self.sharedContext)
+                    completionHandler(result: media, error: nil)
+                } else {
+                    completionHandler(result: nil, error: NSError(domain: "getMediaFromTag parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getMediaFromTag"]))
+                }
+            }
+        }
+    }
+
     
     func getMediaFromLocation(var location:InstaLocation,completionHandler: (result: [InstaMedia]?, error: NSError?) -> Void) {
         

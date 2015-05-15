@@ -32,27 +32,9 @@ extension InstaClient {
         static let Locations = "locations/search"
         static let MediaLocation = "locations/{id}/media/recent"
         static let MediaSearch = "media/search"
+        static let TagsSearch = "tags/search"
+        static let MediaTag = "tags/{tag-name}/media/recent"
         
-        static let Account = "account"
-        static let AccountIDFavoriteMovies = "account/{id}/favorite/movies"
-        static let AccountIDFavorite = "account/{id}/favorite"
-        static let AccountIDWatchlistMovies = "account/{id}/watchlist/movies"
-        static let AccountIDWatchlist = "account/{id}/watchlist"
-        static let AccountIDRatedList = "account/{id}/rated/movies"
-        
-        // MARK: Authentication
-        static let AuthenticationTokenNew = "authentication/token/new"
-        static let AuthenticationSessionNew = "authentication/session/new"
-        
-        // MARK: Search
-        static let SearchMovie = "search/movie"
-        
-        // MARK: Config
-        static let Config = "configuration"
-        
-        // MARK: Movie
-        static let MovieIDRating = "movie/{id}/rating"
-
     }
     
     struct LocationKeys{
