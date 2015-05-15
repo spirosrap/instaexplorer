@@ -18,6 +18,7 @@ class InstaMedia: NSManagedObject {
     @NSManaged var thumbnailPath:String?
     @NSManaged var imagePath:String?
     @NSManaged var mediaID:String?
+    @NSManaged var searchTag:String?
     
     @NSManaged var username:String?
     @NSManaged var profileImagePath:String?
@@ -81,8 +82,10 @@ class InstaMedia: NSManagedObject {
                     dictionary["fullname"] = fullname
                 }
                 
-                if let lat: AnyObject =  result["location"]!.valueForKey("latitude"),let lng: AnyObject = result["location"]!.valueForKey("longitude"),let name: AnyObject = result["location"]!.valueForKey("name"),let id: AnyObject = result["location"]!.valueForKey("id"){
-                    dictionary["instaLocation"] = InstaLocation(dictionary: ["name":name as! String,"id":"\(id as! Double)","longitude":lng as! Double,"latitude":lat as! Double], context: context)
+                if let lat =  result["location"]!.valueForKey("latitude") as? Double,let lng = result["location"]!.valueForKey("longitude") as? Double,let name = result["location"]!.valueForKey("name") as? String,let id = result["location"]!.valueForKey("id") as? Double {
+                    
+                    println("lat: \(lat) lng: \(lng) id: \(id)")
+                    dictionary["instaLocation"] = InstaLocation(dictionary: ["name":name as String,"id":"\(id as Double)","longitude":lng as Double,"latitude":lat as Double], context: context)
                 }
                 
             }
@@ -92,21 +95,6 @@ class InstaMedia: NSManagedObject {
             }
             
         }
-        
-//        if !images.isEmpty {
-//            for i in images{
-//                if i.link == nil{
-//                    println(i.fullname)
-//                    println(i.imagePath)
-//                    println(i.profileImagePath)
-//                    println(i.text)
-//                    println(i.thumbnailPath)
-//                    println(i.username)
-//                }
-//            }
-//        }
-
-        
         return images
     }
     

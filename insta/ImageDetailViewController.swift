@@ -24,7 +24,6 @@ class ImageDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         if let userComment = userComment{
             
             attributedString  = atex( "@" + instaMedia.username! + " " + userComment,fontname: "HelveticaNeue",textColor:UIColor.blackColor(),linkColor: UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00),size: 14)
@@ -46,8 +45,13 @@ class ImageDetailViewController: UIViewController {
 //            ct.editable = false
 //            ct.selectable = false
         }
-
         
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.navigationBarHidden = true
+
     }
     
     func atex(let string:String,let fontname:String,let textColor:UIColor,let linkColor:UIColor,let size:CGFloat) -> NSMutableAttributedString {
@@ -113,6 +117,8 @@ class ImageDetailViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        self.navigationController?.navigationBarHidden = false
+
         fetchedResultsController.performFetch(nil)
         let sectionInfo = fetchedResultsController.sections![0] as! NSFetchedResultsSectionInfo
         var instaMedia:InstaMedia

@@ -70,7 +70,7 @@ class FavoritesTableViewController: UITableViewController {
 //                    (m as InstaMedia).instaLocation = self.instaLocations[indexPath.row]
 //                }
 //                CoreDataStackManager.sharedInstance().saveContext()
-//                let paController = self.storyboard!.instantiateViewControllerWithIdentifier("PhotoAlbumViewController")! as! PhotoAlbumViewController
+//                let paController = self.storyboard!.instantiateViewControllerWithIdentifier("LocationPhotoAlbumViewController")! as! LocationPhotoAlbumViewController
 //                paController.title = self.instaLocations[indexPath.row].name
 //                
 //                //                paController.location = self.instaLocations[indexPath.row]

@@ -206,7 +206,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
 //                    self.navigationController!.pushViewController(tableController, animated: true)
 //                }
                 
-                let paController = self.storyboard!.instantiateViewControllerWithIdentifier("PhotoAlbumViewController")! as! PhotoAlbumViewController
+                let paController = self.storyboard!.instantiateViewControllerWithIdentifier("LocationPhotoAlbumViewController")! as! LocationPhotoAlbumViewController
 //                paController.title = self.instaLocations[indexPath.row].name
 //                
                 paController.location = self.selectedLocation
@@ -267,7 +267,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     
     //Select Annotation
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
-        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("PhotoAlbumViewController")! as! PhotoAlbumViewController
+        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("LocationPhotoAlbumViewController")! as! LocationPhotoAlbumViewController
         if let l = annotationsLocations[view.annotation.hash]{//Determine the location instance from the hash of selected annotation
             detailController.location = l
             selectedLocation = l //Set The selected location as a global variable
