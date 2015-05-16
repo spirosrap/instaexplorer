@@ -9,6 +9,7 @@
         <relationship name="location" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Location" inverseName="instaLocation" inverseEntity="Location" syncable="YES"/>
     </entity>
     <entity name="InstaMedia" representedClassName="InstaMedia" syncable="YES">
+        <attribute name="favorite" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="fullname" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="imagePath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
@@ -19,7 +20,7 @@
         <attribute name="userID" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="instaLocation" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="InstaLocation" inverseName="instaMedia" inverseEntity="InstaLocation" syncable="YES"/>
-        <relationship name="location" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="instaMedia" inverseEntity="Location" syncable="YES"/>
+        <relationship name="location" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Location" inverseName="instaMedia" inverseEntity="Location" syncable="YES"/>
     </entity>
     <entity name="Location" representedClassName="Location" syncable="YES">
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" syncable="YES"/>
@@ -29,7 +30,7 @@
     </entity>
     <elements>
         <element name="InstaLocation" positionX="-54" positionY="-9" width="128" height="135"/>
-        <element name="InstaMedia" positionX="-45" positionY="54" width="128" height="210"/>
+        <element name="InstaMedia" positionX="-45" positionY="54" width="128" height="225"/>
         <element name="Location" positionX="-63" positionY="-18" width="128" height="105"/>
     </elements>
 </model>

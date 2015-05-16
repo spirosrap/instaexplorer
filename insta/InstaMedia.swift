@@ -18,13 +18,10 @@ class InstaMedia: NSManagedObject {
     @NSManaged var thumbnailPath:String?
     @NSManaged var imagePath:String?
     @NSManaged var mediaID:String?
-    @NSManaged var searchTag:String?
-    
+    @NSManaged var favorite:NSNumber? // I cannot create a Bool and use it in Core data. http://stackoverflow.com/questions/24333507/swift-coredata-can-not-set-a-bool-on-nsmanagedobject-subclass-bug
     @NSManaged var username:String?
     @NSManaged var profileImagePath:String?
     @NSManaged var userID:String?
-    
-
     
     @NSManaged var link:String?
     @NSManaged var instaLocation: InstaLocation?
@@ -50,6 +47,7 @@ class InstaMedia: NSManagedObject {
         profileImagePath = dictionary["profileImagePath"] as? String
         link = dictionary["link"] as? String
         instaLocation = dictionary["instaLocation"] as? InstaLocation
+        favorite = dictionary["favorite"] as? NSNumber
     }
     
     /* Helper: Given an array of dictionaries, convert them to an array of TMDBMovie objects */
@@ -61,7 +59,7 @@ class InstaMedia: NSManagedObject {
             var dictionary = [String:AnyObject]()
             
             if ( result["type"]! as! String == "image"){
-                
+                dictionary["favorite"] = 0 //Default is not a favorite
                 dictionary["username"] = result["user"]!.valueForKey("username")!
                 
                 dictionary["profileImagePath"] = result["user"]!.valueForKey("profile_picture")!

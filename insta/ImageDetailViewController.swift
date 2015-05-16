@@ -15,6 +15,7 @@ class ImageDetailViewController: UIViewController {
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var usernameTextView: UITextView!
     @IBOutlet weak var LocationTextView: UITextView!
+    @IBOutlet var star: UIButton!
     
     var mediaID:String!
     var instaMedia:InstaMedia!
@@ -212,6 +213,18 @@ class ImageDetailViewController: UIViewController {
         
         }()
     
+    @IBAction func favoriteClicked(sender: UIButton) {
+        if instaMedia.favorite! == 0{
+            instaMedia.favorite = 1
+            CoreDataStackManager.sharedInstance().saveContext()
+            star.setImage(UIImage(named: "star_enabled"), forState: .Normal)
+        }else{
+            instaMedia.favorite = 0
+            CoreDataStackManager.sharedInstance().saveContext()
+            star.setImage(UIImage(named: "star_disabled"), forState: .Normal)
+            
+        }
+    }
     
     
 }

@@ -149,8 +149,9 @@ class CoreDataStackManager {
         if let context = self.managedObjectContext {
             
             var error: NSError? = nil
-//            deleteFile(Flickr.sharedInstance().imagePath(photo.imagePath.lastPathComponent))
-//            context.deleteObject(photo)
+            deleteFile(InstaClient.sharedInstance().imagePath(photo.imagePath!))
+            deleteFile(InstaClient.sharedInstance().imagePath(photo.profileImagePath!))
+            context.deleteObject(photo)
             if context.hasChanges && !context.save(&error) {
                 NSLog("Unresolved error \(error), \(error!.userInfo)")
                 abort()

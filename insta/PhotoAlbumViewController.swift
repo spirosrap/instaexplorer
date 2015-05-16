@@ -59,7 +59,12 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
     override func viewWillDisappear(animated: Bool) {
 //        self.navigationController?.navigationBarHidden = true
 //        self.navigationController?.toolbarHidden = true
+//        for p in prefetchedPhotos{
+//            CoreDataStackManager.sharedInstance().deleteObject(p)
+//        }
     }
+    
+
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
@@ -72,9 +77,9 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
         newCollectionButton.tintColor =  UIColor(red: (255/255.0), green: (0/255.0), blue: (132/255.0), alpha: 1.0)
         self.toolbarItems = [flexSpace,newCollectionButton,flexSpace]
     }
+
     
-
-
+    
     // MARK: - Core Data Convenience. This will be useful for fetching. And for adding and saving objects as well.
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext!
@@ -128,9 +133,9 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
     //MARK: Collection View Related
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
 //        self.prefetchedPhotos = self.fetchedResultsController.fetchedObjects as! [InstaMedia]
-        for pf in (prefetchedPhotos!){
-            print(pf.location)
-        }
+//        for pf in (prefetchedPhotos!){
+//            print(pf.location)
+//        }
         return prefetchedPhotos!.count
     }
 
