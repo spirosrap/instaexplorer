@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 import CoreData
 
-class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITableViewDelegate,NSFetchedResultsControllerDelegate,UICollectionViewDelegateFlowLayout {
+class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UITableViewDelegate,NSFetchedResultsControllerDelegate,UICollectionViewDelegateFlowLayout {
     @IBOutlet var collectionView: UICollectionView!
 
 //    @IBOutlet var indicator: UIActivityIndicatorView! //The activity Indicator for the informationBox(not an alert view)
@@ -31,8 +31,8 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
         self.navigationController?.toolbarHidden = false
         
         //We invoke a performfetch for already fetched sets of image urls(the first stage) to be able to use it's delegate functionality
-//        fetchedResultsController.performFetch(nil)
-//        fetchedResultsController.delegate = self
+        fetchedResultsController.performFetch(nil)
+        fetchedResultsController.delegate = self
         
 //        imageInfoView?.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.70)
 //        imageInfoView.hidden = true
@@ -70,6 +70,8 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
         super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = true
         self.navigationController?.toolbarHidden = true
+        self.tableView.reloadData()
+        self.collectionView.reloadData()
         //"New Collection" Button and it's color
         newCollectionButton = UIBarButtonItem(title: "New Collection", style: .Plain, target: self, action: "newCollection")
         var flexSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
@@ -84,21 +86,22 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
         return CoreDataStackManager.sharedInstance().managedObjectContext!
     }
     
-//    //Add the lazy fetchedResultsController property. Photos are already fetched(from flickr) and saved in Core data before this screen, but we fetch them again to use the NSFetchedResultsControllerDelegate methods
-//    lazy var fetchedResultsController: NSFetchedResultsController = {
-//        
-//        let fetchRequest = NSFetchRequest(entityName: "InstaMedia")
-//        
-//        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "username", ascending: true)]
-//        
-//        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
-//            managedObjectContext: self.sharedContext,
-//            sectionNameKeyPath: nil,
-//            cacheName: nil)
-//        
-//        return fetchedResultsController
-//        
-//        }()
+    //Add the lazy fetchedResultsController property. Photos are already fetched(from flickr) and saved in Core data before this screen, but we fetch them again to use the NSFetchedResultsControllerDelegate methods
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        
+        let fetchRequest = NSFetchRequest(entityName: "InstaMedia")
+        var l:NSNumber = 1
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "username", ascending: true)]
+        fetchRequest.predicate = NSPredicate(format: "favorite == %@", l);
+
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+            managedObjectContext: self.sharedContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        return fetchedResultsController
+        
+        }()
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -131,7 +134,7 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
     
     //MARK: Collection View Related
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        self.prefetchedPhotos = self.fetchedResultsController.fetchedObjects as! [InstaMedia]
+        self.prefetchedPhotos = self.fetchedResultsController.fetchedObjects as! [InstaMedia]
 //        for pf in (prefetchedPhotos!){
 //            print(pf.location)
 //        }
@@ -277,7 +280,7 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
         
-//        self.prefetchedPhotos = self.fetchedResultsController.fetchedObjects as! [InstaMedia]
+        self.prefetchedPhotos = self.fetchedResultsController.fetchedObjects as! [InstaMedia]
 
         return prefetchedPhotos!.count
     }
@@ -362,9 +365,12 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
         case 0:
             collectionView.hidden = false
             tableView.hidden = true
+            self.collectionView.reloadData()
+            
         case 1:
             collectionView.hidden = true
             tableView.hidden = false
+            self.tableView.reloadData()
         default:
             break;
         }

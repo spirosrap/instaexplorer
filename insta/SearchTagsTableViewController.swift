@@ -41,6 +41,7 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = true
+        self.tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning() {

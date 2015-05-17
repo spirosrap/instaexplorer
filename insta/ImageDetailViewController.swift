@@ -66,12 +66,6 @@ class ImageDetailViewController: UIViewController {
         
         return attributedString
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
-    
 
     
     func clickableTouched(recognizer:UITapGestureRecognizer) -> Void{
@@ -119,10 +113,11 @@ class ImageDetailViewController: UIViewController {
         super.viewWillAppear(animated)
         
         self.navigationController?.navigationBarHidden = false
-
+    
         fetchedResultsController.performFetch(nil)
         let sectionInfo = fetchedResultsController.sections![0] as! NSFetchedResultsSectionInfo
         var instaMedia:InstaMedia
+        
         
         if  !sectionInfo.objects.isEmpty{
             instaMedia = sectionInfo.objects[0] as! InstaMedia
@@ -160,6 +155,12 @@ class ImageDetailViewController: UIViewController {
             
             InstaClient.sharedInstance().setImage(instaMedia.imagePath!,imageView:imageView)
             InstaClient.sharedInstance().setImage(instaMedia.profileImagePath!,imageView: profileImageView)
+            
+            if (instaMedia.favorite! == 0){
+                star.setImage(UIImage(named: "star_disabled"), forState: .Normal)
+            }else{
+                star.setImage(UIImage(named: "star_enabled"), forState: .Normal)
+            }
         
         }
 

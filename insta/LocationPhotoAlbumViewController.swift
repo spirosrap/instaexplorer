@@ -66,6 +66,8 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
         super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = false
         self.navigationController?.toolbarHidden = true
+        self.tableView.reloadData()
+        self.collectionView.reloadData()
         
         setRegion() //Set the region on the top map based on the selected Location
         
