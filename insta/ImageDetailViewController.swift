@@ -8,7 +8,7 @@
 
 import UIKit
 import CoreData
-class ImageDetailViewController: UIViewController {
+class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
     @IBOutlet var imageView: UIImageView!
     
     @IBOutlet var clickableText: UITextView!
@@ -16,14 +16,21 @@ class ImageDetailViewController: UIViewController {
     @IBOutlet weak var usernameTextView: UITextView!
     @IBOutlet weak var LocationTextView: UITextView!
     @IBOutlet var star: UIButton!
+    @IBOutlet var scrollView: UIScrollView!
     
     var mediaID:String!
     var instaMedia:InstaMedia!
     var userComment:String!
     var attributedString = NSMutableAttributedString(string: "")
 //    var ct:UITextView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        scrollView.delegate = self
+//        scrollView.contentSize = CGSizeMake(400, self.view.frame.height);
+//        scrollView.contentSize = self.view.frame.size
         
         if let userComment = userComment{
             
@@ -53,6 +60,11 @@ class ImageDetailViewController: UIViewController {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBarHidden = true
 
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+
+//        scrollView.contentOffset = CGPoint(x: 0, y: scrollView.contentOffset.y)
     }
     
     func atex(let string:String,let fontname:String,let textColor:UIColor,let linkColor:UIColor,let size:CGFloat) -> NSMutableAttributedString {
