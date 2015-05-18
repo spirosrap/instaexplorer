@@ -68,7 +68,7 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.navigationBarHidden = false
         self.navigationController?.toolbarHidden = true
         self.tableView.reloadData()
         self.collectionView.reloadData()

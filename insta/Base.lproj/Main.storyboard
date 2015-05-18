@@ -80,7 +80,6 @@
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Instaplaces" id="N6Z-pP-Ph3"/>
-                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="mapView" destination="wxO-6M-MK7" id="ku3-vo-ei8"/>
                         <outlet property="searchBar" destination="ogv-Vu-jEe" id="5Xc-iE-ELF"/>
@@ -134,10 +133,10 @@
             </objects>
             <point key="canvasLocation" x="3292" y="-968"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Tab Bar Controller View Controller-->
         <scene sceneID="zv2-pQ-Hv3">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarController" id="U4c-oJ-f77" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" id="U4c-oJ-f77" customClass="TabBarControllerViewController" customModule="instaplaces" customModuleProvider="target" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="S5Z-N2-SAH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -1546,7 +1545,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lru-E3-Lq8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="60" y="-1471.5"/>
+            <point key="canvasLocation" x="1260" y="-1573.5"/>
         </scene>
         <!--search for Hashtag-->
         <scene sceneID="5bM-03-udo">
@@ -1613,7 +1612,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="732" y="-1471.5"/>
+            <point key="canvasLocation" x="1932" y="-1573.5"/>
         </scene>
         <!--Virtual Tourist-->
         <scene sceneID="epM-R1-hxq">
@@ -2069,9 +2068,6 @@
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="0.0" y="30" width="404" height="770"/>
-                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="lOH-hl-UfJ" id="tBn-UN-ZEz"/>
                                     <outlet property="delegate" destination="lOH-hl-UfJ" id="huu-et-hPl"/>
@@ -2125,8 +2121,7 @@
                                                                     <exclude reference="eVI-m6-u6A"/>
                                                                 </mask>
                                                             </variation>
-                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                <rect key="frame" x="56" y="27" width="45" height="45"/>
+                                                            <variation key="heightClass=regular-widthClass=compact">
                                                                 <mask key="constraints">
                                                                     <include reference="aqs-Jl-Fig"/>
                                                                     <include reference="eBK-TP-j3z"/>
@@ -2139,9 +2134,8 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
-                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                            <variation key="heightClass=regular-widthClass=compact">
                                                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
-                                                                <rect key="frame" x="8" y="75" width="140" height="16"/>
                                                             </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="749" text="LABEL" textAlignment="center" lineBreakMode="characterWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vwj-aO-s8J" userLabel="Location">
@@ -2149,9 +2143,6 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <color key="textColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
-                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                <rect key="frame" x="8" y="99" width="140" height="36"/>
-                                                            </variation>
                                                         </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2196,8 +2187,7 @@
                                                             <exclude reference="AlV-Tg-bnH"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="156" y="8" width="156" height="143"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="subviews">
                                                             <include reference="ocC-z4-Go6"/>
                                                             <include reference="xbR-hA-7hm"/>
@@ -2305,10 +2295,12 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Lg6-ST-sdN" firstAttribute="bottom" secondItem="bGe-Gr-dyY" secondAttribute="top" id="1zd-ng-qTD"/>
+                            <constraint firstItem="Lg6-ST-sdN" firstAttribute="bottom" secondItem="bGe-Gr-dyY" secondAttribute="top" id="1zd-ng-qTD">
+                                <variation key="heightClass=regular-widthClass=compact" constant="49"/>
+                            </constraint>
                             <constraint firstItem="Lg6-ST-sdN" firstAttribute="top" secondItem="QTs-0g-AKb" secondAttribute="bottom" id="9cW-Ao-p5p"/>
                             <constraint firstItem="QTs-0g-AKb" firstAttribute="top" secondItem="TpW-UK-q8u" secondAttribute="top" constant="-30" id="EDG-Vl-tZW">
-                                <variation key="heightClass=regular-widthClass=compact" constant="-26"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="-30"/>
                             </constraint>
                             <constraint firstItem="QTs-0g-AKb" firstAttribute="top" secondItem="pkj-qr-6zJ" secondAttribute="bottom" id="Gcm-CI-oCS"/>
                             <constraint firstItem="TpW-UK-q8u" firstAttribute="centerX" secondItem="QTs-0g-AKb" secondAttribute="centerX" id="H88-T9-Yzn"/>
@@ -2321,7 +2313,7 @@
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="QTs-0g-AKb" firstAttribute="top" secondItem="Lg6-ST-sdN" secondAttribute="top" constant="-28" id="qAl-zv-aJH">
-                                <variation key="heightClass=regular-widthClass=compact" constant="-10"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="31"/>
                             </constraint>
                             <constraint firstItem="TpW-UK-q8u" firstAttribute="top" secondItem="Lg6-ST-sdN" secondAttribute="top" id="qQ7-FP-0Gt"/>
                             <constraint firstItem="bGe-Gr-dyY" firstAttribute="top" secondItem="Lg6-ST-sdN" secondAttribute="bottom" id="rpF-Jy-Dik"/>
@@ -2379,7 +2371,6 @@
                     <navigationItem key="navigationItem" title="Virtual Tourist" id="81A-wF-V7C">
                         <barButtonItem key="backBarButtonItem" title="back" id="uIh-R7-BuU"/>
                     </navigationItem>
-                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="collectionView" destination="Lg6-ST-sdN" id="gXR-pf-OsL"/>
                         <outlet property="selectViewSegmentedControl" destination="QTs-0g-AKb" id="1PC-TQ-OSt"/>
