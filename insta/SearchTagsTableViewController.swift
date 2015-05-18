@@ -14,6 +14,7 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
     var filteredTableData = [(String,Int)]()
     var resultSearchController = UISearchController()
     
+    @IBOutlet var searchBar: UISearchBar!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,6 +32,8 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         
         // Reload the table
         self.tableView.reloadData()
+        self.resultSearchController.searchBar.barTintColor = UIColor(red: 0.220, green: 0.220, blue: 0.220, alpha: 1.00)
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -40,7 +43,7 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBarHidden = true
+        self.navigationController?.navigationBarHidden = false
         self.tableView.reloadData()
     }
     

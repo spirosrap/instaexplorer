@@ -306,7 +306,10 @@ class InstaClient : NSObject {
                 // Convert the downloaded data in to a UIImage object
                 let image = UIImage(data: data)
                 var changedPath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "")
-                NSKeyedArchiver.archiveRootObject(image!,toFile: self.imagePath(changedPath))
+                if let im = image{
+                   NSKeyedArchiver.archiveRootObject(im,toFile: self.imagePath(changedPath))
+                }
+                
 //                println(self.imagePath(changedPath))
                 
                 if (NSKeyedUnarchiver.unarchiveObjectWithFile(self.imagePath(changedPath)) != nil){

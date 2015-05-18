@@ -17,6 +17,7 @@
 		D424C9AE1AFB9C0E003E7B8A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D424C9AC1AFB9C0E003E7B8A /* Model.xcdatamodeld */; };
 		D42883991B034EE4003E052A /* MediaTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42883981B034EE4003E052A /* MediaTableViewCell.swift */; };
 		D43032E21AFA160D00AEB7DC /* InstaMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43032E11AFA160D00AEB7DC /* InstaMedia.swift */; };
+		D43600D11B0A5A6E00CA6DF9 /* ADVSegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D43600D01B0A5A6E00CA6DF9 /* ADVSegmentedControl.swift */; };
 		D444CE861B0A150300F4B7EC /* TabBarControllerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D444CE851B0A150300F4B7EC /* TabBarControllerViewController.swift */; };
 		D45167B01AFCAEF700C78A19 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45167AF1AFCAEF700C78A19 /* Location.swift */; };
 		D45167B31AFCBD8E00C78A19 /* InstaLocationsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45167B21AFCBD8E00C78A19 /* InstaLocationsTableViewController.swift */; };
@@ -75,6 +76,7 @@
 		D424C9AD1AFB9C0E003E7B8A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		D42883981B034EE4003E052A /* MediaTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MediaTableViewCell.swift; sourceTree = "<group>"; };
 		D43032E11AFA160D00AEB7DC /* InstaMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaMedia.swift; sourceTree = "<group>"; };
+		D43600D01B0A5A6E00CA6DF9 /* ADVSegmentedControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ADVSegmentedControl.swift; sourceTree = "<group>"; };
 		D444CE851B0A150300F4B7EC /* TabBarControllerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarControllerViewController.swift; sourceTree = "<group>"; };
 		D45167AF1AFCAEF700C78A19 /* Location.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		D45167B21AFCBD8E00C78A19 /* InstaLocationsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaLocationsTableViewController.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 				D424C9A91AFB937C003E7B8A /* Controllers */,
 				D471B86C1AF6870900651865 /* AppDelegate.swift */,
 				D471B8911AF7539D00651865 /* InstaConstants.swift */,
+				D43600D01B0A5A6E00CA6DF9 /* ADVSegmentedControl.swift */,
 				D471B8931AF753C300651865 /* InstaClient.swift */,
 				D471B88F1AF74C6500651865 /* InstaAuthViewController.swift */,
 				D4C8A30C1AF90F17000D9F54 /* InstaConvenience.swift */,
@@ -340,6 +343,7 @@
 				D43032E21AFA160D00AEB7DC /* InstaMedia.swift in Sources */,
 				D424C9A71AFB7383003E7B8A /* MapViewController.swift in Sources */,
 				D41C243F1B05F8E600FCE12C /* SearchTagsTableViewController.swift in Sources */,
+				D43600D11B0A5A6E00CA6DF9 /* ADVSegmentedControl.swift in Sources */,
 				D471B8721AF6870900651865 /* ViewController.swift in Sources */,
 				D471B86D1AF6870900651865 /* AppDelegate.swift in Sources */,
 				D471B8941AF753C300651865 /* InstaClient.swift in Sources */,

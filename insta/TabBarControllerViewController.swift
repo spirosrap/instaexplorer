@@ -12,9 +12,9 @@ class TabBarControllerViewController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.tabBar.tintColor = UIColor(red: 0.643, green: 0.651, blue: 0.663, alpha: 1.00)
-        self.tabBar.barTintColor = UIColor(red: 0.145, green: 0.153, blue: 0.165, alpha: 1.00)
-
+        self.tabBar.tintColor = UIColor.whiteColor()
+        self.tabBar.barTintColor = UIColor.blackColor()
+        self.tabBar.selectionIndicatorImage = selectedImage()
         // Do any additional setup after loading the view.
     }
 
@@ -33,5 +33,23 @@ class TabBarControllerViewController: UITabBarController {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    func selectedImage() -> UIImage{
+        var  count:CGFloat    = CGFloat(self.viewControllers!.count)
+        var tabBarSize:CGSize = self.tabBar.frame.size
+        var padding:CGFloat = CGFloat(0);
+        var buttonSize = CGSizeMake( tabBarSize.width / count, tabBarSize.height );
+        UIGraphicsBeginImageContext( buttonSize );
+        var c:CGContextRef = UIGraphicsGetCurrentContext();
+        UIColor(white: 0.9, alpha: 0.1).setFill()
+        var roundedRect:UIBezierPath = UIBezierPath(roundedRect: CGRectMake(padding,padding * 2, buttonSize.width - (padding * 2),buttonSize.height - ( padding * 2 ) ), cornerRadius: 4.0)
+        roundedRect.fillWithBlendMode(kCGBlendModeNormal, alpha: 1.0)
+        
+        var image:UIImage = UIGraphicsGetImageFromCurrentImageContext();
+        
+        
+        return image;
+
+    }
 
 }

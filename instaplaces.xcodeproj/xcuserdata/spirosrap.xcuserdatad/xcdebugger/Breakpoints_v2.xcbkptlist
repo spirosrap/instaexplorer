@@ -168,11 +168,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "insta/SearchTagsTableViewController.swift"
-            timestampString = "453553342.367545"
+            timestampString = "453660882.299725"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "63"
-            endingLineNumber = "63"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
             landmarkName = "tableView(_:numberOfRowsInSection:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -184,11 +184,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "insta/SearchTagsTableViewController.swift"
-            timestampString = "453553342.367545"
+            timestampString = "453660882.299725"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
+            startingLineNumber = "136"
+            endingLineNumber = "136"
             landmarkName = "updateSearchResultsForSearchController(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -200,11 +200,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "insta/SearchTagsTableViewController.swift"
-            timestampString = "453553342.367545"
+            timestampString = "453660882.299725"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
+            startingLineNumber = "81"
+            endingLineNumber = "81"
             landmarkName = "tableView(_:cellForRowAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -296,11 +296,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "insta/FavoritesAlbumViewController.swift"
-            timestampString = "453549122.383497"
+            timestampString = "453664488.439451"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "52"
-            endingLineNumber = "52"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
             landmarkName = "collectionView(_:layout:sizeForItemAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -312,11 +312,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "insta/FavoritesAlbumViewController.swift"
-            timestampString = "453643743.53047"
+            timestampString = "453664488.439451"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "125"
-            endingLineNumber = "125"
+            startingLineNumber = "132"
+            endingLineNumber = "132"
             landmarkName = "controller(_:didChangeObject:atIndexPath:forChangeType:newIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>

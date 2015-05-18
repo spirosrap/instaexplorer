@@ -52,8 +52,13 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         searchBar.delegate = self
         tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
         tapRecognizer?.numberOfTapsRequired = 1
+        
+        searchBar.barTintColor = UIColor(red: 0.220, green: 0.220, blue: 0.220, alpha: 1.00)
+        self.view.backgroundColor = UIColor(red: 0.220, green: 0.220, blue: 0.220, alpha: 1.00)
     }
-
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
     @IBAction func segmentedControlChanged(sender: UISegmentedControl) {
 
         switch (sender.selectedSegmentIndex) {
