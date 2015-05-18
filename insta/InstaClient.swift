@@ -42,7 +42,8 @@ class InstaClient : NSObject {
         mutableParameters["access_token"] = self.accessToken!
         
         /* 2/3. Build the URL and configure the request */
-        let urlString = Constants.BaseURLSecure + method + InstaClient.escapedParameters(mutableParameters)
+        //method could have a tag with an accent like "Atatürk". We need to escape such characters.
+        let urlString = Constants.BaseURLSecure + method.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)! + InstaClient.escapedParameters(mutableParameters)
         let url = NSURL(string: urlString)!
         let request = NSURLRequest(URL: url)
         
@@ -102,6 +103,8 @@ class InstaClient : NSObject {
         mutableParameters[ParameterKeys.ApiKey] = Constants.ApiKey
         
         /* 2/3. Build the URL and configure the request */
+//        method = method.stringByAddingPercentEscapesUsingEncoding: NSUTF8StringEncoding]\
+        
         let urlString = Constants.BaseURLSecure + method + InstaClient.escapedParameters(mutableParameters)
         let url = NSURL(string: urlString)!
         let request = NSMutableURLRequest(URL: url)
