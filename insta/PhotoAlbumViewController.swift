@@ -27,8 +27,6 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
         
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        self.navigationController?.navigationBarHidden = true
-        self.navigationController?.toolbarHidden = false
         
         //We invoke a performfetch for already fetched sets of image urls(the first stage) to be able to use it's delegate functionality
 //        fetchedResultsController.performFetch(nil)
@@ -68,14 +66,11 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBarHidden = true
+
+        self.navigationController?.navigationBarHidden = false
         self.navigationController?.toolbarHidden = true
-        //"New Collection" Button and it's color
-        newCollectionButton = UIBarButtonItem(title: "New Collection", style: .Plain, target: self, action: "newCollection")
-        var flexSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
-        newCollectionButton.tintColor =  UIColor(red: (255/255.0), green: (0/255.0), blue: (132/255.0), alpha: 1.0)
-        self.toolbarItems = [flexSpace,newCollectionButton,flexSpace]
-    }
+        
+     }
 
     
     

@@ -27,7 +27,9 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        fetchedResultsController.performFetch(nil)
+        let sectionInfo = fetchedResultsController.sections![0] as! NSFetchedResultsSectionInfo
+
         scrollView.delegate = self
 //        scrollView.contentSize = CGSizeMake(400, self.view.frame.height);
 //        scrollView.contentSize = self.view.frame.size
@@ -54,6 +56,57 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
 //            ct.selectable = false
         }
         
+        
+        
+        
+        if  !sectionInfo.objects.isEmpty{
+            instaMedia = sectionInfo.objects[0] as! InstaMedia
+            println(instaMedia.text)
+            //            UIColor(red: 0.051, green: 0.494, blue: 0.839, alpha: 1.00) //Location
+            //            UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00) //Username
+            //            UIFont boldSystemFontOfSize:fontSize
+            
+            var usernameAttr  = NSMutableAttributedString(string: instaMedia.username!, attributes: [NSForegroundColorAttributeName:UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00), NSFontAttributeName:UIFont(name: "HelveticaNeue-Bold", size: 17)!])
+            var range = NSString(string: instaMedia.username!).rangeOfString(instaMedia.username!)
+            usernameAttr.replaceCharactersInRange(range, withAttributedString: usernameAttr)
+            
+            
+            
+            profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 10
+            profileImageView.clipsToBounds = true
+            
+            var utv = UITextView(frame: usernameTextView.alignmentRectForFrame(usernameTextView.frame))
+            utv.attributedText = usernameAttr
+            
+            
+            usernameTextView.addSubview(utv)
+            usernameTextView.editable = false
+            usernameTextView.selectable = false
+            
+            
+            if let locationName = instaMedia.instaLocation?.name {
+                var locationAttr  = NSMutableAttributedString(string: locationName, attributes: [NSForegroundColorAttributeName:UIColor(red: 0.051, green: 0.494, blue: 0.839, alpha: 1.00), NSFontAttributeName:UIFont(name: "HelveticaNeue-Thin", size: 17)!])
+                var range = NSString(string: locationName).rangeOfString(locationName)
+                locationAttr.replaceCharactersInRange(range, withAttributedString: locationAttr)
+                
+                
+                var ltv = UITextView(frame: usernameTextView.alignmentRectForFrame(LocationTextView.frame))
+                ltv.attributedText = locationAttr
+                LocationTextView.attributedText = locationAttr
+            }
+            
+            InstaClient.sharedInstance().setImage(instaMedia.imagePath!,imageView:imageView)
+            InstaClient.sharedInstance().setImage(instaMedia.profileImagePath!,imageView: profileImageView)
+            
+            if (instaMedia.favorite! == 0){
+                star.setImage(UIImage(named: "star_disabled"), forState: .Normal)
+            }else{
+                star.setImage(UIImage(named: "star_enabled"), forState: .Normal)
+            }
+            
+        }
+
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -61,6 +114,14 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
         self.navigationController?.navigationBarHidden = true
 
     }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBarHidden = false
+        
+        
+    }
+
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
 
@@ -113,70 +174,27 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
 
                 var value:AnyObject? = textView.textStorage.attribute(t, atIndex: characterIndex, effectiveRange: &range)
                 if(value != nil){
-
+                    
                     println("clicked: \(t)")
+                    if t.rangeOfString("#") != nil {
+                        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("displayTaggedMedia")! as! PhotoAlbumViewController
+                        var tag = t.substringWithRange(Range<String.Index>(start: t.rangeOfString("#")!.endIndex, end: t.endIndex))
+                        InstaClient.sharedInstance().getMediaFromTag(tag, completionHandler: { (result, error) -> Void in
+                            if error == nil{
+                                dispatch_async(dispatch_get_main_queue(), {
+
+                                    detailController.prefetchedPhotos = result! as [InstaMedia]
+                                    detailController.navigationController?.navigationBar.hidden = false
+                                    self.navigationController!.pushViewController(detailController, animated: true)
+                                })
+                            }
+                        })
+                    }
                 }
             }
         }
-        
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.navigationController?.navigationBarHidden = false
-    
-        fetchedResultsController.performFetch(nil)
-        let sectionInfo = fetchedResultsController.sections![0] as! NSFetchedResultsSectionInfo
-        var instaMedia:InstaMedia
-        
-        
-        if  !sectionInfo.objects.isEmpty{
-            instaMedia = sectionInfo.objects[0] as! InstaMedia
-            println(instaMedia.text)
-//            UIColor(red: 0.051, green: 0.494, blue: 0.839, alpha: 1.00) //Location
-//            UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00) //Username
-//            UIFont boldSystemFontOfSize:fontSize
-
-            var usernameAttr  = NSMutableAttributedString(string: instaMedia.username!, attributes: [NSForegroundColorAttributeName:UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00), NSFontAttributeName:UIFont(name: "HelveticaNeue-Bold", size: 17)!])
-            var range = NSString(string: instaMedia.username!).rangeOfString(instaMedia.username!)
-            usernameAttr.replaceCharactersInRange(range, withAttributedString: usernameAttr)
-            
-
-            
-            profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 10
-            profileImageView.clipsToBounds = true
-            
-            var utv = UITextView(frame: usernameTextView.alignmentRectForFrame(usernameTextView.frame))
-            utv.attributedText = usernameAttr
-
-            
-            usernameTextView.addSubview(utv)
-
-            
-            if let locationName = instaMedia.instaLocation?.name {
-                var locationAttr  = NSMutableAttributedString(string: locationName, attributes: [NSForegroundColorAttributeName:UIColor(red: 0.051, green: 0.494, blue: 0.839, alpha: 1.00), NSFontAttributeName:UIFont(name: "HelveticaNeue-Thin", size: 17)!])
-                var range = NSString(string: locationName).rangeOfString(locationName)
-                locationAttr.replaceCharactersInRange(range, withAttributedString: locationAttr)
-
-                
-                var ltv = UITextView(frame: usernameTextView.alignmentRectForFrame(LocationTextView.frame))
-                ltv.attributedText = locationAttr
-                LocationTextView.attributedText = locationAttr
-            }
-            
-            InstaClient.sharedInstance().setImage(instaMedia.imagePath!,imageView:imageView)
-            InstaClient.sharedInstance().setImage(instaMedia.profileImagePath!,imageView: profileImageView)
-            
-            if (instaMedia.favorite! == 0){
-                star.setImage(UIImage(named: "star_disabled"), forState: .Normal)
-            }else{
-                star.setImage(UIImage(named: "star_enabled"), forState: .Normal)
-            }
-        
-        }
-
-    }
     
     func tags(var searchString:String) -> [String]{
         var retValue = [String]()

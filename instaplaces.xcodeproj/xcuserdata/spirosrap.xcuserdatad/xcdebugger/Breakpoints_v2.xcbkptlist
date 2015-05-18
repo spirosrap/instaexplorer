@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "insta/ImageDetailViewController.swift"
-            timestampString = "453575283.84397"
+            timestampString = "453636733.22316"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "182"
-            endingLineNumber = "182"
+            startingLineNumber = "200"
+            endingLineNumber = "200"
             landmarkName = "tags(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -152,11 +152,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "insta/PhotoAlbumViewController.swift"
-            timestampString = "453402302.892857"
+            timestampString = "453632417.391322"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
             landmarkName = "viewDidLoad()"
             landmarkType = "5">
          </BreakpointContent>
@@ -248,11 +248,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "insta/ImageDetailViewController.swift"
-            timestampString = "453575283.84397"
+            timestampString = "453636733.22316"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "230"
-            endingLineNumber = "230"
+            startingLineNumber = "248"
+            endingLineNumber = "248"
             landmarkName = "favoriteClicked(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -264,11 +264,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "insta/ImageDetailViewController.swift"
-            timestampString = "453575283.84397"
+            timestampString = "453636733.22316"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
+            startingLineNumber = "249"
+            endingLineNumber = "249"
             landmarkName = "favoriteClicked(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -280,11 +280,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "insta/ImageDetailViewController.swift"
-            timestampString = "453575283.84397"
+            timestampString = "453636733.22316"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "235"
-            endingLineNumber = "235"
+            startingLineNumber = "253"
+            endingLineNumber = "253"
             landmarkName = "favoriteClicked(_:)"
             landmarkType = "5">
          </BreakpointContent>
