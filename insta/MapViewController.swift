@@ -11,7 +11,7 @@ import MapKit
 import CoreData
 
 class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate {
-    @IBOutlet weak var segment: UISegmentedControl!
+    @IBOutlet weak var segment: ADVSegmentedControl!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var searchBar: UISearchBar!
     
@@ -53,15 +53,23 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
         tapRecognizer?.numberOfTapsRequired = 1
         
-        searchBar.barTintColor = UIColor(red: 0.220, green: 0.220, blue: 0.220, alpha: 1.00)
-        self.view.backgroundColor = UIColor(red: 0.220, green: 0.220, blue: 0.220, alpha: 1.00)
+        self.view.backgroundColor = UIColor.blackColor()
+        
+        segment.items = ["Standard", "Satellite","Hybrid"]
+        segment.font = UIFont(name: "Avenir-Black", size: 12)
+        segment.borderColor = UIColor(white: 1.0, alpha: 0.3)
+        segment.selectedIndex = 0
+        segment.addTarget(self, action: "switchSegmented:", forControlEvents: .ValueChanged)
+
+        
     }
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
-    @IBAction func segmentedControlChanged(sender: UISegmentedControl) {
+    
+    func switchSegmented(sender: ADVSegmentedControl) {
 
-        switch (sender.selectedSegmentIndex) {
+        switch (sender.selectedIndex) {
           case 0:
             mapView.mapType = .Standard
           case 1:

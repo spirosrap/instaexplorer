@@ -3,6 +3,7 @@
 //  Mega
 //
 //  Created by Tope Abayomi on 01/12/2014.
+//  Customized by Spiros Raptis for application needs.
 //  Copyright (c) 2014 App Design Vault. All rights reserved.
 //
 
@@ -25,19 +26,19 @@ import UIKit
         }
     }
     
-    @IBInspectable var selectedLabelColor : UIColor = UIColor.blackColor() {
+    @IBInspectable var selectedLabelColor : UIColor = UIColor.whiteColor() {
         didSet {
             setSelectedColors()
         }
     }
     
-    @IBInspectable var unselectedLabelColor : UIColor = UIColor.whiteColor() {
+    @IBInspectable var unselectedLabelColor : UIColor = UIColor(red: 0.502, green: 0.502, blue: 0.502, alpha: 1.00) {
         didSet {
             setSelectedColors()
         }
     }
     
-    @IBInspectable var thumbColor : UIColor = UIColor.whiteColor() {
+    @IBInspectable var thumbColor : UIColor = UIColor(red: 0.165, green: 0.165, blue: 0.165, alpha: 1.00) {
         didSet {
             setSelectedColors()
         }

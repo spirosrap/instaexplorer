@@ -32,7 +32,9 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         
         // Reload the table
         self.tableView.reloadData()
-        self.resultSearchController.searchBar.barTintColor = UIColor(red: 0.220, green: 0.220, blue: 0.220, alpha: 1.00)
+        self.resultSearchController.searchBar.barTintColor = UIColor.blackColor()
+        self.resultSearchController.searchBar.tintColor = UIColor.whiteColor()
+
         
     }
     

@@ -18,8 +18,12 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
     @IBOutlet var star: UIButton!
     @IBOutlet var scrollView: UIScrollView!
     
+    var shareButton = UIBarButtonItem()
+    var flexiblespace = UIBarButtonItem()
+    var imageToShare = UIImage()
     var mediaID:String!
     var instaMedia:InstaMedia!
+    var favoritedMedia:InstaMedia!
     var userComment:String!
     var attributedString = NSMutableAttributedString(string: "")
 //    var ct:UITextView!
@@ -97,15 +101,18 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
             
             InstaClient.sharedInstance().setImage(instaMedia.imagePath!,imageView:imageView)
             InstaClient.sharedInstance().setImage(instaMedia.profileImagePath!,imageView: profileImageView)
-            
+            imageToShare = imageView.image!
             if (instaMedia.favorite! == 0){
                 star.setImage(UIImage(named: "star_disabled"), forState: .Normal)
             }else{
                 star.setImage(UIImage(named: "star_enabled"), forState: .Normal)
             }
-            
         }
 
+        shareButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "share")
+        flexiblespace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
+        
+        self.navigationItem.rightBarButtonItem = shareButton
         
     }
     
@@ -247,15 +254,20 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
     @IBAction func favoriteClicked(sender: UIButton) {
         if instaMedia.favorite! == 0{
             instaMedia.favorite = 1
-            CoreDataStackManager.sharedInstance().saveContext()
+            
             star.setImage(UIImage(named: "star_enabled"), forState: .Normal)
         }else{
             instaMedia.favorite = 0
-            CoreDataStackManager.sharedInstance().saveContext()
             star.setImage(UIImage(named: "star_disabled"), forState: .Normal)
-            
         }
     }
+    
+    func share(){
+        let objectsToShare = [UIActivityTypePostToFacebook,UIActivityTypePostToTwitter,UIActivityTypeMessage,UIActivityTypeSaveToCameraRoll]
+        let activity = UIActivityViewController(activityItems: [instaMedia.link!,imageToShare], applicationActivities: nil)
+        self.presentViewController(activity, animated: true, completion:nil)
+    }
+
     
     
 }

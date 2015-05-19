@@ -22,61 +22,94 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="wxO-6M-MK7">
                                 <rect key="frame" x="0.0" y="136" width="600" height="415"/>
                             </mapView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bordered" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="CQL-RZ-gH2">
-                                <rect key="frame" x="0.0" y="64" width="600" height="29"/>
-                                <color key="backgroundColor" red="0.10980392156862745" green="0.10980392156862745" blue="0.10980392156862745" alpha="1" colorSpace="calibratedRGB"/>
-                                <segments>
-                                    <segment title="Standard"/>
-                                    <segment title="Satellite"/>
-                                    <segment title="Hybrid"/>
-                                </segments>
-                                <color key="tintColor" red="0.71697443181818188" green="0.71697443181818188" blue="0.71697443181818188" alpha="1" colorSpace="calibratedRGB"/>
-                                <connections>
-                                    <action selector="segmentedControlChanged:" destination="YsU-ak-0hI" eventType="valueChanged" id="haY-qY-oDb"/>
-                                </connections>
-                            </segmentedControl>
                             <searchBar contentMode="redraw" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ogv-Vu-jEe">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yOv-Lt-CUJ">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <color key="backgroundColor" red="0.10980392160000001" green="0.10980392160000001" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="29" id="UCw-Cc-mTE"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="UCw-Cc-mTE"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="UCw-Cc-mTE"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3gw-bI-J8Y" customClass="ADVSegmentedControl" customModule="instaplaces" customModuleProvider="target">
+                                <rect key="frame" x="46" y="53" width="508" height="45"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="Q6c-tG-Ffe"/>
+                                </constraints>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="Q6c-tG-Ffe"/>
+                                    </mask>
+                                </variation>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="ogv-Vu-jEe" firstAttribute="top" secondItem="CQL-RZ-gH2" secondAttribute="top" constant="28" id="3Wq-dh-F5B"/>
+                            <constraint firstItem="3gw-bI-J8Y" firstAttribute="top" secondItem="Sjt-nO-Jp2" secondAttribute="topMargin" constant="19" id="3DN-ef-Vb1"/>
                             <constraint firstItem="wxO-6M-MK7" firstAttribute="top" secondItem="4Sg-n8-pjR" secondAttribute="bottom" id="75g-qU-mLg"/>
-                            <constraint firstItem="CQL-RZ-gH2" firstAttribute="top" secondItem="4Sg-n8-pjR" secondAttribute="bottom" id="7GW-JP-7zh"/>
-                            <constraint firstItem="CQL-RZ-gH2" firstAttribute="top" secondItem="4Sg-n8-pjR" secondAttribute="bottom" id="8xG-fz-wy2"/>
-                            <constraint firstItem="CQL-RZ-gH2" firstAttribute="top" secondItem="4Sg-n8-pjR" secondAttribute="bottom" id="BbX-a6-Lgo"/>
-                            <constraint firstItem="CQL-RZ-gH2" firstAttribute="leading" secondItem="Sjt-nO-Jp2" secondAttribute="leadingMargin" constant="-16" id="Djb-LC-Nvh"/>
-                            <constraint firstItem="CQL-RZ-gH2" firstAttribute="top" secondItem="4Sg-n8-pjR" secondAttribute="bottom" id="EP6-Wb-nmb"/>
+                            <constraint firstItem="3gw-bI-J8Y" firstAttribute="bottom" secondItem="ogv-Vu-jEe" secondAttribute="top" id="76x-k6-AAw"/>
                             <constraint firstItem="zjq-mg-8e6" firstAttribute="top" secondItem="wxO-6M-MK7" secondAttribute="bottom" id="Hvi-ES-HBo"/>
-                            <constraint firstItem="CQL-RZ-gH2" firstAttribute="top" secondItem="4Sg-n8-pjR" secondAttribute="bottom" id="J5q-tq-sKy"/>
-                            <constraint firstItem="CQL-RZ-gH2" firstAttribute="top" secondItem="4Sg-n8-pjR" secondAttribute="bottom" id="Prb-gE-WYD"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="CQL-RZ-gH2" secondAttribute="trailing" constant="-16" id="U2K-Lj-IsY"/>
+                            <constraint firstItem="yOv-Lt-CUJ" firstAttribute="top" secondItem="3gw-bI-J8Y" secondAttribute="top" id="OZY-f3-jLj"/>
+                            <constraint firstItem="3gw-bI-J8Y" firstAttribute="centerX" secondItem="ogv-Vu-jEe" secondAttribute="centerX" id="Wh9-Ap-vZh"/>
                             <constraint firstItem="wxO-6M-MK7" firstAttribute="top" secondItem="4Sg-n8-pjR" secondAttribute="bottom" id="X93-EC-mgO"/>
-                            <constraint firstItem="CQL-RZ-gH2" firstAttribute="top" secondItem="4Sg-n8-pjR" secondAttribute="bottom" id="crL-97-0RE"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wxO-6M-MK7" secondAttribute="trailing" constant="-16" id="f5F-e2-8HA"/>
+                            <constraint firstItem="yOv-Lt-CUJ" firstAttribute="leading" secondItem="ogv-Vu-jEe" secondAttribute="leading" id="gdV-fZ-gHs"/>
                             <constraint firstItem="wxO-6M-MK7" firstAttribute="leading" secondItem="Sjt-nO-Jp2" secondAttribute="leadingMargin" constant="-16" id="hhb-h6-MUd"/>
                             <constraint firstItem="ogv-Vu-jEe" firstAttribute="top" secondItem="wxO-6M-MK7" secondAttribute="top" constant="-44" id="iKg-X9-3Tk"/>
-                            <constraint firstItem="CQL-RZ-gH2" firstAttribute="top" secondItem="4Sg-n8-pjR" secondAttribute="bottom" id="m0H-GS-yGP"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ogv-Vu-jEe" secondAttribute="trailing" constant="-16" id="qxX-6e-bvb"/>
                             <constraint firstItem="wxO-6M-MK7" firstAttribute="top" secondItem="4Sg-n8-pjR" secondAttribute="bottom" id="sRH-L7-f7E"/>
-                            <constraint firstItem="CQL-RZ-gH2" firstAttribute="top" secondItem="4Sg-n8-pjR" secondAttribute="bottom" id="vlS-mg-C6z"/>
+                            <constraint firstItem="3gw-bI-J8Y" firstAttribute="leading" secondItem="yOv-Lt-CUJ" secondAttribute="leading" id="weY-hV-B1s"/>
+                            <constraint firstItem="3gw-bI-J8Y" firstAttribute="trailing" secondItem="yOv-Lt-CUJ" secondAttribute="trailing" id="z5z-lH-Dse"/>
                             <constraint firstItem="ogv-Vu-jEe" firstAttribute="leading" secondItem="Sjt-nO-Jp2" secondAttribute="leadingMargin" constant="-16" id="zWb-ys-NUi"/>
+                            <constraint firstItem="yOv-Lt-CUJ" firstAttribute="bottom" secondItem="ogv-Vu-jEe" secondAttribute="top" id="zeV-Hf-t4X"/>
                         </constraints>
                         <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="yOv-Lt-CUJ"/>
+                                <exclude reference="3gw-bI-J8Y"/>
+                            </mask>
                             <mask key="constraints">
-                                <exclude reference="7GW-JP-7zh"/>
-                                <exclude reference="8xG-fz-wy2"/>
-                                <exclude reference="EP6-Wb-nmb"/>
-                                <exclude reference="J5q-tq-sKy"/>
-                                <exclude reference="Prb-gE-WYD"/>
-                                <exclude reference="crL-97-0RE"/>
-                                <exclude reference="m0H-GS-yGP"/>
-                                <exclude reference="vlS-mg-C6z"/>
+                                <exclude reference="3DN-ef-Vb1"/>
+                                <exclude reference="76x-k6-AAw"/>
+                                <exclude reference="Wh9-Ap-vZh"/>
+                                <exclude reference="weY-hV-B1s"/>
+                                <exclude reference="z5z-lH-Dse"/>
+                                <exclude reference="OZY-f3-jLj"/>
+                                <exclude reference="gdV-fZ-gHs"/>
+                                <exclude reference="zeV-Hf-t4X"/>
                                 <exclude reference="75g-qU-mLg"/>
                                 <exclude reference="X93-EC-mgO"/>
                                 <exclude reference="sRH-L7-f7E"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="yOv-Lt-CUJ"/>
+                                <include reference="3gw-bI-J8Y"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="3DN-ef-Vb1"/>
+                                <include reference="76x-k6-AAw"/>
+                                <include reference="Wh9-Ap-vZh"/>
+                                <include reference="weY-hV-B1s"/>
+                                <include reference="z5z-lH-Dse"/>
+                                <include reference="OZY-f3-jLj"/>
+                                <include reference="gdV-fZ-gHs"/>
+                                <include reference="zeV-Hf-t4X"/>
                             </mask>
                         </variation>
                     </view>
@@ -84,7 +117,7 @@
                     <connections>
                         <outlet property="mapView" destination="wxO-6M-MK7" id="ku3-vo-ei8"/>
                         <outlet property="searchBar" destination="ogv-Vu-jEe" id="5Xc-iE-ELF"/>
-                        <outlet property="segment" destination="CQL-RZ-gH2" id="Iyx-Es-bV3"/>
+                        <outlet property="segment" destination="3gw-bI-J8Y" id="4R8-MA-uwy"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iCw-6G-eBT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1586,7 +1619,7 @@
                         <searchBar key="tableHeaderView" contentMode="redraw" id="iKV-Zf-MWe">
                             <rect key="frame" x="0.0" y="64" width="600" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                            <color key="barTintColor" red="0.16862745098039217" green="0.16862745098039217" blue="0.16862745098039217" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
                                 <outlet property="delegate" destination="L7T-8P-Obw" id="Gtn-Um-wO8"/>
@@ -2131,7 +2164,7 @@
                                     <outlet property="delegate" destination="lOH-hl-UfJ" id="huu-et-hPl"/>
                                 </connections>
                             </collectionView>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="167" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="TpW-UK-q8u">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="167" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="TpW-UK-q8u">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
@@ -2341,7 +2374,7 @@
                             </tableView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UeD-DG-u7N">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                <color key="backgroundColor" red="0.10980392160000001" green="0.10980392160000001" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="29" id="BVx-cW-j29"/>
                                 </constraints>

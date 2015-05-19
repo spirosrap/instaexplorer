@@ -96,6 +96,25 @@ class InstaMedia: NSManagedObject {
         return images
     }
     
+    static func copyToOtherContext(var media:InstaMedia,context: NSManagedObjectContext) -> InstaMedia{
+        
+        var dictionary = [String:AnyObject]()
+
+        dictionary["text"] = media.text
+        dictionary["username"] = media.username
+        dictionary["fullname"] = media.fullname
+        dictionary["userID"] = media.userID
+        dictionary["mediaID"] = media.mediaID
+        dictionary["thumbnailPath"] = media.thumbnailPath
+        dictionary["imagePath"] = media.imagePath
+        dictionary["profileImagePath"] = media.profileImagePath
+        dictionary["link"] = media.link
+        dictionary["instaLocation"] = media.instaLocation
+        dictionary["favorite"] = media.favorite
+        
+        return InstaMedia(dictionary: dictionary,context: context)
+    }
+    
     var image: UIImage? {
         get {
             return InstaClient.Caches.imageCache.imageWithIdentifier(imagePath!)

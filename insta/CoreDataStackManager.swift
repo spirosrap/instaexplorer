@@ -111,6 +111,21 @@ class CoreDataStackManager {
         return managedObjectContext
         }()
     
+    lazy var favoritesManagedObjectContext: NSManagedObjectContext? = {
+        
+        println("Instantiating the managedObjectContext property")
+        
+        // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
+        let coordinator = self.persistentStoreCoordinator
+        if coordinator == nil {
+            return nil
+        }
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
+        managedObjectContext.persistentStoreCoordinator = coordinator
+        return managedObjectContext
+        }()
+    
+    
     // MARK: - Core Data Saving support
     
     func saveContext () {
@@ -125,6 +140,30 @@ class CoreDataStackManager {
             }
         }
     }
+    
+    func favoritesSaveContext(){
+        if let context = self.favoritesManagedObjectContext {
+            var error: NSError? = nil
+            if context.hasChanges && !context.save(&error) {
+                NSLog("Unresolved error \(error), \(error!.userInfo)")
+                abort()
+            }
+        }
+    }
+    
+    func favoritesdeleteObject(var photo:InstaMedia){
+        if let context = self.favoritesManagedObjectContext {
+            var error: NSError? = nil
+            deleteFile(InstaClient.sharedInstance().imagePath(photo.imagePath!))
+            deleteFile(InstaClient.sharedInstance().imagePath(photo.profileImagePath!))
+            context.deleteObject(photo)
+            if context.hasChanges && !context.save(&error) {
+                NSLog("Unresolved error \(error), \(error!.userInfo)")
+                abort()
+            }
+        }
+    }
+
     
     func deleteObject(var location:Location){
         if let context = self.managedObjectContext {

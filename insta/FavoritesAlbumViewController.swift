@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 import CoreData
 
-class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UITableViewDelegate,NSFetchedResultsControllerDelegate,UICollectionViewDelegateFlowLayout {
+class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UITableViewDataSource,UITableViewDelegate,NSFetchedResultsControllerDelegate,UICollectionViewDelegateFlowLayout {
     @IBOutlet var collectionView: UICollectionView!
 
 //    @IBOutlet var indicator: UIActivityIndicatorView! //The activity Indicator for the informationBox(not an alert view)
@@ -17,8 +17,9 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
 //    @IBOutlet var infoLabel: UILabel!
     
     @IBOutlet weak var selectViewSegmentedControl: ADVSegmentedControl!
-    
     @IBOutlet weak var tableView: UITableView!
+    var editButton = UIBarButtonItem()
+
     var prefetchedPhotos: [InstaMedia]!//We put the Photo Objects in a variable to use in NSFetchedResultsControllerDelegate methods
     var newCollectionButton:UIBarButtonItem!
     var location:Location!
@@ -47,6 +48,8 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
         selectViewSegmentedControl.selectedIndex = 0
         selectViewSegmentedControl.addTarget(self, action: "switchViews:", forControlEvents: .ValueChanged)
 
+        editButton = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "edit")
+        self.navigationItem.leftBarButtonItem = editButton
 
     }
     
@@ -75,15 +78,14 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.tableView.editing = false
+        
         self.navigationController?.navigationBarHidden = false
         self.navigationController?.toolbarHidden = true
         self.tableView.reloadData()
         self.collectionView.reloadData()
-        //"New Collection" Button and it's color
-        newCollectionButton = UIBarButtonItem(title: "New Collection", style: .Plain, target: self, action: "newCollection")
-        var flexSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
-        newCollectionButton.tintColor =  UIColor(red: (255/255.0), green: (0/255.0), blue: (132/255.0), alpha: 1.0)
-        self.toolbarItems = [flexSpace,newCollectionButton,flexSpace]
+
     }
 
     
@@ -296,12 +298,6 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("tablecell", forIndexPath: indexPath) as! MediaTableViewCell
-        
-        
-        
-
-
-        
         var frame = cell.profileIm.frame
         frame.size.height = cell.profileIm.frame.size.width
         frame.size.width  = cell.profileIm.frame.size.width
@@ -340,7 +336,35 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
 
         
     }
+     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+
+    //For deleting the Meme
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+
+        prefetchedPhotos![indexPath.row].favorite = 0
+
+        self.tableView.reloadData()
+    }
     
+    func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+        return UITableViewCellEditingStyle.Delete
+    }
+    
+    func edit(){
+        if editButton.title! == "Edit"{
+            editButton.title = "Done"
+        }else{
+            editButton.title = "Edit"
+        }
+        self.tableView.editing = !self.tableView.editing
+    }
+
     //MARK: Other: alert view and a custom made information Box
     
     //A simple Alert view with an OK Button
