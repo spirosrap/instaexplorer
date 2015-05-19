@@ -123,7 +123,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D424C9A91AFB937C003E7B8A /* Controllers */ = {
+		D424C9A91AFB937C003E7B8A /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				D471B8711AF6870900651865 /* ViewController.swift */,
@@ -141,7 +141,7 @@
 				D41C243E1B05F8E600FCE12C /* SearchTagsTableViewController.swift */,
 				D444CE851B0A150300F4B7EC /* TabBarControllerViewController.swift */,
 			);
-			name = Controllers;
+			name = Controller;
 			sourceTree = "<group>";
 		};
 		D42B3FA91B0B4BA700A868D4 /* View */ = {
@@ -186,14 +186,14 @@
 		D471B8691AF6870900651865 /* instaplaces */ = {
 			isa = PBXGroup;
 			children = (
-				D42B3FA91B0B4BA700A868D4 /* View */,
 				D45F786B1B01122C00A534CA /* Model */,
-				D424C9A91AFB937C003E7B8A /* Controllers */,
-				D471B86C1AF6870900651865 /* AppDelegate.swift */,
-				D471B8911AF7539D00651865 /* InstaConstants.swift */,
-				D471B8931AF753C300651865 /* InstaClient.swift */,
-				D471B88F1AF74C6500651865 /* InstaAuthViewController.swift */,
+				D42B3FA91B0B4BA700A868D4 /* View */,
+				D424C9A91AFB937C003E7B8A /* Controller */,
 				D4C8A30C1AF90F17000D9F54 /* InstaConvenience.swift */,
+				D471B86C1AF6870900651865 /* AppDelegate.swift */,
+				D471B8931AF753C300651865 /* InstaClient.swift */,
+				D471B8911AF7539D00651865 /* InstaConstants.swift */,
+				D471B88F1AF74C6500651865 /* InstaAuthViewController.swift */,
 				D471B8731AF6870900651865 /* Main.storyboard */,
 				D471B8761AF6870900651865 /* Images.xcassets */,
 				D471B8781AF6870900651865 /* LaunchScreen.xib */,

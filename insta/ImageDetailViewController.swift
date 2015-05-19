@@ -65,10 +65,6 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
         
         if  !sectionInfo.objects.isEmpty{
             instaMedia = sectionInfo.objects[0] as! InstaMedia
-            println(instaMedia.text)
-            //            UIColor(red: 0.051, green: 0.494, blue: 0.839, alpha: 1.00) //Location
-            //            UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00) //Username
-            //            UIFont boldSystemFontOfSize:fontSize
             
             var usernameAttr  = NSMutableAttributedString(string: instaMedia.username!, attributes: [NSForegroundColorAttributeName:UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00), NSFontAttributeName:UIFont(name: "HelveticaNeue-Bold", size: 17)!])
             var range = NSString(string: instaMedia.username!).rangeOfString(instaMedia.username!)
@@ -233,6 +229,11 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext!
     }
+    
+    var favoritesSharedContext: NSManagedObjectContext {
+        return CoreDataStackManager.sharedInstance().favoritesManagedObjectContext!
+    }
+    
 
     
     lazy var fetchedResultsController: NSFetchedResultsController = {
@@ -251,14 +252,41 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
         
         }()
     
+    lazy var fetchedFavoritesResultsController: NSFetchedResultsController = {
+        
+        let fetchRequest = NSFetchRequest(entityName: "InstaMedia")
+        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "username", ascending: true)]
+        fetchRequest.predicate = NSPredicate(format: "mediaID == %@", self.mediaID);
+        
+        let fetchedFavoritesResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+            managedObjectContext: self.favoritesSharedContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        return fetchedFavoritesResultsController
+        
+        }()
+
+    
     @IBAction func favoriteClicked(sender: UIButton) {
         if instaMedia.favorite! == 0{
-            instaMedia.favorite = 1
-            
+            instaMedia.favorite = 1 //Origin Image must have the favorite on in case it is browsed from other than Favorites tab
+            var im = InstaMedia.copyToOtherContext(instaMedia, context: CoreDataStackManager.sharedInstance().favoritesManagedObjectContext!)
+            im.favorite = 1
+            CoreDataStackManager.sharedInstance().favoritesSaveContext()
             star.setImage(UIImage(named: "star_enabled"), forState: .Normal)
         }else{
-            instaMedia.favorite = 0
-            star.setImage(UIImage(named: "star_disabled"), forState: .Normal)
+            fetchedFavoritesResultsController.performFetch(nil)
+            let sectionInfo = fetchedFavoritesResultsController.sections![0] as! NSFetchedResultsSectionInfo
+            if  !sectionInfo.objects.isEmpty{
+                var im = sectionInfo.objects[0] as! InstaMedia
+                CoreDataStackManager.sharedInstance().favoritesdeleteObject(im)
+                CoreDataStackManager.sharedInstance().favoritesSaveContext()
+                
+                instaMedia.favorite = 0 //Origin Image must favorite indicator must be updated on in case it is browsed from other than Favorites tab
+                star.setImage(UIImage(named: "star_disabled"), forState: .Normal)
+            }
         }
     }
     

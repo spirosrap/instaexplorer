@@ -23,7 +23,6 @@ class FavoritesTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = false
         self.tabBarController!.tabBar.hidden = false;
-
     }
     
     override func didReceiveMemoryWarning() {

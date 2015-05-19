@@ -32,8 +32,6 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
         self.navigationController?.toolbarHidden = false
         
         //We invoke a performfetch for already fetched sets of image urls(the first stage) to be able to use it's delegate functionality
-        fetchedResultsController.performFetch(nil)
-        fetchedResultsController.delegate = self
         
 //        imageInfoView?.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.70)
 //        imageInfoView.hidden = true
@@ -79,6 +77,9 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
+        fetchedResultsController.performFetch(nil)
+        fetchedResultsController.delegate = self
+
         self.tableView.editing = false
         
         self.navigationController?.navigationBarHidden = false
@@ -104,7 +105,7 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
         fetchRequest.predicate = NSPredicate(format: "favorite == %@", l);
 
         let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
-            managedObjectContext: self.sharedContext,
+            managedObjectContext: CoreDataStackManager.sharedInstance().favoritesManagedObjectContext!,
             sectionNameKeyPath: nil,
             cacheName: nil)
         

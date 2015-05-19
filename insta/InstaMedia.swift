@@ -109,7 +109,7 @@ class InstaMedia: NSManagedObject {
         dictionary["imagePath"] = media.imagePath
         dictionary["profileImagePath"] = media.profileImagePath
         dictionary["link"] = media.link
-        dictionary["instaLocation"] = media.instaLocation
+        dictionary["instaLocation"] = nil
         dictionary["favorite"] = media.favorite
         
         return InstaMedia(dictionary: dictionary,context: context)

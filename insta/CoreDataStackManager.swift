@@ -107,13 +107,16 @@ class CoreDataStackManager {
             return nil
         }
         var managedObjectContext = NSManagedObjectContext()
+
+        managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy //http://stackoverflow.com/questions/6984683/nsmanagedobjectcontext-doesnt-refresh-correctly
+        
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
         }()
     
     lazy var favoritesManagedObjectContext: NSManagedObjectContext? = {
         
-        println("Instantiating the managedObjectContext property")
+        println("Instantiating the favoritesManagedObjectContext property")
         
         // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
         let coordinator = self.persistentStoreCoordinator
@@ -121,7 +124,12 @@ class CoreDataStackManager {
             return nil
         }
         var managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
+        
+        managedObjectContext.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy //http://stackoverflow.com/questions/6984683/nsmanagedobjectcontext-doesnt-refresh-correctly
+        
         managedObjectContext.persistentStoreCoordinator = coordinator
+        
+        
         return managedObjectContext
         }()
     
