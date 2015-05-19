@@ -16,7 +16,7 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
 //    @IBOutlet var imageInfoView: UIImageView!
 //    @IBOutlet var infoLabel: UILabel!
     
-    @IBOutlet weak var selectViewSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var selectViewSegmentedControl: ADVSegmentedControl!
     
     @IBOutlet weak var tableView: UITableView!
     var prefetchedPhotos: [InstaMedia]!//We put the Photo Objects in a variable to use in NSFetchedResultsControllerDelegate methods
@@ -38,6 +38,13 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
         
         tableView.hidden = true
         tableView.delegate = self
+        
+        selectViewSegmentedControl.items = ["Collection", "Table"]
+        selectViewSegmentedControl.font = UIFont(name: "Avenir-Black", size: 12)
+        selectViewSegmentedControl.borderColor = UIColor(white: 1.0, alpha: 0.3)
+        selectViewSegmentedControl.selectedIndex = 0
+        selectViewSegmentedControl.addTarget(self, action: "switchViews:", forControlEvents: .ValueChanged)
+
 
     }
     
@@ -352,19 +359,21 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
         }
     }
     
-    @IBAction func switchViews(sender: UISegmentedControl) {
-        switch (sender.selectedSegmentIndex) {
+    @IBAction func switchViews(sender: ADVSegmentedControl) {
+        switch (sender.selectedIndex) {
         case 0:
             collectionView.hidden = false
             tableView.hidden = true
+            self.collectionView.reloadData()
+            
         case 1:
             collectionView.hidden = true
             tableView.hidden = false
+            self.tableView.reloadData()
         default:
             break;
         }
-
+        
     }
-
 }
 
