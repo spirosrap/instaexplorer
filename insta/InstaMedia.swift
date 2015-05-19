@@ -96,7 +96,7 @@ class InstaMedia: NSManagedObject {
         return images
     }
     
-    static func copyToOtherContext(var media:InstaMedia,context: NSManagedObjectContext) -> InstaMedia{
+    static func copy(var media:InstaMedia,context: NSManagedObjectContext) -> InstaMedia{
         
         var dictionary = [String:AnyObject]()
 
