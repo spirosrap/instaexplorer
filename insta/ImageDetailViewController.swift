@@ -210,7 +210,7 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
             }
         }
         while(true){ // for username:  "((?:^|\\s)(?:@){1}[0-9a-zA-Z_]{1,15})"
-            if let tag = searchforusernames.rangeOfString("((?:^|\\s)(?:@){1}[0-9a-zA-Z_]{1,50})",options: .RegularExpressionSearch){
+            if let tag = searchforusernames.rangeOfString("((?:^|\\s)(?:@){1}[0-9a-zA-Z_.]{1,50})",options: .RegularExpressionSearch){
                 retValue.append(searchforusernames.substringWithRange(tag))
                 searchforusernames = searchforusernames.substringFromIndex(tag.endIndex)
             }else{
