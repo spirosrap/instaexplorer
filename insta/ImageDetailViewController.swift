@@ -254,11 +254,12 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
     @IBAction func favoriteClicked(sender: UIButton) {
         if instaMedia.favorite! == 0{
             instaMedia.favorite = 1
-            
+            CoreDataStackManager.sharedInstance().saveContext()
             star.setImage(UIImage(named: "star_enabled"), forState: .Normal)
         }else{
             instaMedia.favorite = 0
             star.setImage(UIImage(named: "star_disabled"), forState: .Normal)
+            CoreDataStackManager.sharedInstance().saveContext()
         }
     }
     

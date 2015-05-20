@@ -50,7 +50,7 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
 
         editButton = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "edit")
         self.navigationItem.leftBarButtonItem = editButton
-
+        self.editing = false
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -204,6 +204,12 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
         dispatch_async(dispatch_get_main_queue()) {
             self.navigationController!.pushViewController(paController, animated: true)
         }
+        
+        if(self.editing){// If the edit mode is on display the delete icon.
+            cell.deleteImageView.hidden = false
+        }else{
+            cell.deleteImageView.hidden = true
+        }
 
 
         
@@ -312,6 +318,8 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
         if let il = prefetchedPhotos![indexPath.row].instaLocation{
             cell.locationLabel.text = il.name
         }
+        
+
 
         return cell
     }
@@ -344,8 +352,9 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
 
         prefetchedPhotos![indexPath.row].favorite = 0
-
+        CoreDataStackManager.sharedInstance().saveContext()
         self.tableView.reloadData()
+
     }
     
     func tableView(tableView: UITableView, shouldIndentWhileEditingRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -363,6 +372,7 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
             editButton.title = "Edit"
         }
         self.tableView.editing = !self.tableView.editing
+        self.editing  = !self.editing
     }
 
     //MARK: Other: alert view and a custom made information Box
@@ -406,6 +416,15 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
             break;
         }
 
+    }
+    
+    //http://stackoverflow.com/questions/15945497/merge-two-uiimageview-into-single-a-single-uiimageview-in-ios
+    func imageWithView(imageView:UIView) -> UIImage{
+        UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, CGFloat(1.0))
+        imageView.layer.renderInContext(UIGraphicsGetCurrentContext())
+        var img = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return img
     }
 
 }

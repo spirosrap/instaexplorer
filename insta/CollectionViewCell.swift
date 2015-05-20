@@ -10,6 +10,7 @@
 import UIKit
 class CollectionViewCell: UICollectionViewCell {
     //Cell will display the image and the activity indicator while loading.
+    @IBOutlet var deleteImageView: UIImageView!
     @IBOutlet var photo: UIImageView!
     @IBOutlet var indicator: UIActivityIndicatorView!
 }
