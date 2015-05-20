@@ -191,6 +191,14 @@ extension InstaClient {
         }
     }
     
+    //http://stackoverflow.com/questions/15945497/merge-two-uiimageview-into-single-a-single-uiimageview-in-ios
+    func imageWithView(imageView:UIView) -> UIImage{
+        UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, CGFloat(1.0))
+        imageView.layer.renderInContext(UIGraphicsGetCurrentContext())
+        var img = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return img
+    }
 
     
 

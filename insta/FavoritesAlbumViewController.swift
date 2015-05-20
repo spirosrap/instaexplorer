@@ -23,7 +23,6 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
     var prefetchedPhotos: [InstaMedia]!//We put the Photo Objects in a variable to use in NSFetchedResultsControllerDelegate methods
     var newCollectionButton:UIBarButtonItem!
     var location:Location!
-    
     override func viewDidLoad() {
         
         super.viewDidLoad()
@@ -51,6 +50,8 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
         editButton = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "edit")
         self.navigationItem.leftBarButtonItem = editButton
         self.editing = false
+        self.tableView.editing = false
+        
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -79,7 +80,6 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        self.tableView.editing = false
         
         self.navigationController?.navigationBarHidden = false
         self.navigationController?.toolbarHidden = true
@@ -181,7 +181,17 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
             })
         }
         
-        
+        if(self.editing){// If the edit mode is on display the delete icon.
+            cell.deleteImageView = UIImageView(frame: cell.photo.frame)
+            cell.deleteImageView.image = UIImage(named: "delete")
+            cell.addSubview(cell.deleteImageView)
+            cell.photo.image = InstaClient.sharedInstance().imageWithView(cell.photo)
+        }else{
+            if let i = cell.image{
+              cell.deleteImageView.removeFromSuperview()
+            }
+        }
+
         return cell
     }
     
@@ -190,25 +200,22 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
         let photo = prefetchedPhotos[indexPath.row]
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
         let paController = self.storyboard!.instantiateViewControllerWithIdentifier("ImageDetailViewController")! as! ImageDetailViewController
-        
-        if let t = photo.text{
-            paController.userComment = t
-            println("comment1: \(t)")
-        }
-        paController.mediaID = photo.mediaID!
-        paController.instaMedia = photo
-        var a = paController.view//Important. fatal error if not present. We need to first allocate the view.(Whole view be present in memory)
+        if(!self.editing){// If the edit mode is on display the delete icon.
+            if let t = photo.text{
+                paController.userComment = t
+            }
+            paController.mediaID = photo.mediaID!
+            paController.instaMedia = photo
+            var a = paController.view//Important. fatal error if not present. We need to first allocate the view.(Whole view be present in memory)
 
-
-
-        dispatch_async(dispatch_get_main_queue()) {
-            self.navigationController!.pushViewController(paController, animated: true)
-        }
-        
-        if(self.editing){// If the edit mode is on display the delete icon.
-            cell.deleteImageView.hidden = false
+            dispatch_async(dispatch_get_main_queue()) {
+                self.navigationController!.pushViewController(paController, animated: true)
+            }
         }else{
-            cell.deleteImageView.hidden = true
+            prefetchedPhotos![indexPath.row].favorite = 0
+            CoreDataStackManager.sharedInstance().saveContext()
+            self.collectionView.reloadData()
+            self.tableView.reloadData()
         }
 
 
@@ -373,6 +380,8 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
         }
         self.tableView.editing = !self.tableView.editing
         self.editing  = !self.editing
+        self.collectionView.reloadData()
+        self.tableView.reloadData()
     }
 
     //MARK: Other: alert view and a custom made information Box
@@ -406,26 +415,15 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
         case 0:
             collectionView.hidden = false
             tableView.hidden = true
-            self.collectionView.reloadData()
-            
         case 1:
             collectionView.hidden = true
             tableView.hidden = false
-            self.tableView.reloadData()
         default:
             break;
         }
 
     }
     
-    //http://stackoverflow.com/questions/15945497/merge-two-uiimageview-into-single-a-single-uiimageview-in-ios
-    func imageWithView(imageView:UIView) -> UIImage{
-        UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, CGFloat(1.0))
-        imageView.layer.renderInContext(UIGraphicsGetCurrentContext())
-        var img = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return img
-    }
 
 }
 
