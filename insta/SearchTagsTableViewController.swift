@@ -98,15 +98,17 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if (self.resultSearchController.active) {
 //            filteredTableData[indexPath.row]
+            let selectedTag = filteredTableData[indexPath.row].0
             let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("displayTaggedMedia")! as! PhotoAlbumViewController
-            InstaClient.sharedInstance().getMediaFromTag(filteredTableData[indexPath.row].0, completionHandler: { (result, error) -> Void in
+            InstaClient.sharedInstance().getMediaFromTag(selectedTag, completionHandler: { (result, error) -> Void in
                 if error == nil{
                     dispatch_async(dispatch_get_main_queue(), {
                         detailController.prefetchedPhotos = result! as [InstaMedia]
                         self.resultSearchController.active = false
                         
                         detailController.navigationController?.navigationBar.hidden = false
-                        
+                        detailController.navigationItem.title =   "#" + selectedTag
+
                         self.navigationController!.pushViewController(detailController, animated: true)
                     })
                 }
@@ -127,6 +129,7 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
                 for r in result!{
                     array += [(r.name!,r.media_count!)]
                 }
+                
                 dispatch_async(dispatch_get_main_queue(), {
                       self.filteredTableData = array
                     self.tableView.reloadData()

@@ -2461,22 +2461,22 @@
                                 <exclude reference="7rO-ZZ-hZ2"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="OIp-CN-4QW"/>
-                                <exclude reference="P2A-ec-Dgg"/>
-                                <exclude reference="WmE-AN-eT7"/>
-                                <exclude reference="pIm-sn-LGg"/>
-                                <exclude reference="ssG-lb-U3i"/>
                                 <exclude reference="0Jd-qi-Esi"/>
                                 <exclude reference="Iog-Db-Nvn"/>
                                 <exclude reference="cDa-aC-vXw"/>
                                 <exclude reference="gIU-X5-U1o"/>
                                 <exclude reference="q8r-fH-aC7"/>
+                                <exclude reference="OIp-CN-4QW"/>
+                                <exclude reference="P2A-ec-Dgg"/>
+                                <exclude reference="WmE-AN-eT7"/>
+                                <exclude reference="pIm-sn-LGg"/>
+                                <exclude reference="ssG-lb-U3i"/>
+                                <exclude reference="dbV-Ll-Mdw"/>
                                 <exclude reference="Pcv-A0-7aw"/>
                                 <exclude reference="bcP-di-Opy"/>
                                 <exclude reference="oIP-sD-G5k"/>
                                 <exclude reference="qQ7-FP-0Gt"/>
                                 <exclude reference="yUV-dq-mb6"/>
-                                <exclude reference="dbV-Ll-Mdw"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -2486,6 +2486,11 @@
                                 <include reference="7rO-ZZ-hZ2"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="0Jd-qi-Esi"/>
+                                <include reference="Iog-Db-Nvn"/>
+                                <include reference="cDa-aC-vXw"/>
+                                <include reference="gIU-X5-U1o"/>
+                                <include reference="q8r-fH-aC7"/>
                                 <include reference="OIp-CN-4QW"/>
                                 <include reference="P2A-ec-Dgg"/>
                                 <exclude reference="Ppy-Eu-RJ2"/>
@@ -2493,18 +2498,13 @@
                                 <exclude reference="hBx-Mq-Pcw"/>
                                 <include reference="pIm-sn-LGg"/>
                                 <include reference="ssG-lb-U3i"/>
-                                <include reference="0Jd-qi-Esi"/>
-                                <include reference="Iog-Db-Nvn"/>
-                                <include reference="cDa-aC-vXw"/>
-                                <include reference="gIU-X5-U1o"/>
-                                <include reference="q8r-fH-aC7"/>
+                                <include reference="dbV-Ll-Mdw"/>
+                                <exclude reference="rpF-Jy-Dik"/>
                                 <include reference="Pcv-A0-7aw"/>
                                 <include reference="bcP-di-Opy"/>
                                 <include reference="oIP-sD-G5k"/>
                                 <exclude reference="qQ7-FP-0Gt"/>
                                 <include reference="yUV-dq-mb6"/>
-                                <include reference="dbV-Ll-Mdw"/>
-                                <exclude reference="rpF-Jy-Dik"/>
                             </mask>
                         </variation>
                     </view>

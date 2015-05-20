@@ -184,11 +184,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "insta/SearchTagsTableViewController.swift"
-            timestampString = "453725612.319275"
+            timestampString = "453842826.424988"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "138"
-            endingLineNumber = "138"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
             landmarkName = "updateSearchResultsForSearchController(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -248,11 +248,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "insta/FavoritesAlbumViewController.swift"
-            timestampString = "453727678.367969"
+            timestampString = "453835742.112165"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
+            startingLineNumber = "63"
+            endingLineNumber = "63"
             landmarkName = "collectionView(_:layout:sizeForItemAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -264,7 +264,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "insta/FavoritesAlbumViewController.swift"
-            timestampString = "453733981.707475"
+            timestampString = "453837976.324862"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "134"
@@ -280,12 +280,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "insta/FavoritesAlbumViewController.swift"
-            timestampString = "453814347.550196"
+            timestampString = "453841650.291384"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "348"
-            endingLineNumber = "348"
-            landmarkName = "tableView(_:canEditRowAtIndexPath:)"
+            startingLineNumber = "347"
+            endingLineNumber = "347"
+            landmarkName = "tableView(_:didSelectRowAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -296,12 +296,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "insta/FavoritesAlbumViewController.swift"
-            timestampString = "453814347.550196"
+            timestampString = "453841650.291384"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "374"
-            endingLineNumber = "374"
-            landmarkName = "edit()"
+            startingLineNumber = "372"
+            endingLineNumber = "372"
+            landmarkName = "tableView(_:editingStyleForRowAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -312,12 +312,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "insta/FavoritesAlbumViewController.swift"
-            timestampString = "453814347.550196"
+            timestampString = "453841650.291384"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "370"
-            endingLineNumber = "370"
-            landmarkName = "edit()"
+            startingLineNumber = "368"
+            endingLineNumber = "368"
+            landmarkName = "tableView(_:shouldIndentWhileEditingRowAtIndexPath:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -344,13 +344,105 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "insta/FavoritesAlbumViewController.swift"
-            timestampString = "453814347.550196"
+            timestampString = "453837976.324862"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "355"
-            endingLineNumber = "355"
-            landmarkName = "tableView(_:commitEditingStyle:forRowAtIndexPath:)"
-            landmarkType = "5">
+            startingLineNumber = "97"
+            endingLineNumber = "97"
+            landmarkName = "FavoritesAlbumViewController"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "instaplaces.FavoritesAlbumViewController.fetchedResultsController.getter : ObjectiveC.NSFetchedResultsController"
+                  moduleName = "instaplaces"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spirosrap/Desktop/insta/insta/FavoritesAlbumViewController.swift"
+                  timestampString = "453837954.110369"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "15">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "instaplaces.FavoritesAlbumViewController.fetchedResultsController.getter : ObjectiveC.NSFetchedResultsController"
+                  moduleName = "instaplaces"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spirosrap/Desktop/insta/insta/FavoritesAlbumViewController.swift"
+                  timestampString = "453837954.110638"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "100"
+                  endingLineNumber = "100"
+                  offsetFromSymbolStart = "204">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "instaplaces.FavoritesAlbumViewController.fetchedResultsController.setter : ObjectiveC.NSFetchedResultsController"
+                  moduleName = "instaplaces"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spirosrap/Desktop/insta/insta/FavoritesAlbumViewController.swift"
+                  timestampString = "453837954.110846"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "instaplaces.FavoritesAlbumViewController.init (instaplaces.FavoritesAlbumViewController.Type)(nibName : Swift.Optional&lt;Swift.String&gt;, bundle : Swift.Optional&lt;ObjectiveC.NSBundle&gt;) -&gt; instaplaces.FavoritesAlbumViewController"
+                  moduleName = "instaplaces"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spirosrap/Desktop/insta/insta/FavoritesAlbumViewController.swift"
+                  timestampString = "453837954.111034"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "100"
+                  endingLineNumber = "100"
+                  offsetFromSymbolStart = "332">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "instaplaces.FavoritesAlbumViewController.init (instaplaces.FavoritesAlbumViewController.Type)(coder : ObjectiveC.NSCoder) -&gt; instaplaces.FavoritesAlbumViewController"
+                  moduleName = "instaplaces"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spirosrap/Desktop/insta/insta/FavoritesAlbumViewController.swift"
+                  timestampString = "453837954.111228"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "100"
+                  endingLineNumber = "100"
+                  offsetFromSymbolStart = "258">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "instaplaces.FavoritesAlbumViewController.(fetchedResultsController.getter : ObjectiveC.NSFetchedResultsController).(closure #1)"
+                  moduleName = "instaplaces"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/spirosrap/Desktop/insta/insta/FavoritesAlbumViewController.swift"
+                  timestampString = "453837954.111446"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "102"
+                  endingLineNumber = "102"
+                  offsetFromSymbolStart = "20">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
