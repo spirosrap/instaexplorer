@@ -48,7 +48,12 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
         selectViewSegmentedControl.selectedIndex = 0
         selectViewSegmentedControl.addTarget(self, action: "switchViews:", forControlEvents: .ValueChanged)
 
-        
+        //"New Collection" Button and it's color
+        newCollectionButton = UIBarButtonItem(title: "New Collection", style: .Plain, target: self, action: "newCollection")
+        var flexSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
+        newCollectionButton.tintColor =  UIColor(red: (255/255.0), green: (0/255.0), blue: (132/255.0), alpha: 1.0)
+                self.navigationItem.rightBarButtonItem = newCollectionButton
+
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -78,11 +83,6 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
         
         setRegion() //Set the region on the top map based on the selected Location
         
-        //"New Collection" Button and it's color
-        newCollectionButton = UIBarButtonItem(title: "New Collection", style: .Plain, target: self, action: "newCollection")
-        var flexSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
-        newCollectionButton.tintColor =  UIColor(red: (255/255.0), green: (0/255.0), blue: (132/255.0), alpha: 1.0)
-        self.toolbarItems = [flexSpace,newCollectionButton,flexSpace]
     }
     
     
@@ -239,54 +239,56 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
         self.map.setRegion(region, animated: true)
     }
     
-    //    //MARK: New Collection Button
-    //    //Generate a new collection of (12) images
-    //    func newCollection() -> Bool { //I added a return value to exit when there is no connection
-    //
-    //        var networkReachability = Reachability.reachabilityForInternetConnection()
-    //        var networkStatus = networkReachability.currentReachabilityStatus()
-    //
-    //        if(networkStatus.value == NotReachable.value){// Before searching fοr an additonal Photos in Flickr check if there is an available internet connection
-    //            displayMessageBox("No Network Connection")
-    //            return false
-    //        }
-    //
-    //        let applicationDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)//the appdelegate keeps a "Statistics" instance.
-    //        informationBox("Connecting to Flickr",animate:true)
-    //        newCollectionButton.enabled = false
-    //        Flickr.sharedInstance().populateLocationPhotos(location) { (success,photosArray, errorString) in
-    //            if success {
-    //                println("finished retrieving imagepaths")
-    //
-    //                dispatch_async(dispatch_get_main_queue(), {
-    //
-    //                    //Deleting the previous set of photos. It's inside dispatch_async because
-    //                    //We avoid having a blank screen(deleted photos) while waiting a reply from flickr
-    //                    for p in self.location.photos!{
-    //                        CoreDataStackManager.sharedInstance().deleteObject(p)
-    //                    }
-    //
-    //                    if let pd = photosArray{//We create the Photo instances from the photosArray and save them.
-    //                        for p in pd{
-    //                            let photo = Photo(dictionary: ["title":p[0],"imagePath":p[1]], context: self.sharedContext)
-    //                            photo.location = self.location
-    //                            applicationDelegate.stats.photosDisplayed += 1 //Save the number of displayed images for statistics.
-    //                            CoreDataStackManager.sharedInstance().saveContext()
-    //                        }
-    //                    }
-    //                    self.informationBox(nil,animate:false)
-    //                    self.newCollectionButton.enabled = true
-    //                    self.collectionView.reloadData()
-    //                })
-    //            } else {
-    //                self.informationBox(nil,animate:false)
-    //                self.displayMessageBox(errorString!) //Its appropriate at this point to display an Alert
-    //                self.newCollectionButton.enabled = true
-    //                println(errorString!)
-    //            }
-    //        }
-    //        return true
-    //    }
+        //MARK: New Collection Button
+        //Generate a new collection
+        func newCollection() -> Bool { //I added a return value to exit when there is no connection
+    
+//            var networkReachability = Reachability.reachabilityForInternetConnection()
+//            var networkStatus = networkReachability.currentReachabilityStatus()
+//    
+//            if(networkStatus.value == NotReachable.value){// Before searching fοr an additonal Photos in Flickr check if there is an available internet connection
+//                displayMessageBox("No Network Connection")
+//                return false
+//            }
+    
+            let applicationDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)//the appdelegate keeps a "Statistics" instance.
+            informationBox("Connecting to Instagram",animate:true)
+            newCollectionButton.enabled = false
+
+            InstaClient.sharedInstance().getMedia(Double(location.latitude), longitude: Double(location.longitude), distance: 100) { (result, error) -> Void in
+                
+                if error == nil {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        //                                self.informationBox(nil,animate:false)
+                        //instantiate the controller and pass the parameter location.
+
+                        for p in self.prefetchedPhotos{
+                            if(p.favorite != 1){
+                               CoreDataStackManager.sharedInstance().deleteObject(p)
+                            }
+                        }
+
+                        for il in result!{
+                            il.location = self.location
+                        }
+                        
+                        CoreDataStackManager.sharedInstance().saveContext()
+                               dispatch_async(dispatch_get_main_queue(), {
+                                self.tableView.reloadData()
+                                self.collectionView.reloadData()
+                                self.newCollectionButton.enabled = true
+
+                        })
+                    }
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), {
+                        //                                self.informationBox(nil,animate:false)
+                        self.displayMessageBox("No available Photos Found")//Its appropriate at this point to display an Alert
+                    })
+                }
+            }
+            return true
+        }
     
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -308,10 +310,6 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("tablecell", forIndexPath: indexPath) as! MediaTableViewCell
-        
-        
-        
-        
         
         
         var frame = cell.profileIm.frame
