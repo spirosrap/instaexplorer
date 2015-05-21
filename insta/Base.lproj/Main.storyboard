@@ -22,11 +22,6 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="wxO-6M-MK7">
                                 <rect key="frame" x="0.0" y="136" width="600" height="415"/>
                             </mapView>
-                            <searchBar contentMode="redraw" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ogv-Vu-jEe">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
-                                <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </searchBar>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yOv-Lt-CUJ">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" red="0.10980392160000001" green="0.10980392160000001" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -56,10 +51,17 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <searchBar contentMode="redraw" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ogv-Vu-jEe">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="3gw-bI-J8Y" firstAttribute="top" secondItem="Sjt-nO-Jp2" secondAttribute="topMargin" constant="19" id="3DN-ef-Vb1"/>
+                            <constraint firstItem="3gw-bI-J8Y" firstAttribute="top" secondItem="Sjt-nO-Jp2" secondAttribute="topMargin" constant="19" id="3DN-ef-Vb1">
+                                <variation key="heightClass=regular-widthClass=compact" constant="64"/>
+                            </constraint>
                             <constraint firstItem="wxO-6M-MK7" firstAttribute="top" secondItem="4Sg-n8-pjR" secondAttribute="bottom" id="75g-qU-mLg"/>
                             <constraint firstItem="3gw-bI-J8Y" firstAttribute="bottom" secondItem="ogv-Vu-jEe" secondAttribute="top" id="76x-k6-AAw"/>
                             <constraint firstItem="zjq-mg-8e6" firstAttribute="top" secondItem="wxO-6M-MK7" secondAttribute="bottom" id="Hvi-ES-HBo"/>
@@ -122,7 +124,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iCw-6G-eBT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1907" y="-819"/>
+            <point key="canvasLocation" x="1906.5" y="-819"/>
         </scene>
         <!--Search Tags-->
         <scene sceneID="mae-TA-9cv">
@@ -276,10 +278,9 @@
         <!--Map-->
         <scene sceneID="0G1-gf-Md9">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="wcn-wG-NoB" sceneMemberID="viewController">
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="wcn-wG-NoB" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Map" image="map-7_30x30" id="ZcQ-vM-GxI"/>
                     <toolbarItems/>
-                    <nil key="simulatedTopBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Qmz-jr-rI2">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

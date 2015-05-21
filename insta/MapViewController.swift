@@ -23,12 +23,11 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     
     var firstDrop = true // This is a variable to determine when it is the first time the user long clicks in order to avoid having the effect of creating an annotation. (In order to create the drag effect we create and remove annotations very fast).(The effect seems like the pin is dropping from outside the phone(up))
     var longPressRecognizer:UILongPressGestureRecognizer!
-    
+    var editButton:UIBarButtonItem!
     //MARK: ViewDidLoad,ViewWillAppear,viewWillDisappear
     override func viewDidLoad() {
         super.viewDidLoad()
         self.mapView.delegate = self
-        self.navigationController?.navigationBarHidden = true
         self.navigationItem.hidesBackButton = true
         restoreMapRegion(false) //Remembers where the user scrolled in the map.
         longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressed:")
@@ -45,6 +44,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                 let annotation = MKPointAnnotation()
                 var tapPoint = CLLocationCoordinate2D(latitude: Double(l.latitude), longitude: Double(l.longitude)) //We need to cast to double because the parameters were NSNumber
                 annotation.coordinate = tapPoint
+                annotation.title = "Collection:"
                 annotationsLocations[annotation.hash] = l //Setting the dictionary that will enable us to segway to photo album
                 self.mapView.addAnnotation(annotation)
             }
@@ -60,9 +60,22 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         segment.borderColor = UIColor(white: 1.0, alpha: 0.3)
         segment.selectedIndex = 0
         segment.addTarget(self, action: "switchSegmented:", forControlEvents: .ValueChanged)
-
         
+        
+        editButton = UIBarButtonItem(title: "Add", style: .Done, target: self, action: "edit")
+        self.navigationItem.leftBarButtonItem = editButton
+
     }
+    
+    func edit(){
+        if editButton.title! == "Add"{
+            editButton.title = "Delete"
+        }else{
+            editButton.title = "Add"
+        }
+    }
+
+    
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
@@ -90,7 +103,6 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.navigationBarHidden = true
         self.tabBarController!.tabBar.hidden = false;
 
 
@@ -125,6 +137,23 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         return fetchedResultsController
         
         }()
+    
+    func instaMediafetchedResultsController(var location:Location) -> NSFetchedResultsController  {
+        
+        let fetchRequest = NSFetchRequest(entityName: "InstaMedia")
+        
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "username", ascending: true)]
+        fetchRequest.predicate = NSPredicate(format: "location == %@", location);
+        
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+            managedObjectContext: self.sharedContext,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        return fetchedResultsController
+        
+        }
+
     
     var sharedContext: NSManagedObjectContext {
         return CoreDataStackManager.sharedInstance().managedObjectContext!
@@ -175,9 +204,10 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         let applicationDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
         if (sender.state == .Began)
         {
+            firstDrop = true
+
             var annotation = MKPointAnnotation() //We need to create a local variable to not mess up the global
             
-            firstDrop = true
             let point:CGPoint = sender.locationInView(self.mapView) //The point the user tapped (CGPoint)
             var tapPoint:CLLocationCoordinate2D = mapView.convertPoint(point, toCoordinateFromView: self.mapView) //The point the user tapped (CLLocationCoordinate2D)
             
@@ -200,28 +230,19 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
             
         } else if (sender.state == .Ended){//The user has lifted the finger.
             firstDrop = false
+
             //Create the new Location and save it to the variable selectedLocation
             selectedLocation = Location(dictionary: ["latitude":self.annotation.coordinate.latitude,"longitude":self.annotation.coordinate.longitude], context: sharedContext)
             InstaClient.sharedInstance().getMedia(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 100, completionHandler: { (result, error) -> Void in
-                
+                self.annotation.title = "Collection:"
                 for il in result!{
                     il.location = self.selectedLocation
                 }
-//                println(result!.count)
+
                 CoreDataStackManager.sharedInstance().saveContext()
-                //instantiate the controller and pass the parameter location.
-//                let tableController = self.storyboard!.instantiateViewControllerWithIdentifier("InstaLocationsTableViewController")! as! InstaLocationsTableViewController
-//                tableController.instaLocations = result! as [InstaLocation]
-//                self.annotationsLocations[self.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
-//                
-//                dispatch_async(dispatch_get_main_queue()) {
-//                    //                self.informationBox(nil,animate:false)
-//                    self.navigationController!.pushViewController(tableController, animated: true)
-//                }
-                
+
+
                 let paController = self.storyboard!.instantiateViewControllerWithIdentifier("LocationPhotoAlbumViewController")! as! LocationPhotoAlbumViewController
-//                paController.title = self.instaLocations[indexPath.row].name
-//                
                 paController.location = self.selectedLocation
                 
                 dispatch_async(dispatch_get_main_queue()) {
@@ -231,46 +252,10 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                 self.annotationsLocations[self.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
 
                 self.mapView.deselectAnnotation(self.annotation, animated: false)
-                
-                
+                self.annotationsToRemove = []
+
             })
             
-//            applicationDelegate.stats.locationsAdded += 1 //Location Added. For Stats.
-//            informationBox("Connecting to Flickr",animate:true)
-//            Flickr.sharedInstance().populateLocationPhotos(selectedLocation) { (success,photosArray, errorString) in
-//                if success {
-//                    if let pd = photosArray{//We create the Photo instances from the photosArray and save them.The actual files aren't downloaded yet.
-//                        for p in pd{
-//                            let photo = Photo(dictionary: ["title":p[0],"imagePath":p[1]], context: self.sharedContext)
-//                            photo.location = self.selectedLocation
-//                            applicationDelegate.stats.photosDisplayed += 1 //Save statistic of Photos Displayed
-//                        }
-//                    }
-//                    CoreDataStackManager.sharedInstance().saveContext()
-//                    //instantiate the controller and pass the parameter location.
-//                    let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("CollectionView")! as! PhotoAlbumViewController
-//                    detailController.location = self.selectedLocation
-//                    
-//                    self.annotationsLocations[self.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
-//                    
-//                    dispatch_async(dispatch_get_main_queue()) {
-//                        self.informationBox(nil,animate:false)
-//                        self.navigationController!.pushViewController(detailController, animated: true)
-//                    }
-//                    
-//                    self.mapView.deselectAnnotation(self.annotation, animated: false)
-//                    self.annotationsToRemove = []
-//                    
-//                } else {
-//                    dispatch_async(dispatch_get_main_queue(), {
-//                        self.informationBox(nil,animate:false)
-//                        self.displayMessageBox(errorString!)//Its appropriate at this point to display an Alert
-//                        self.mapView.removeAnnotation(self.annotation)
-//                        CoreDataStackManager.sharedInstance().deleteObject(self.selectedLocation)
-//                        println(errorString!)
-//                    })
-//                }
-//            }
         }
         
         return true
@@ -279,67 +264,93 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     //MARK: MapView Related
     
     //Select Annotation
-    func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
-        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("LocationPhotoAlbumViewController")! as! LocationPhotoAlbumViewController
-        if let l = annotationsLocations[view.annotation.hash]{//Determine the location instance from the hash of selected annotation
-            detailController.location = l
-            selectedLocation = l //Set The selected location as a global variable
-            
-            if let p = l.instaMedia{
-                if p.isEmpty{ //If all the photos of the album were deleted we fetch another batch of Photos.
-//                    informationBox("Connecting to Flickr",animate:true)
-                    InstaClient.sharedInstance().getMedia(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 100) { (result, error) -> Void in
-                        
-                        if error == nil {
-                            dispatch_async(dispatch_get_main_queue()) {
-//                                self.informationBox(nil,animate:false)
-                                //instantiate the controller and pass the parameter location.
-                                detailController.location = l
-                                
-                                for il in result!{
-                                    il.location = self.selectedLocation
-                                }
-                                
-                                CoreDataStackManager.sharedInstance().saveContext()
-                                self.tabBarController!.tabBar.hidden = true;
-                                self.navigationController!.pushViewController(detailController, animated: true)
-                            }
-                        } else {
-                            dispatch_async(dispatch_get_main_queue(), {
-//                                self.informationBox(nil,animate:false)
-                                self.displayMessageBox("No available Photos Found")//Its appropriate at this point to display an Alert
-                                self.mapView.removeAnnotation(view.annotation)
-                                CoreDataStackManager.sharedInstance().deleteObject(self.selectedLocation)
-                                println(error)
-                            })
-                        }
-                    }
-                }else{
-                    self.tabBarController!.tabBar.hidden = true;
-                    self.navigationController!.pushViewController(detailController, animated: true)
-                }
-            }
-        }
-        self.mapView.deselectAnnotation(view.annotation, animated: false)
-    }
+//    func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
+//        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("LocationPhotoAlbumViewController")! as! LocationPhotoAlbumViewController
+//        if let l = annotationsLocations[view.annotation.hash]{//Determine the location instance from the hash of selected annotation
+//            detailController.location = l
+//            selectedLocation = l //Set The selected location as a global variable
+//            
+//            if let p = l.instaMedia{
+//                if p.isEmpty{ //If all the photos of the album were deleted we fetch another batch of Photos.
+////                    informationBox("Connecting to Flickr",animate:true)
+//                    InstaClient.sharedInstance().getMedia(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 100) { (result, error) -> Void in
+//                        
+//                        if error == nil {
+//                            dispatch_async(dispatch_get_main_queue()) {
+////                                self.informationBox(nil,animate:false)
+//                                //instantiate the controller and pass the parameter location.
+//                                detailController.location = l
+//                                
+//                                for il in result!{
+//                                    il.location = self.selectedLocation
+//                                }
+//                                
+//                                CoreDataStackManager.sharedInstance().saveContext()
+//                                self.tabBarController!.tabBar.hidden = true;
+//                                self.navigationController!.pushViewController(detailController, animated: true)
+//                            }
+//                        } else {
+//                            dispatch_async(dispatch_get_main_queue(), {
+////                                self.informationBox(nil,animate:false)
+//                                self.displayMessageBox("No available Photos Found")//Its appropriate at this point to display an Alert
+//                                self.mapView.removeAnnotation(view.annotation)
+//                                CoreDataStackManager.sharedInstance().deleteObject(self.selectedLocation)
+//                                println(error)
+//                            })
+//                        }
+//                    }
+//                }else{
+//                    self.tabBarController!.tabBar.hidden = true;
+//                    self.navigationController!.pushViewController(detailController, animated: true)
+//                }
+//            }
+//        }
+//        self.mapView.deselectAnnotation(view.annotation, animated: false)
+//    }
     
-    
-    //Customise the annotation color etc..
-    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
-        if annotation is MKPointAnnotation {
-            let pinAnnotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "myPin")
-            
-            pinAnnotationView.pinColor = .Green
-            pinAnnotationView.draggable = false
-            
-            pinAnnotationView.canShowCallout = false
-            firstDrop ? (pinAnnotationView.animatesDrop = true) : (pinAnnotationView.animatesDrop = false) //If the it is the first time the user makes the longpress use the animateDrop, otherwise don't to create an effect of a moving/draggable annotation.
-            
-            return pinAnnotationView
-        }
+    //MARK: Map Related
+    func mapView(mapView: MKMapView!, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
-        return nil
+        if control == annotationView.rightCalloutAccessoryView {
+            
+        }
     }
+
+    
+    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+        let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "myPin")
+        if annotation is MKPointAnnotation {
+            firstDrop ? (pinView!.animatesDrop = true) : (pinView!.animatesDrop = false) //If the it is the first time the user makes the longpress use the animateDrop, otherwise don't to create an effect of a moving/draggable annotation.
+            pinView!.pinColor = .Purple
+            pinView!.canShowCallout = true
+//            pinView!.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
+            var imv = UIImageView(frame: pinView!.frame)
+            if let location = annotationsLocations[annotation.hash]{
+                var frcf = instaMediafetchedResultsController(annotationsLocations[annotation.hash]!)
+                frcf.performFetch(nil)
+                let sectionInfo = frcf.sections![0] as! NSFetchedResultsSectionInfo
+                
+                if  !sectionInfo.objects.isEmpty{
+                    var im  = sectionInfo.objects as! [InstaMedia]
+                    InstaClient.sharedInstance().setImage(im[0].imagePath!, imageView: imv)
+                    pinView!.rightCalloutAccessoryView = imv
+                }else{
+                    pinView!.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
+                }
+            }else{
+                pinView!.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
+            }
+            
+        }
+        else {
+            pinView!.annotation = annotation
+        }
+        return pinView
+    }
+
+    
+    
+    
     //This is not used. It could be used in case that we wanted a draggable annotation but this isn't feesible because can't have both select and drag.
     func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
         if(newState == .Starting){
