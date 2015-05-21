@@ -234,33 +234,34 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
             //Create the new Location and save it to the variable selectedLocation
             selectedLocation = Location(dictionary: ["latitude":self.annotation.coordinate.latitude,"longitude":self.annotation.coordinate.longitude], context: sharedContext)
             InstaClient.sharedInstance().getMedia(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 100, completionHandler: { (result, error) -> Void in
-                self.annotation.title = " "
-                for il in result!{
-                    il.location = self.selectedLocation
+                if(result! != []){
+                    self.annotation.title = " "
+                    for il in result!{
+                        il.location = self.selectedLocation
+                    }
+
+                    CoreDataStackManager.sharedInstance().saveContext()
+
+
+                    let paController = self.storyboard!.instantiateViewControllerWithIdentifier("LocationPhotoAlbumViewController")! as! LocationPhotoAlbumViewController
+                    paController.location = self.selectedLocation
+                    
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.tabBarController!.tabBar.hidden = true;
+                        self.navigationController!.pushViewController(paController, animated: true)
+                    }
+                    self.annotationsLocations[self.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
+
+                    var view = self.mapView.viewForAnnotation(self.annotation)
+                    var imv = UIImageView(frame: view!.frame)
+                    var im = result![0] as InstaMedia
+                    InstaClient.sharedInstance().setImage(im.imagePath!, imageView: imv)
+                    
+                    self.mapView.viewForAnnotation(self.annotation).leftCalloutAccessoryView = imv //It will display the first image as the accecory view but it's really a random image. It will be changed in subsequent runs.
+                       self.mapView.viewForAnnotation(self.annotation).rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
+                    self.mapView.deselectAnnotation(self.annotation, animated: false)
+                    self.annotationsToRemove = []
                 }
-
-                CoreDataStackManager.sharedInstance().saveContext()
-
-
-                let paController = self.storyboard!.instantiateViewControllerWithIdentifier("LocationPhotoAlbumViewController")! as! LocationPhotoAlbumViewController
-                paController.location = self.selectedLocation
-                
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.tabBarController!.tabBar.hidden = true;
-                    self.navigationController!.pushViewController(paController, animated: true)
-                }
-                self.annotationsLocations[self.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
-
-                var view = self.mapView.viewForAnnotation(self.annotation)
-                var imv = UIImageView(frame: view!.frame)
-                var im = result![0] as InstaMedia
-                InstaClient.sharedInstance().setImage(im.imagePath!, imageView: imv)
-                
-                self.mapView.viewForAnnotation(self.annotation).leftCalloutAccessoryView = imv //It will display the first image as the accecory view but it's really a random image. It will be changed in subsequent runs.
-                   self.mapView.viewForAnnotation(self.annotation).rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
-                self.mapView.deselectAnnotation(self.annotation, animated: false)
-                self.annotationsToRemove = []
-
             })
             
         }
