@@ -312,9 +312,6 @@ class InstaClient : NSObject {
                 
 //                println(self.imagePath(changedPath))
                 
-                if (NSKeyedUnarchiver.unarchiveObjectWithFile(self.imagePath(changedPath)) != nil){
-                    println("ok")
-                }
                 
                 photo.image = image
                 completionHandler(success: true, errorString: nil)

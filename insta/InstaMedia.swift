@@ -68,9 +68,8 @@ class InstaMedia: NSManagedObject {
                 dictionary["link"] = result["link"]!
                 
                 dictionary["userID"] = result["user"]!.valueForKey("id")!
-                println(dictionary["userID"])
                 dictionary["mediaID"] = result["id"]!
-                println(dictionary["mediaID"])
+
                 
                 if let text: AnyObject = result["caption"]!.valueForKey("text"){
                     dictionary["text"] = text
@@ -82,7 +81,6 @@ class InstaMedia: NSManagedObject {
                 
                 if let lat =  result["location"]!.valueForKey("latitude") as? Double,let lng = result["location"]!.valueForKey("longitude") as? Double,let name = result["location"]!.valueForKey("name") as? String,let id = result["location"]!.valueForKey("id") as? Double {
                     
-                    println("lat: \(lat) lng: \(lng) id: \(id)")
                     dictionary["instaLocation"] = InstaLocation(dictionary: ["name":name as String,"id":"\(id as Double)","longitude":lng as Double,"latitude":lat as Double], context: context)
                 }
                 

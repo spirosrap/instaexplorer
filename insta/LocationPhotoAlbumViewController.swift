@@ -190,7 +190,6 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
         
         if let t = photo.text{
             paController.userComment = t
-            println("comment1: \(t)")
         }
         paController.mediaID = photo.mediaID!
         paController.instaMedia = photo
@@ -338,7 +337,6 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
         
         if let t = photo.text{
             paController.userComment = t
-            println("comment1: \(t)")
         }
         paController.mediaID = photo.mediaID!
         paController.instaMedia = photo

@@ -65,7 +65,6 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
         
         if  !sectionInfo.objects.isEmpty{
             instaMedia = sectionInfo.objects[0] as! InstaMedia
-            println(instaMedia.text)
             //            UIColor(red: 0.051, green: 0.494, blue: 0.839, alpha: 1.00) //Location
             //            UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00) //Username
             //            UIFont boldSystemFontOfSize:fontSize
@@ -149,7 +148,6 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
 
     
     func clickableTouched(recognizer:UITapGestureRecognizer) -> Void{
-        println(recognizer.state.rawValue)
         
 //        if(recognizer.state == .Changed){
 //            attributedString  = atex(userComment,fontname: "HelveticaNeue",textColor:UIColor.blackColor(),linkColor: UIColor(red: 0.051, green: 0.494, blue: 0.839, alpha: 1.00),size: 14)
@@ -182,7 +180,6 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
                 var value:AnyObject? = textView.textStorage.attribute(t, atIndex: characterIndex, effectiveRange: &range)
                 if(value != nil){
                     
-                    println("clicked: \(t)")
                     if t.rangeOfString("#") != nil {
                         let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("displayTaggedMedia")! as! PhotoAlbumViewController
                         var tag = t.substringWithRange(Range<String.Index>(start: t.rangeOfString("#")!.endIndex, end: t.endIndex))
@@ -225,7 +222,6 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
             }
         }
 
-        println(retValue)
         return retValue
     }
     

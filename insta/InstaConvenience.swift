@@ -26,7 +26,6 @@ extension InstaClient {
                 if success {
                     self.accessToken = accessToken
                     NSKeyedArchiver.archiveRootObject(accessToken!, toFile: self.accessTokenfilePath)
-                    println(accessToken!)
                     completionHandler(success: success, errorString: nil)
                 }else{
                     completionHandler(success: false, errorString: "Couldn't get access Token")
