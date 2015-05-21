@@ -184,10 +184,10 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
         if(self.editing){// If the edit mode is on display the delete icon.
             cell.deleteImageView = UIImageView(frame: cell.photo.frame)
             cell.deleteImageView.image = UIImage(named: "delete")
-            cell.addSubview(cell.deleteImageView)
+            cell.photo.addSubview(cell.deleteImageView)
             cell.photo.image = InstaClient.sharedInstance().imageWithView(cell.photo)
         }else{
-            if let i = cell.image{
+            if let i = cell.deleteImageView{
               cell.deleteImageView.removeFromSuperview()
             }
         }
