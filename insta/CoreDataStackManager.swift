@@ -188,8 +188,16 @@ class CoreDataStackManager {
         if let context = self.managedObjectContext {
             
             var error: NSError? = nil
-            deleteFile(InstaClient.sharedInstance().imagePath(photo.imagePath!))
-            deleteFile(InstaClient.sharedInstance().imagePath(photo.profileImagePath!))
+            
+            println(NSKeyedUnarchiver.unarchiveObjectWithFile(photo.imagePath!))
+            println(deleteFile(InstaClient.sharedInstance().imagePath(photo.imagePath!)))
+            println(NSKeyedUnarchiver.unarchiveObjectWithFile(photo.imagePath!))
+
+
+            println(NSKeyedUnarchiver.unarchiveObjectWithFile(photo.profileImagePath!))
+            println(deleteFile(InstaClient.sharedInstance().imagePath(photo.profileImagePath!)))
+            println(NSKeyedUnarchiver.unarchiveObjectWithFile(photo.profileImagePath!))
+            
             context.deleteObject(photo)
             if context.hasChanges && !context.save(&error) {
                 NSLog("Unresolved error \(error), \(error!.userInfo)")
