@@ -98,14 +98,20 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
                 LocationTextView.attributedText = locationAttr
             }
             
-            InstaClient.sharedInstance().setImage(instaMedia.imagePath!,imageView:imageView)
             InstaClient.sharedInstance().setImage(instaMedia.profileImagePath!,imageView: profileImageView)
-            imageToShare = imageView.image!
+            shareButton.enabled = false
+            InstaClient.sharedInstance().downloadImageAndSetCell(instaMedia.imagePath!, photo: imageView, completionHandler: { (success, errorString) -> Void in
+                if success{
+                    self.imageToShare = self.imageView.image!
+                    self.shareButton.enabled = true
+                }
+            })
             if (instaMedia.favorite! == 0){
                 star.setImage(UIImage(named: "star_disabled"), forState: .Normal)
             }else{
                 star.setImage(UIImage(named: "star_enabled"), forState: .Normal)
             }
+            
         }
 
         shareButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "share")
