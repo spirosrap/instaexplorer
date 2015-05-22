@@ -141,9 +141,6 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
     //MARK: Collection View Related
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         self.prefetchedPhotos = self.fetchedResultsController.fetchedObjects as! [InstaMedia]
-        for pf in (prefetchedPhotos!){
-            print(pf.location)
-        }
         return prefetchedPhotos!.count
     }
     
@@ -155,12 +152,9 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
         //If the photo image(imagepaths and titles are saved in Core Data) is saved using NSKeyedArchiver / NSKeyedUnarchiver we display it right away else we download it using its imagepath
         var changedPath = prefetchedPhotos![indexPath.row].thumbnailPath!.stringByReplacingOccurrencesOfString("/", withString: "")
         
-        
-        
         if let photo = NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().imagePath(changedPath)) as? UIImage {
             cell.indicator.stopAnimating()
             cell.photo.image = photo
-            
         }else{
             cell.indicator.startAnimating()
             cell.photo.image = UIImage(named: "PlaceHolder") //Default placeholder
