@@ -339,7 +339,6 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
         
         if let t = photo.text{
             paController.userComment = t
-            println("comment1: \(t)")
         }
         paController.mediaID = photo.mediaID!
         paController.instaMedia = photo
