@@ -189,14 +189,15 @@ class CoreDataStackManager {
             
             var error: NSError? = nil
             
-            println(NSKeyedUnarchiver.unarchiveObjectWithFile(photo.imagePath!))
-            println(deleteFile(InstaClient.sharedInstance().imagePath(photo.imagePath!)))
-            println(NSKeyedUnarchiver.unarchiveObjectWithFile(photo.imagePath!))
+            var changedThumbnailPath = photo.thumbnailPath!.stringByReplacingOccurrencesOfString("/", withString: "")
+            var changedImagePath = photo.imagePath!.stringByReplacingOccurrencesOfString("/", withString: "")
+            var changedProfileImagePath = photo.profileImagePath!.stringByReplacingOccurrencesOfString("/", withString: "")
+            
 
-
-            println(NSKeyedUnarchiver.unarchiveObjectWithFile(photo.profileImagePath!))
-            println(deleteFile(InstaClient.sharedInstance().imagePath(photo.profileImagePath!)))
-            println(NSKeyedUnarchiver.unarchiveObjectWithFile(photo.profileImagePath!))
+            deleteFile(InstaClient.sharedInstance().imagePath(changedThumbnailPath))
+            deleteFile(InstaClient.sharedInstance().imagePath(changedImagePath))
+            deleteFile(InstaClient.sharedInstance().imagePath(changedProfileImagePath))
+            
             
             context.deleteObject(photo)
             if context.hasChanges && !context.save(&error) {
