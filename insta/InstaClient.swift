@@ -300,14 +300,14 @@ class InstaClient : NSObject {
         let imgURL = NSURL(string: imagePath)
         let request: NSURLRequest = NSURLRequest(URL: imgURL!)
         let mainQueue = NSOperationQueue.mainQueue()
-
+        photo.image = UIImage(named: "PlaceHolder")
         NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
             if error == nil {
                 // Convert the downloaded data in to a UIImage object
                 let image = UIImage(data: data)
                 var changedPath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "")
                 if let im = image{
-                   NSKeyedArchiver.archiveRootObject(im,toFile: self.imagePath(changedPath))
+                   NSKeyedArchiver.archiveRootObject(im,toFile: InstaClient.sharedInstance().imagePath(changedPath))
                 }
                 
 //                println(self.imagePath(changedPath))
