@@ -14,7 +14,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     @IBOutlet weak var segment: ADVSegmentedControl!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var searchBar: UISearchBar!
-    
+    var alert:UIAlertController!
     var tapRecognizer: UITapGestureRecognizer? = nil //Recognizer for the search bar
     var locations = [Location]() // Array of locations in map view.
     var selectedLocation:Location! // The selected location or the just created location using the pin.
@@ -105,6 +105,8 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBarHidden = false
+        self.tabBarController!.tabBar.hidden = false;
+
     }
 
     
@@ -208,70 +210,80 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
 //            return false
 //        }
         
-        
-        let applicationDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
-        if (sender.state == .Began)
-        {
-            firstDrop = true
-
-            var annotation = MKPointAnnotation() //We need to create a local variable to not mess up the global
-            
-            let point:CGPoint = sender.locationInView(self.mapView) //The point the user tapped (CGPoint)
-            var tapPoint:CLLocationCoordinate2D = mapView.convertPoint(point, toCoordinateFromView: self.mapView) //The point the user tapped (CLLocationCoordinate2D)
-            
-            annotation.coordinate = tapPoint
-            self.mapView.addAnnotation(annotation)
-            self.annotation = annotation
-            annotationsToRemove.append(annotation) //It will be removed next when the user's finger has moved in order to have an effect of moving annotation.
-            
-        } else if (sender.state == .Changed){
-            firstDrop = false //The first annotation of the series in the drag effect is already droped.
-            var annotation = MKPointAnnotation() //We need to create a local variable to not mess up the global
-            self.mapView.removeAnnotations(annotationsToRemove)
-            let point:CGPoint = sender.locationInView(self.mapView)//The point the user tapped (CGPoint)
-            var tapPoint:CLLocationCoordinate2D = mapView.convertPoint(point, toCoordinateFromView: self.mapView)//The point the user tapped (CLLocationCoordinate2D)
-            annotation.coordinate = tapPoint
-            
-            self.mapView.addAnnotation(annotation)
-            annotationsToRemove.append(annotation)
-            self.annotation = annotation
-            
-        } else if (sender.state == .Ended){//The user has lifted the finger.
-            firstDrop = false
-
-            //Create the new Location and save it to the variable selectedLocation
-            selectedLocation = Location(dictionary: ["latitude":self.annotation.coordinate.latitude,"longitude":self.annotation.coordinate.longitude], context: sharedContext)
-            InstaClient.sharedInstance().getMedia(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 100, completionHandler: { (result, error) -> Void in
-                if(result! != []){
-                    self.annotation.title = " "
-                    for il in result!{
-                        il.location = self.selectedLocation
+        if(!self.editing){
+            let applicationDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
+            if (sender.state == .Began)
+            {
+                firstDrop = true
+                
+                var annotation = MKPointAnnotation() //We need to create a local variable to not mess up the global
+                
+                let point:CGPoint = sender.locationInView(self.mapView) //The point the user tapped (CGPoint)
+                var tapPoint:CLLocationCoordinate2D = mapView.convertPoint(point, toCoordinateFromView: self.mapView) //The point the user tapped (CLLocationCoordinate2D)
+                
+                annotation.coordinate = tapPoint
+                self.mapView.addAnnotation(annotation)
+                self.annotation = annotation
+                annotationsToRemove.append(annotation) //It will be removed next when the user's finger has moved in order to have an effect of moving annotation.
+                
+            } else if (sender.state == .Changed){
+                firstDrop = false //The first annotation of the series in the drag effect is already droped.
+                var annotation = MKPointAnnotation() //We need to create a local variable to not mess up the global
+                self.mapView.removeAnnotations(annotationsToRemove)
+                let point:CGPoint = sender.locationInView(self.mapView)//The point the user tapped (CGPoint)
+                var tapPoint:CLLocationCoordinate2D = mapView.convertPoint(point, toCoordinateFromView: self.mapView)//The point the user tapped (CLLocationCoordinate2D)
+                annotation.coordinate = tapPoint
+                
+                self.mapView.addAnnotation(annotation)
+                annotationsToRemove.append(annotation)
+                self.annotation = annotation
+                
+            } else if (sender.state == .Ended){//The user has lifted the finger.
+                firstDrop = false
+                
+                //Create the new Location and save it to the variable selectedLocation
+                selectedLocation = Location(dictionary: ["latitude":self.annotation.coordinate.latitude,"longitude":self.annotation.coordinate.longitude], context: sharedContext)
+                InstaClient.sharedInstance().getMedia(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 100, completionHandler: { (result, error) -> Void in
+                    if(result! != []){
+                        self.annotation.title = " "
+                        for il in result!{
+                            il.location = self.selectedLocation
+                        }
+                        
+                        CoreDataStackManager.sharedInstance().saveContext()
+                        
+                        
+                        let paController = self.storyboard!.instantiateViewControllerWithIdentifier("LocationPhotoAlbumViewController")! as! LocationPhotoAlbumViewController
+                        paController.location = self.selectedLocation
+                        
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.tabBarController!.tabBar.hidden = true;
+                            self.navigationController!.pushViewController(paController, animated: true)
+                        }
+                        
+                        self.annotationsLocations[self.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
+                        var view = self.mapView.viewForAnnotation(self.annotation)
+                        var imv = UIImageView(frame: view!.frame)
+                        var im = result![0] as InstaMedia
+                        InstaClient.sharedInstance().setImage(im.imagePath!, imageView: imv)
+                        
+                        self.mapView.viewForAnnotation(self.annotation).leftCalloutAccessoryView = imv //It will display the first image as the accecory view but it's really a random image. It will be changed in subsequent runs.
+                        self.mapView.viewForAnnotation(self.annotation).rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
+                        self.mapView.deselectAnnotation(self.annotation, animated: false)
+                        self.annotationsToRemove = []
+                    }else{
+                        dispatch_async(dispatch_get_main_queue()) {
+                            
+                            self.mapView.deselectAnnotation(self.annotation, animated: false)
+                            self.mapView.removeAnnotation(self.annotation)
+                            CoreDataStackManager.sharedInstance().deleteObject(self.selectedLocation)
+                        }
                     }
-
-                    CoreDataStackManager.sharedInstance().saveContext()
-
-
-                    let paController = self.storyboard!.instantiateViewControllerWithIdentifier("LocationPhotoAlbumViewController")! as! LocationPhotoAlbumViewController
-                    paController.location = self.selectedLocation
-                    
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.tabBarController!.tabBar.hidden = true;
-                        self.navigationController!.pushViewController(paController, animated: true)
-                    }
-
-                    self.annotationsLocations[self.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
-                    var view = self.mapView.viewForAnnotation(self.annotation)
-                    var imv = UIImageView(frame: view!.frame)
-                    var im = result![0] as InstaMedia
-                    InstaClient.sharedInstance().setImage(im.imagePath!, imageView: imv)
-                    
-                    self.mapView.viewForAnnotation(self.annotation).leftCalloutAccessoryView = imv //It will display the first image as the accecory view but it's really a random image. It will be changed in subsequent runs.
-                    self.mapView.viewForAnnotation(self.annotation).rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
-                    self.mapView.deselectAnnotation(self.annotation, animated: false)
-                    self.annotationsToRemove = []
-                }
-            })
-            
+                })
+                
+            }
+        }else{
+            self.displayMessageBox("You are in Edit Mode! Tap Done.")
         }
         
         return true
@@ -420,7 +432,6 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                         self.navigationController!.pushViewController(paController, animated: true)
                     }
                     
-
                 }
             })
         }
@@ -517,10 +528,18 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     
     //MARK: Other: alert view and a custom made information Box
     //An alert message box with an OK Button
+    var isAlertPresented = false //Don't show another alert view if this one is already presenting
     func displayMessageBox(message:String){
-        var alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+        if(!isAlertPresented){
+            isAlertPresented = true
+            alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {
+                alert in
+                    self.isAlertPresented = false
+
+            }))
+            self.presentViewController(self.alert, animated: true, completion: nil)
+        }
     }
     
     //A custom made info box.
