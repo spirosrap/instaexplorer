@@ -7,24 +7,38 @@
 //
 
 import Foundation
+import CoreData
 import UIKit
 
+@objc(Tag)
 
 
-class Tag {
-    var name:String!
-    var media_count:Int!
-    
-    init(var name:String, var media_count:Int){
-        self.name = name
-        self.media_count = media_count
+class Tag:NSManagedObject {
+    @NSManaged var name:String?
+    @NSManaged var media_count:NSNumber?
+    @NSManaged var media:[InstaMedia]?
+    override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
     }
 
-    static func tagsFromResults(results: [[String : AnyObject]]) -> [Tag] {
-        var tags = [Tag]()
+    
+    
+    init(dictionary: [String : AnyObject],context: NSManagedObjectContext) {
+        let entity =  NSEntityDescription.entityForName("Tag", inManagedObjectContext: context)!
+        super.init(entity: entity, insertIntoManagedObjectContext: context)
         
+        name = dictionary["name"] as? String
+        media_count = dictionary["media_count"] as? NSNumber
+    }
+
+    static func tagsFromResults(results: [[String : AnyObject]],context: NSManagedObjectContext) -> [Tag] {
+        var tags = [Tag]()
         for result in results {
-            tags.append(Tag(name: result["name"]! as! String,media_count: result["media_count"]! as! Int))
+            var dictionary = [String:AnyObject]()
+            
+            dictionary["name"] = result["name"]!
+            dictionary["media_count"] = result["media_count"]!
+            tags.append(Tag(dictionary: dictionary,context: context))
         }
 
         return tags

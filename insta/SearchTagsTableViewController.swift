@@ -7,13 +7,16 @@
 //
 
 import UIKit
+import CoreData
 
 class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdating {
     
     let tableData:[String] = []
-    var filteredTableData = [(String,Int)]()
+    var filteredTableData = [Tag]()
+    var tags = [Tag]()
     var resultSearchController = UISearchController()
-    
+    var temporaryContext: NSManagedObjectContext!
+    var editButton:UIBarButtonItem!
     @IBOutlet var searchBar: UISearchBar!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +38,11 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         self.resultSearchController.searchBar.barTintColor = UIColor.blackColor()
         self.resultSearchController.searchBar.tintColor = UIColor.whiteColor()
 
-        
+        editButton = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "edit")
+        self.navigationItem.leftBarButtonItem = editButton
+        self.editing = false
+        self.tableView.editing = false
+
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -68,44 +75,91 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
             return self.filteredTableData.count
         }
         else {
-            return self.tableData.count
+            fetchedResultsController.performFetch(nil)
+            tags = self.fetchedResultsController.fetchedObjects! as! [Tag]
+            return tags.count
         }
+    }
+    
+    lazy var fetchedResultsController: NSFetchedResultsController = {
+        
+        let fetchRequest = NSFetchRequest(entityName: "Tag")
+
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+            managedObjectContext: CoreDataStackManager.sharedInstance().managedObjectContext!,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        return fetchedResultsController
+        
+        }()
+    
+    
+    //Fetch controller for Media which has already associated with a searched tag.
+    func fetchedTaggedMediaResultsController(let tag:Tag) -> NSFetchedResultsController  {
+        
+        let fetchRequest = NSFetchRequest(entityName: "InstaMedia")
+
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "username", ascending: true)]
+        fetchRequest.predicate = NSPredicate(format: "tag == %@", tag);
+        let fetchedResultsController = NSFetchedResultsController(fetchRequest: fetchRequest,
+            managedObjectContext: CoreDataStackManager.sharedInstance().managedObjectContext!,
+            sectionNameKeyPath: nil,
+            cacheName: nil)
+        
+        return fetchedResultsController
     }
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+        let numberFormatter = NSNumberFormatter()
+        numberFormatter.numberStyle = .DecimalStyle
         
         // 3
         if (self.resultSearchController.active) {
-            if let t = cell.textLabel!.text{
-                cell.textLabel?.text = "#" + filteredTableData[indexPath.row].0
-               let numberFormatter = NSNumberFormatter()
-               numberFormatter.numberStyle = .DecimalStyle
+            if let t = cell.textLabel!.text,let name = filteredTableData[indexPath.row].name, let media_count = filteredTableData[indexPath.row].media_count{
+                cell.textLabel?.text = "#" + name
                 
-               cell.detailTextLabel?.text = numberFormatter.stringFromNumber(filteredTableData[indexPath.row].1)! + " posts"
+               cell.detailTextLabel?.text = numberFormatter.stringFromNumber(media_count)! + " posts"
                 
             }
             return cell
         }
         else {
-            cell.textLabel?.text = tableData[indexPath.row]
-            
+            if let t = cell.textLabel!.text{
+                cell.textLabel?.text = "#" + tags[indexPath.row].name!
+                cell.detailTextLabel?.text = ""
+            }
             return cell
         }
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("displayTaggedMedia")! as! PhotoAlbumViewController
+        
         if (self.resultSearchController.active) {
-//            filteredTableData[indexPath.row]
-            let selectedTag = filteredTableData[indexPath.row].0
-            let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("displayTaggedMedia")! as! PhotoAlbumViewController
+            let selectedTag = filteredTableData[indexPath.row].name!
+            
+            var dictionary = [String:AnyObject]()
+            
+            dictionary["name"] = filteredTableData[indexPath.row].name!
+            dictionary["media_count"] = filteredTableData[indexPath.row].media_count!
+
+            var savedTag = Tag(dictionary: dictionary, context: CoreDataStackManager.sharedInstance().managedObjectContext!)
+            CoreDataStackManager.sharedInstance().saveContext()
+            
             InstaClient.sharedInstance().getMediaFromTag(selectedTag, completionHandler: { (result, error) -> Void in
                 if error == nil{
                     dispatch_async(dispatch_get_main_queue(), {
                         detailController.prefetchedPhotos = result! as [InstaMedia]
+                        for r in result!{
+                            r.tag = savedTag
+                        }
                         self.resultSearchController.active = false
-                        
+                        CoreDataStackManager.sharedInstance().saveContext()
                         detailController.navigationController?.navigationBar.hidden = false
                         detailController.navigationItem.title =   "#" + selectedTag
 
@@ -113,8 +167,41 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
                     })
                 }
             })
+        }else{
+            let selectedTag = tags[indexPath.row]
+            let frc = fetchedTaggedMediaResultsController(selectedTag)
+            frc.performFetch(nil)
+            var media = frc.fetchedObjects! as! [InstaMedia]
+            detailController.prefetchedPhotos = media
+            
+            detailController.navigationController?.navigationBar.hidden = false
+            detailController.navigationItem.title =   "#" + selectedTag.name!
+
+            self.navigationController!.pushViewController(detailController, animated: true)
+
+            tableView.deselectRowAtIndexPath(indexPath, animated: true)
         }
     }
+    
+    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    //For deleting the Meme
+    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        let selectedTag = tags[indexPath.row]
+        let frc = fetchedTaggedMediaResultsController(selectedTag)
+        frc.performFetch(nil)
+        var media = frc.fetchedObjects! as! [InstaMedia]
+
+        for m in media{
+            CoreDataStackManager.sharedInstance().deleteObject(m)
+        }
+        
+        CoreDataStackManager.sharedInstance().deleteObject(tags[indexPath.row])
+        tableView.reloadData()
+    }
+
     
     func updateSearchResultsForSearchController(searchController: UISearchController)
     {
@@ -122,17 +209,24 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         
         let searchPredicate = NSPredicate(format: "SELF CONTAINS[c]%@", searchController.searchBar.text)
         
-        var array = [(String,Int)]()
+        var array = [Tag]()
         
-        InstaClient.sharedInstance().getTags(searchController.searchBar.text, completionHandler: { (result, error) -> Void in
+        // Set the temporary context
+        // When getting any tags we don't need them for the main context and we create a temporary one
+        let sharedContext = CoreDataStackManager.sharedInstance().managedObjectContext!
+
+        temporaryContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType)
+        temporaryContext.parentContext = sharedContext
+        
+        InstaClient.sharedInstance().getTags(searchController.searchBar.text,context: temporaryContext, completionHandler: { (result, error) -> Void in
             if error == nil{
                 for r in result!{
-                    array += [(r.name!,r.media_count!)]
+                    array += [r as Tag]
                 }
                 
                 dispatch_async(dispatch_get_main_queue(), {
                       self.filteredTableData = array
-                    self.tableView.reloadData()
+                      self.tableView.reloadData()
                 })
             }
         })
@@ -143,5 +237,15 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         
     }
     
+    func edit(){
+        if editButton.title! == "Edit"{
+            editButton.title = "Done"
+        }else{
+            editButton.title = "Edit"
+        }
+        self.tableView.editing = !self.tableView.editing
+        self.tableView.reloadData()
+    }
+
 
 }

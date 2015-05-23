@@ -106,7 +106,7 @@ class CoreDataStackManager {
         if coordinator == nil {
             return nil
         }
-        var managedObjectContext = NSManagedObjectContext()
+        var managedObjectContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.MainQueueConcurrencyType)
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
         }()
@@ -176,6 +176,19 @@ class CoreDataStackManager {
             }
         }
     }
+    
+    func deleteObject(var tag:Tag){
+        if let context = self.managedObjectContext {
+            
+            var error: NSError? = nil
+            context.deleteObject(tag)
+            if context.hasChanges && !context.save(&error) {
+                NSLog("Unresolved error \(error), \(error!.userInfo)")
+                abort()
+            }
+        }
+    }
+
     
     //Delete a file(an image in our case) using NSFileManager
     func deleteFile(let filePath:String) -> Bool {

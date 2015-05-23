@@ -26,7 +26,7 @@ class InstaMedia: NSManagedObject {
     @NSManaged var link:String?
     @NSManaged var instaLocation: InstaLocation?
     @NSManaged var location: Location?
-    
+    @NSManaged var tag:Tag?
     
     override init(entity: NSEntityDescription, insertIntoManagedObjectContext context: NSManagedObjectContext?) {
         super.init(entity: entity, insertIntoManagedObjectContext: context)

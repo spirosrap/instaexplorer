@@ -8,7 +8,7 @@
 
 import UIKit
 import Foundation
-
+import CoreData
 // MARK: - Convenient Resource Methods
 
 extension InstaClient {
@@ -60,7 +60,7 @@ extension InstaClient {
         })
     }
     
-    func getTags(var string:String,completionHandler: (result: [Tag]?, error: NSError?) -> Void) {
+    func getTags(var string:String,let context:NSManagedObjectContext,completionHandler: (result: [Tag]?, error: NSError?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         let parameters = ["q":string]
@@ -75,8 +75,9 @@ extension InstaClient {
                 completionHandler(result: nil, error: error)
             } else {
                 if let results = JSONResult.valueForKey("data") as? [[String : AnyObject]] {
+
                     
-                    var tags = Tag.tagsFromResults(results)
+                    var tags = Tag.tagsFromResults(results,context: context)
                     completionHandler(result: tags, error: nil)
                 } else {
                     completionHandler(result: nil, error: NSError(domain: "getTags parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getTags"]))

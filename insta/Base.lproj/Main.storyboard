@@ -1570,7 +1570,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="crq-u8-nlh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8787" y="1384.5"/>
+            <point key="canvasLocation" x="8835" y="1336.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="pUr-UQ-7RN">
@@ -3711,7 +3711,7 @@
                                             </mask>
                                         </variation>
                                     </imageView>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" scrollEnabled="NO" text="asdasd" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z48-vL-Ssw">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" scrollEnabled="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z48-vL-Ssw">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <accessibility key="accessibilityConfiguration" label=""/>
