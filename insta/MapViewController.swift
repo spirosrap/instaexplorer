@@ -53,7 +53,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
         tapRecognizer?.numberOfTapsRequired = 1
         
-        self.view.backgroundColor = UIColor.blackColor()
+//        self.view.backgroundColor = UIColor.blackColor()
         
         segment.items = ["Standard", "Satellite","Hybrid"]
         segment.font = UIFont(name: "Avenir-Black", size: 12)
