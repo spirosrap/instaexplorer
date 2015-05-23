@@ -37,10 +37,8 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
 //        imageInfoView?.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.70)
 //        imageInfoView.hidden = true
 //        infoLabel.hidden = true
-        
         tableView.hidden = true
         tableView.delegate = self
-        
         selectViewSegmentedControl.items = ["Collection", "Table"]
         selectViewSegmentedControl.font = UIFont(name: "Avenir-Black", size: 12)
         selectViewSegmentedControl.borderColor = UIColor(white: 1.0, alpha: 0.3)
@@ -51,6 +49,7 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
         self.navigationItem.leftBarButtonItem = editButton
         self.editing = false
         self.tableView.editing = false
+        
         
     }
     
