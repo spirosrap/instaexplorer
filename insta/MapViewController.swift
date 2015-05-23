@@ -70,8 +70,11 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     func edit(){
         if editButton.title! == "Done"{
             editButton.title = "Delete"
+            editButton.setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.whiteColor()], forState: UIControlState.Normal)
         }else{
             editButton.title = "Done"
+            editButton.setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.redColor()], forState: UIControlState.Normal)
+            
             for a in mapView.annotations{ //Deselect callout bubbles.
                 mapView.deselectAnnotation(a as! MKAnnotation, animated: false)
             }
