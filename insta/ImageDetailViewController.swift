@@ -83,8 +83,8 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
             
             
             usernameTextView.addSubview(utv)
-            usernameTextView.editable = false
-            usernameTextView.selectable = false
+            utv.editable = false
+            utv.selectable = false
             
             
             if let locationName = instaMedia.instaLocation?.name {
