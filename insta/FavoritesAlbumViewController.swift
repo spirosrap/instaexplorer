@@ -95,7 +95,7 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
         return CoreDataStackManager.sharedInstance().managedObjectContext!
     }
     
-    //Add the lazy fetchedResultsController property. Photos are already fetched(from flickr) and saved in Core data before this screen, but we fetch them again to use the NSFetchedResultsControllerDelegate methods
+    //Add the lazy fetchedResultsController property. Photos are already fetched and saved in Core data before this screen, but we fetch them again to use the NSFetchedResultsControllerDelegate methods
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         let fetchRequest = NSFetchRequest(entityName: "InstaMedia")
@@ -217,10 +217,6 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
             self.collectionView.reloadData()
             self.tableView.reloadData()
         }
-
-
-        
-//        CoreDataStackManager.sharedInstance().deleteObject(photo)
     }
     
     func collectionView(collectionView: UICollectionView,
@@ -241,55 +237,6 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
             return UIEdgeInsets(top: 2.0, left: 2.0, bottom: 2.0, right: 10.0)
     }
 
-    
-//    //MARK: New Collection Button
-//    //Generate a new collection of (12) images
-//    func newCollection() -> Bool { //I added a return value to exit when there is no connection
-//
-//        var networkReachability = Reachability.reachabilityForInternetConnection()
-//        var networkStatus = networkReachability.currentReachabilityStatus()
-//        
-//        if(networkStatus.value == NotReachable.value){// Before searching fοr an additonal Photos in Flickr check if there is an available internet connection
-//            displayMessageBox("No Network Connection")
-//            return false
-//        }
-//        
-//        let applicationDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)//the appdelegate keeps a "Statistics" instance.
-//        informationBox("Connecting to Flickr",animate:true)
-//        newCollectionButton.enabled = false
-//        Flickr.sharedInstance().populateLocationPhotos(location) { (success,photosArray, errorString) in
-//            if success {
-//                println("finished retrieving imagepaths")
-//
-//                dispatch_async(dispatch_get_main_queue(), {
-//                    
-//                    //Deleting the previous set of photos. It's inside dispatch_async because
-//                    //We avoid having a blank screen(deleted photos) while waiting a reply from flickr
-//                    for p in self.location.photos!{
-//                        CoreDataStackManager.sharedInstance().deleteObject(p)
-//                    }
-//                    
-//                    if let pd = photosArray{//We create the Photo instances from the photosArray and save them.
-//                        for p in pd{
-//                            let photo = Photo(dictionary: ["title":p[0],"imagePath":p[1]], context: self.sharedContext)
-//                            photo.location = self.location
-//                            applicationDelegate.stats.photosDisplayed += 1 //Save the number of displayed images for statistics.
-//                            CoreDataStackManager.sharedInstance().saveContext()
-//                        }
-//                    }
-//                    self.informationBox(nil,animate:false)
-//                    self.newCollectionButton.enabled = true
-//                    self.collectionView.reloadData()
-//                })
-//            } else {
-//                self.informationBox(nil,animate:false)
-//                self.displayMessageBox(errorString!) //Its appropriate at this point to display an Alert
-//                self.newCollectionButton.enabled = true
-//                println(errorString!)
-//            }
-//        }
-//        return true
-//    }
     
     
      func numberOfSectionsInTableView(tableView: UITableView) -> Int {
