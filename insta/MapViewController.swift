@@ -24,6 +24,8 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     var firstDrop = true // This is a variable to determine when it is the first time the user long clicks in order to avoid having the effect of creating an annotation. (In order to create the drag effect we create and remove annotations very fast).(The effect seems like the pin is dropping from outside the phone(up))
     var longPressRecognizer:UILongPressGestureRecognizer!
     var editButton:UIBarButtonItem!
+    var logoutButton = UIBarButtonItem()
+    
     //MARK: ViewDidLoad,ViewWillAppear,viewWillDisappear
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,7 +65,11 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         
         
         editButton = UIBarButtonItem(title: "Delete", style: .Done, target: self, action: "edit")
+        logoutButton = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "logout")
+        
         self.navigationItem.leftBarButtonItem = editButton
+        self.navigationItem.rightBarButtonItem = logoutButton
+        
         self.editing = false
     }
     
@@ -563,6 +569,9 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     //MARK: Core Data related
     //variable to fetch the ,existing saved in core data,locations
     
+    func logout(){
+        InstaClient.sharedInstance().logout(self)
+    }
     
     
 }

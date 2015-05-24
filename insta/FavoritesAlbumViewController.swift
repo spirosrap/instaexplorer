@@ -22,6 +22,8 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
 
     var prefetchedPhotos: [InstaMedia]!//We put the Photo Objects in a variable to use in NSFetchedResultsControllerDelegate methods
     var newCollectionButton:UIBarButtonItem!
+    var logoutButton = UIBarButtonItem()
+    
     var location:Location!
     override func viewDidLoad() {
         
@@ -45,8 +47,11 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
         selectViewSegmentedControl.selectedIndex = 0
         selectViewSegmentedControl.addTarget(self, action: "switchViews:", forControlEvents: .ValueChanged)
 
+        logoutButton = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "logout")
         editButton = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "edit")
         self.navigationItem.leftBarButtonItem = editButton
+        self.navigationItem.rightBarButtonItem = logoutButton
+        
         self.editing = false
         self.tableView.editing = false
         
@@ -369,6 +374,9 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
 
     }
     
+    func logout(){
+        InstaClient.sharedInstance().logout(self)
+    }
 
 }
 

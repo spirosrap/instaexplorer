@@ -37,9 +37,6 @@ extension InstaClient {
         }
     }
     
-    
-    
-    /* This function opens a TMDBAuthViewController to handle Step 2a of the auth flow */
     func getAccessToken(hostViewController: UIViewController, completionHandler: (success: Bool,accessToken:String?, errorString: String?) -> Void) {
         
         var modifiedURLString = String(format:"%@?client_id=%@&redirect_uri=%@&response_type=token", InstaClient.Constants.AuthorizationURL,InstaClient.Constants.ClientID,InstaClient.Constants.RedirectURI)
@@ -59,6 +56,35 @@ extension InstaClient {
             hostViewController.presentViewController(webAuthNavigationController, animated: true, completion: nil)
         })
     }
+    
+    func webLogout(hostViewController: UIViewController, completionHandler: (success: Bool,accessToken:String?, errorString: String?) -> Void) {
+        
+        let logoutURL = NSURL(string: "https://instagram.com/accounts/logout")
+        let request = NSURLRequest(URL: logoutURL!)
+        let webAuthViewController = hostViewController.storyboard!.instantiateViewControllerWithIdentifier("InstaAuthViewController") as! InstaAuthViewController
+        webAuthViewController.urlRequest = request
+        webAuthViewController.completionHandler = completionHandler
+        hostViewController.navigationController!.pushViewController(webAuthViewController, animated: false)
+    }
+    
+    func logout(hostViewController: UIViewController){
+        
+        if (NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().accessTokenfilePath) != nil){
+            println(CoreDataStackManager.sharedInstance().deleteFile(InstaClient.sharedInstance().accessTokenfilePath))
+            InstaClient.sharedInstance().accessToken = nil
+        }
+        InstaClient.sharedInstance().webLogout(hostViewController) { (success, accessToken, errorString) -> Void in
+            
+            if success{
+                
+            }else{
+                println(errorString)
+            }
+            hostViewController.navigationController?.dismissViewControllerAnimated(false, completion: nil)
+        }
+    }
+
+    
     
     func getTags(var string:String,let context:NSManagedObjectContext,completionHandler: (result: [Tag]?, error: NSError?) -> Void) {
         
@@ -190,6 +216,8 @@ extension InstaClient {
             
         }
     }
+    
+
     
     //http://stackoverflow.com/questions/15945497/merge-two-uiimageview-into-single-a-single-uiimageview-in-ios
     func imageWithView(imageView:UIView) -> UIImage{
