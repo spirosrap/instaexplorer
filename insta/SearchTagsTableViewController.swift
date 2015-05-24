@@ -17,6 +17,9 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
     var resultSearchController = UISearchController()
     var temporaryContext: NSManagedObjectContext!
     var editButton:UIBarButtonItem!
+    var logoutButton = UIBarButtonItem()
+    
+    
     @IBOutlet var searchBar: UISearchBar!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,8 +41,15 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         self.resultSearchController.searchBar.barTintColor = UIColor.blackColor()
         self.resultSearchController.searchBar.tintColor = UIColor.whiteColor()
 
+        
+        
+        
+        
         editButton = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "edit")
+        logoutButton = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "logout")
+        self.navigationItem.rightBarButtonItem = logoutButton
         self.navigationItem.leftBarButtonItem = editButton
+        
         self.editing = false
         self.tableView.editing = false
 
@@ -72,6 +82,9 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // 2
         if (self.resultSearchController.active) {
+            if(self.tableView.editing){
+                edit() //Disable editing if the user forgot to tap done
+            }
             return self.filteredTableData.count
         }
         else {
@@ -121,17 +134,17 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         // 3
         if (self.resultSearchController.active) {
             if let t = cell.textLabel!.text,let name = filteredTableData[indexPath.row].name, let media_count = filteredTableData[indexPath.row].media_count{
-                cell.textLabel?.text = "#" + name
-                
-               cell.detailTextLabel?.text = numberFormatter.stringFromNumber(media_count)! + " posts"
-                
+                    
+                    cell.textLabel?.text = "#" + name
+                    cell.detailTextLabel?.text = numberFormatter.stringFromNumber(media_count)! + " posts"
+                    
             }
             return cell
         }
         else {
             if let t = cell.textLabel!.text{
                 cell.textLabel?.text = "#" + tags[indexPath.row].name!
-                cell.detailTextLabel?.text = ""
+                cell.detailTextLabel?.text = " "
             }
             return cell
         }
@@ -141,32 +154,37 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("displayTaggedMedia")! as! PhotoAlbumViewController
         
         if (self.resultSearchController.active) {
-            let selectedTag = filteredTableData[indexPath.row].name!
-            
-            var dictionary = [String:AnyObject]()
-            
-            dictionary["name"] = filteredTableData[indexPath.row].name!
-            dictionary["media_count"] = filteredTableData[indexPath.row].media_count!
+            if let name = filteredTableData[indexPath.row].name,let media_count = filteredTableData[indexPath.row].media_count {
+                println(filteredTableData[indexPath.row])
+                let selectedTag = filteredTableData[indexPath.row].name!
+                
+                var dictionary = [String:AnyObject]()
+                
+                dictionary["name"] = filteredTableData[indexPath.row].name!
+                dictionary["media_count"] = filteredTableData[indexPath.row].media_count!
 
-            var savedTag = Tag(dictionary: dictionary, context: CoreDataStackManager.sharedInstance().managedObjectContext!)
-            CoreDataStackManager.sharedInstance().saveContext()
-            
-            InstaClient.sharedInstance().getMediaFromTag(selectedTag, completionHandler: { (result, error) -> Void in
-                if error == nil{
-                    dispatch_async(dispatch_get_main_queue(), {
-                        detailController.prefetchedPhotos = result! as [InstaMedia]
-                        for r in result!{
-                            r.tag = savedTag
-                        }
-                        self.resultSearchController.active = false
-                        CoreDataStackManager.sharedInstance().saveContext()
-                        detailController.navigationController?.navigationBar.hidden = false
-                        detailController.navigationItem.title =   "#" + selectedTag
+                var savedTag = Tag(dictionary: dictionary, context: CoreDataStackManager.sharedInstance().managedObjectContext!)
+                CoreDataStackManager.sharedInstance().saveContext()
+                
+                InstaClient.sharedInstance().getMediaFromTag(selectedTag, completionHandler: { (result, error) -> Void in
+                    if error == nil{
+                        dispatch_async(dispatch_get_main_queue(), {
+                            detailController.prefetchedPhotos = result! as [InstaMedia]
+                            for r in result!{
+                                r.tag = savedTag
+                            }
+                            self.resultSearchController.active = false
+                            CoreDataStackManager.sharedInstance().saveContext()
+                            detailController.navigationController?.navigationBar.hidden = false
+                            detailController.navigationItem.title =   "#" + selectedTag
 
-                        self.navigationController!.pushViewController(detailController, animated: true)
-                    })
-                }
-            })
+                            self.navigationController!.pushViewController(detailController, animated: true)
+                        })
+                    }
+                })
+            }else{
+                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+            }
         }else{
             let selectedTag = tags[indexPath.row]
             let frc = fetchedTaggedMediaResultsController(selectedTag)
@@ -195,10 +213,15 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         var media = frc.fetchedObjects! as! [InstaMedia]
 
         for m in media{
-            CoreDataStackManager.sharedInstance().deleteObject(m)
+            if m.favorite != 1{
+                CoreDataStackManager.sharedInstance().deleteObject(m)
+            }else{
+                m.tag = nil // We need to deassociate the favorited media from this tag because it's going to be deleted
+            }
         }
         
         CoreDataStackManager.sharedInstance().deleteObject(tags[indexPath.row])
+        edit()
         tableView.reloadData()
     }
 
@@ -220,20 +243,22 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         
         InstaClient.sharedInstance().getTags(searchController.searchBar.text,context: temporaryContext, completionHandler: { (result, error) -> Void in
             if error == nil{
-                for r in result!{
-                    array += [r as Tag]
-                }
                 
                 dispatch_async(dispatch_get_main_queue(), {
+                    for r in result!{
+                        array += [r as Tag]
+                    }
+
                       self.filteredTableData = array
                       self.tableView.reloadData()
+                    
                 })
             }
         })
+        
 //        let array = (tableData as NSArray).filteredArrayUsingPredicate(searchPredicate)
         
         self.tableView.reloadData()
-
         
     }
     
@@ -246,6 +271,11 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         self.tableView.editing = !self.tableView.editing
         self.tableView.reloadData()
     }
+    
+    func logout(){
+        InstaClient.sharedInstance().logout(self)
+    }
+
 
 
 }
