@@ -448,6 +448,8 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                 if(p.favorite != 1){
                     CoreDataStackManager.sharedInstance().deleteObject(p)
                     CoreDataStackManager.sharedInstance().saveContext()
+                }else{
+                    p.location = nil
                 }
             }
         }
