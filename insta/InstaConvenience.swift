@@ -59,12 +59,13 @@ extension InstaClient {
     
     func webLogout(hostViewController: UIViewController, completionHandler: (success: Bool,accessToken:String?, errorString: String?) -> Void) {
         
-        let logoutURL = NSURL(string: "https://instagram.com/accounts/logout")
-        let request = NSURLRequest(URL: logoutURL!)
-        let webAuthViewController = hostViewController.storyboard!.instantiateViewControllerWithIdentifier("InstaAuthViewController") as! InstaAuthViewController
-        webAuthViewController.urlRequest = request
-        webAuthViewController.completionHandler = completionHandler
-        hostViewController.navigationController!.pushViewController(webAuthViewController, animated: false)
+//        let logoutURL = NSURL(string: "https://instagram.com/accounts/logout")
+//        let request = NSURLRequest(URL: logoutURL!)
+//        let webAuthViewController = hostViewController.storyboard!.instantiateViewControllerWithIdentifier("InstaAuthViewController") as! InstaAuthViewController
+//        webAuthViewController.urlRequest = request
+//        webAuthViewController.completionHandler = completionHandler
+//        hostViewController.navigationController!.pushViewController(webAuthViewController, animated: false)
+
     }
     
     func logout(hostViewController: UIViewController){
@@ -73,15 +74,23 @@ extension InstaClient {
             println(CoreDataStackManager.sharedInstance().deleteFile(InstaClient.sharedInstance().accessTokenfilePath))
             InstaClient.sharedInstance().accessToken = nil
         }
-        InstaClient.sharedInstance().webLogout(hostViewController) { (success, accessToken, errorString) -> Void in
-            
-            if success{
-                
-            }else{
-                println(errorString)
-            }
-            hostViewController.navigationController?.dismissViewControllerAnimated(false, completion: nil)
-        }
+
+        UIView.animateWithDuration(0.75, animations: {
+            UIView.setAnimationCurve(UIViewAnimationCurve.EaseInOut)
+            UIView.setAnimationTransition(UIViewAnimationTransition.FlipFromLeft, forView: hostViewController.navigationController!.view, cache: false)
+        })
+        
+        hostViewController.navigationController?.popViewControllerAnimated(false)
+
+//        InstaClient.sharedInstance().webLogout(hostViewController) { (success, accessToken, errorString) -> Void in
+//            
+//            if success{
+//                
+//            }else{
+//                println(errorString)
+//            }
+//            hostViewController.navigationController?.dismissViewControllerAnimated(false, completion: nil)
+//        }
     }
 
     

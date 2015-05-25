@@ -376,6 +376,11 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
     
     func logout(){
         InstaClient.sharedInstance().logout(self)
+        var appDelegateTemp = UIApplication.sharedApplication().delegate
+        
+        var rootController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LoginViewController")! as! ViewController
+        appDelegateTemp!.window!!.rootViewController = rootController;
+        
     }
 
 }

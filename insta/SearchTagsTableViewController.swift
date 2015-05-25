@@ -83,7 +83,10 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         // 2
         if (self.resultSearchController.active) {
             if(self.tableView.editing){
-                edit() //Disable editing if the user forgot to tap done
+               //Disable editing if the user forgot to tap done
+            editButton.title = "Edit"
+            self.tableView.editing = !self.tableView.editing
+
             }
             return self.filteredTableData.count
         }
@@ -221,7 +224,8 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         }
         
         CoreDataStackManager.sharedInstance().deleteObject(tags[indexPath.row])
-        edit()
+        editButton.title = "Edit"
+        self.tableView.editing = !self.tableView.editing
         tableView.reloadData()
     }
 
@@ -274,6 +278,12 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
     
     func logout(){
         InstaClient.sharedInstance().logout(self)
+        
+        var appDelegateTemp = UIApplication.sharedApplication().delegate
+        
+        var rootController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LoginViewController")! as! ViewController
+        appDelegateTemp!.window!!.rootViewController = rootController;
+
     }
 
 

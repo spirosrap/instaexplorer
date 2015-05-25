@@ -525,7 +525,6 @@
 		D471B88D1AF6870900651865 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -537,13 +536,13 @@
 				INFOPLIST_FILE = instaTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = instaplacesTests;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/instaplaces.app/instaplaces";
 			};
 			name = Debug;
 		};
 		D471B88E1AF6870900651865 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -551,6 +550,7 @@
 				INFOPLIST_FILE = instaTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = instaplacesTests;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/instaplaces.app/instaplaces";
 			};
 			name = Release;
 		};

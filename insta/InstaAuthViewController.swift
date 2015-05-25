@@ -60,6 +60,9 @@ class InstaAuthViewController: UIViewController, UIWebViewDelegate {
             var urlString = request.URL?.absoluteString
             var accessToken = urlString!.rangeOfString("#access_token=")
             if(accessToken != nil){
+                let logoutRequest = NSURLRequest(URL: NSURL(string: "https://instagram.com/accounts/logout")!)
+                self.webView.loadRequest(logoutRequest)
+
                 self.dismissViewControllerAnimated(true, completion: { () -> Void in
                     self.completionHandler!(success: true,accessToken: urlString!.substringFromIndex(accessToken!.endIndex),errorString: nil)
                 })

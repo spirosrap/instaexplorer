@@ -14,30 +14,38 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         if(NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().accessTokenfilePath) != nil){
-            let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController")! as! UITabBarController
+            let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController")! as! TabBarControllerViewController
             
             self.navigationController!.presentViewController(detailController, animated: true) {
                 self.navigationController?.popViewControllerAnimated(true)
                 return ()
             }
-
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
     @IBAction func login(sender: AnyObject) {
+
+        
         InstaClient.sharedInstance().loginWithToken(self){
             success,errorString in
             
             if success{
-                let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController")! as! UITabBarController
+                var appDelegateTemp = UIApplication.sharedApplication().delegate
+                let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController")! as! TabBarControllerViewController
                 
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.navigationController!.presentViewController(detailController, animated: true) {
-                        self.navigationController?.popViewControllerAnimated(true)
-                        return ()
-                    }
-
-                }
+                appDelegateTemp!.window!!.rootViewController = detailController
+                
+//                dispatch_async(dispatch_get_main_queue()) {
+//                    self.navigationController!.presentViewController(detailController, animated: false) {
+//                        self.navigationController?.popViewControllerAnimated(true)
+//                        return ()
+//                    }
+//
+//                }
                 
                 
             }else{
