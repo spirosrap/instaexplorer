@@ -26,6 +26,8 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     var editButton:UIBarButtonItem!
     var logoutButton = UIBarButtonItem()
     
+    @IBOutlet var indicator: UIActivityIndicatorView!
+    
     //MARK: ViewDidLoad,ViewWillAppear,viewWillDisappear
     override func viewDidLoad() {
         super.viewDidLoad()
