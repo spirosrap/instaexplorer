@@ -297,29 +297,32 @@ class InstaClient : NSObject {
 
     //It downloads the images from the already saved image paths to be in turn saved too in the CoreData
     func downloadImageAndSetCell(let imagePath:String,let photo:UIImageView,completionHandler: (success: Bool, errorString: String?) -> Void){
-        let imgURL = NSURL(string: imagePath)
-        let request: NSURLRequest = NSURLRequest(URL: imgURL!)
-        let mainQueue = NSOperationQueue.mainQueue()
-        photo.image = UIImage(named: "PlaceHolder")
-        NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
-            if error == nil {
-                // Convert the downloaded data in to a UIImage object
-                let image = UIImage(data: data)
-                var changedPath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "")
-                if let im = image{
-                   NSKeyedArchiver.archiveRootObject(im,toFile: InstaClient.sharedInstance().imagePath(changedPath))
+        var changedPath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "")
+        if let p = NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().imagePath(changedPath)) as? UIImage {
+            //            cell.indicator.stopAnimating()
+            photo.image = p
+        }else{
+            let imgURL = NSURL(string: imagePath)
+            let request: NSURLRequest = NSURLRequest(URL: imgURL!)
+            let mainQueue = NSOperationQueue.mainQueue()
+            photo.image = UIImage(named: "PlaceHolder")
+            NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
+                if error == nil {
+                    // Convert the downloaded data in to a UIImage object
+                    let image = UIImage(data: data)
+                    var changedPath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "")
+                    if let im = image{
+                       NSKeyedArchiver.archiveRootObject(im,toFile: InstaClient.sharedInstance().imagePath(changedPath))
+                    }
+    //                println(self.imagePath(changedPath))
+                    photo.image = image
+                    completionHandler(success: true, errorString: nil)
                 }
-                
-//                println(self.imagePath(changedPath))
-                
-                
-                photo.image = image
-                completionHandler(success: true, errorString: nil)
-            }
-            else {
-                completionHandler(success: false, errorString: "Could not download image \(imagePath)")
-            }
-        })
+                else {
+                    completionHandler(success: false, errorString: "Could not download image \(imagePath)")
+                }
+            })
+        }
     }
 
     // MARK: - Shared Image Cache
