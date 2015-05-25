@@ -19,9 +19,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="wxO-6M-MK7">
-                                <rect key="frame" x="0.0" y="136" width="600" height="415"/>
-                            </mapView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yOv-Lt-CUJ">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <color key="backgroundColor" red="0.10980392160000001" green="0.10980392160000001" blue="0.10980392160000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -56,6 +53,14 @@
                                 <color key="barTintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="wxO-6M-MK7">
+                                <rect key="frame" x="0.0" y="136" width="600" height="415"/>
+                            </mapView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="u3x-nb-bF9">
+                                <rect key="frame" x="290" y="325" width="20" height="20"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -68,10 +73,12 @@
                             <constraint firstItem="yOv-Lt-CUJ" firstAttribute="top" secondItem="3gw-bI-J8Y" secondAttribute="top" id="OZY-f3-jLj"/>
                             <constraint firstItem="3gw-bI-J8Y" firstAttribute="centerX" secondItem="ogv-Vu-jEe" secondAttribute="centerX" id="Wh9-Ap-vZh"/>
                             <constraint firstItem="wxO-6M-MK7" firstAttribute="top" secondItem="4Sg-n8-pjR" secondAttribute="bottom" id="X93-EC-mgO"/>
+                            <constraint firstItem="wxO-6M-MK7" firstAttribute="centerY" secondItem="u3x-nb-bF9" secondAttribute="centerY" constant="0.5" id="esy-QC-nvL"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wxO-6M-MK7" secondAttribute="trailing" constant="-16" id="f5F-e2-8HA"/>
                             <constraint firstItem="yOv-Lt-CUJ" firstAttribute="leading" secondItem="ogv-Vu-jEe" secondAttribute="leading" id="gdV-fZ-gHs"/>
                             <constraint firstItem="wxO-6M-MK7" firstAttribute="leading" secondItem="Sjt-nO-Jp2" secondAttribute="leadingMargin" constant="-16" id="hhb-h6-MUd"/>
                             <constraint firstItem="ogv-Vu-jEe" firstAttribute="top" secondItem="wxO-6M-MK7" secondAttribute="top" constant="-44" id="iKg-X9-3Tk"/>
+                            <constraint firstItem="wxO-6M-MK7" firstAttribute="centerX" secondItem="u3x-nb-bF9" secondAttribute="centerX" constant="-0.5" id="otK-W9-66B"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ogv-Vu-jEe" secondAttribute="trailing" constant="-16" id="qxX-6e-bvb"/>
                             <constraint firstItem="wxO-6M-MK7" firstAttribute="top" secondItem="4Sg-n8-pjR" secondAttribute="bottom" id="sRH-L7-f7E"/>
                             <constraint firstItem="3gw-bI-J8Y" firstAttribute="leading" secondItem="yOv-Lt-CUJ" secondAttribute="leading" id="weY-hV-B1s"/>
@@ -83,6 +90,7 @@
                             <mask key="subviews">
                                 <exclude reference="yOv-Lt-CUJ"/>
                                 <exclude reference="3gw-bI-J8Y"/>
+                                <exclude reference="u3x-nb-bF9"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="3DN-ef-Vb1"/>
@@ -95,6 +103,8 @@
                                 <exclude reference="zeV-Hf-t4X"/>
                                 <exclude reference="75g-qU-mLg"/>
                                 <exclude reference="X93-EC-mgO"/>
+                                <exclude reference="esy-QC-nvL"/>
+                                <exclude reference="otK-W9-66B"/>
                                 <exclude reference="sRH-L7-f7E"/>
                             </mask>
                         </variation>
@@ -102,6 +112,7 @@
                             <mask key="subviews">
                                 <include reference="yOv-Lt-CUJ"/>
                                 <include reference="3gw-bI-J8Y"/>
+                                <include reference="u3x-nb-bF9"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="3DN-ef-Vb1"/>
@@ -112,11 +123,14 @@
                                 <include reference="OZY-f3-jLj"/>
                                 <include reference="gdV-fZ-gHs"/>
                                 <include reference="zeV-Hf-t4X"/>
+                                <include reference="esy-QC-nvL"/>
+                                <include reference="otK-W9-66B"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Instaplaces" id="N6Z-pP-Ph3"/>
                     <connections>
+                        <outlet property="indicator" destination="u3x-nb-bF9" id="e8G-hB-aJp"/>
                         <outlet property="mapView" destination="wxO-6M-MK7" id="ku3-vo-ei8"/>
                         <outlet property="searchBar" destination="ogv-Vu-jEe" id="5Xc-iE-ELF"/>
                         <outlet property="segment" destination="3gw-bI-J8Y" id="4R8-MA-uwy"/>
@@ -284,12 +298,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Vba-Yp-rqT">
-                                <rect key="frame" x="-10" y="-10" width="20" height="20"/>
-                                <variation key="heightClass=regular-widthClass=compact" fixedFrame="YES">
-                                    <rect key="frame" x="190" y="390" width="20" height="20"/>
-                                </variation>
-                            </activityIndicatorView>
                             <webView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yt3-wX-8h6">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -302,16 +310,6 @@
                             <constraint firstAttribute="trailingMargin" secondItem="Yt3-wX-8h6" secondAttribute="trailing" constant="-16" id="hx3-l6-8zo"/>
                             <constraint firstItem="Yt3-wX-8h6" firstAttribute="top" secondItem="1AU-hm-wM7" secondAttribute="topMargin" id="y1s-QG-cMF"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="Vba-Yp-rqT"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
-                            <mask key="subviews">
-                                <include reference="Vba-Yp-rqT"/>
-                            </mask>
-                        </variation>
                     </view>
                     <connections>
                         <outlet property="webView" destination="Yt3-wX-8h6" id="0fu-s4-UgO"/>
@@ -319,7 +317,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZHy-9b-fue" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2067" y="626"/>
+            <point key="canvasLocation" x="2067" y="625.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tgh-Ui-8Jy">
@@ -1206,6 +1204,11 @@
                                     </mask>
                                 </variation>
                             </view>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="fxn-bb-4PP">
+                                <rect key="frame" x="-10" y="-10" width="20" height="20"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="color" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -1224,6 +1227,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="trf-zn-uR5" secondAttribute="trailing" constant="-21" id="ONz-8N-miC"/>
                             <constraint firstItem="E7k-am-313" firstAttribute="centerX" secondItem="7e4-Ti-iSi" secondAttribute="centerX" id="Tre-Yz-F6I"/>
                             <constraint firstAttribute="centerX" secondItem="owB-0s-utY" secondAttribute="centerX" id="UAI-K5-vaF"/>
+                            <constraint firstAttribute="centerY" secondItem="fxn-bb-4PP" secondAttribute="centerY" constant="-43.5" id="Uid-Oa-EFb"/>
                             <constraint firstItem="XEv-yh-2mi" firstAttribute="leading" secondItem="RX1-jS-9sR" secondAttribute="leadingMargin" constant="-16" id="WjB-on-vFF"/>
                             <constraint firstItem="E7k-am-313" firstAttribute="top" secondItem="UlX-tu-xaK" secondAttribute="bottom" constant="85" id="ZfD-O5-Sbd"/>
                             <constraint firstItem="trf-zn-uR5" firstAttribute="bottom" secondItem="Sht-oO-o9t" secondAttribute="top" id="a8y-n2-rLu"/>
@@ -1242,6 +1246,7 @@
                             <constraint firstItem="2BP-CB-Li5" firstAttribute="leading" secondItem="3eW-zi-Hk0" secondAttribute="leading" constant="110" id="qfv-1J-8WX"/>
                             <constraint firstItem="XEv-yh-2mi" firstAttribute="top" secondItem="UlX-tu-xaK" secondAttribute="bottom" id="saH-4O-up9"/>
                             <constraint firstAttribute="centerY" secondItem="3eW-zi-Hk0" secondAttribute="centerY" id="tcE-iC-4li"/>
+                            <constraint firstAttribute="centerX" secondItem="fxn-bb-4PP" secondAttribute="centerX" constant="-8.5" id="ujs-ca-UlC"/>
                             <constraint firstAttribute="centerX" secondItem="2BP-CB-Li5" secondAttribute="centerX" id="xHo-8t-tsX"/>
                             <constraint firstItem="E7k-am-313" firstAttribute="trailing" secondItem="epR-pf-prP" secondAttribute="trailing" id="xVC-jj-lj6"/>
                             <constraint firstAttribute="trailingMargin" secondItem="XEv-yh-2mi" secondAttribute="trailing" constant="-16" id="zHX-Dr-4x8"/>
@@ -1252,8 +1257,13 @@
                                 <exclude reference="7e4-Ti-iSi"/>
                                 <exclude reference="epR-pf-prP"/>
                                 <exclude reference="E7k-am-313"/>
+                                <exclude reference="fxn-bb-4PP"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="279-WU-oPU"/>
+                                <exclude reference="G2I-QR-xgP"/>
+                                <exclude reference="dmH-Vy-myI"/>
+                                <exclude reference="saH-4O-up9"/>
                                 <exclude reference="1kg-Mf-94Q"/>
                                 <exclude reference="6ov-8W-DhK"/>
                                 <exclude reference="AjK-yu-r9j"/>
@@ -1261,19 +1271,17 @@
                                 <exclude reference="ZfD-O5-Sbd"/>
                                 <exclude reference="d7t-p8-Fje"/>
                                 <exclude reference="xVC-jj-lj6"/>
-                                <exclude reference="279-WU-oPU"/>
-                                <exclude reference="G2I-QR-xgP"/>
-                                <exclude reference="dmH-Vy-myI"/>
-                                <exclude reference="saH-4O-up9"/>
                                 <exclude reference="a8y-n2-rLu"/>
                                 <exclude reference="bQY-KA-GCl"/>
                                 <exclude reference="beV-5N-8MW"/>
                                 <exclude reference="l4m-Lu-GB3"/>
-                                <exclude reference="p5o-AY-UqG"/>
                                 <exclude reference="0Mw-Du-wZw"/>
                                 <exclude reference="fIw-Lq-yB6"/>
                                 <exclude reference="oJ8-mb-ckM"/>
                                 <exclude reference="oUi-9S-JNA"/>
+                                <exclude reference="p5o-AY-UqG"/>
+                                <exclude reference="Uid-Oa-EFb"/>
+                                <exclude reference="ujs-ca-UlC"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -1281,15 +1289,9 @@
                                 <include reference="7e4-Ti-iSi"/>
                                 <include reference="epR-pf-prP"/>
                                 <include reference="E7k-am-313"/>
+                                <include reference="fxn-bb-4PP"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="1kg-Mf-94Q"/>
-                                <include reference="6ov-8W-DhK"/>
-                                <include reference="AjK-yu-r9j"/>
-                                <include reference="Tre-Yz-F6I"/>
-                                <include reference="ZfD-O5-Sbd"/>
-                                <include reference="d7t-p8-Fje"/>
-                                <include reference="xVC-jj-lj6"/>
                                 <include reference="279-WU-oPU"/>
                                 <exclude reference="8T9-Iq-xS4"/>
                                 <include reference="G2I-QR-xgP"/>
@@ -1298,19 +1300,28 @@
                                 <include reference="saH-4O-up9"/>
                                 <exclude reference="zHX-Dr-4x8"/>
                                 <exclude reference="zYT-uo-iF9"/>
+                                <include reference="1kg-Mf-94Q"/>
+                                <include reference="6ov-8W-DhK"/>
+                                <include reference="AjK-yu-r9j"/>
+                                <include reference="Tre-Yz-F6I"/>
+                                <include reference="ZfD-O5-Sbd"/>
+                                <include reference="d7t-p8-Fje"/>
+                                <include reference="xVC-jj-lj6"/>
                                 <exclude reference="L1I-R9-FgB"/>
                                 <exclude reference="ONz-8N-miC"/>
                                 <include reference="a8y-n2-rLu"/>
                                 <include reference="beV-5N-8MW"/>
                                 <include reference="l4m-Lu-GB3"/>
                                 <exclude reference="p5M-6q-0mR"/>
-                                <exclude reference="CVd-69-tOC"/>
-                                <include reference="p5o-AY-UqG"/>
-                                <exclude reference="F5q-iS-kXw"/>
                                 <include reference="0Mw-Du-wZw"/>
                                 <include reference="fIw-Lq-yB6"/>
                                 <include reference="oJ8-mb-ckM"/>
                                 <include reference="oUi-9S-JNA"/>
+                                <exclude reference="CVd-69-tOC"/>
+                                <include reference="p5o-AY-UqG"/>
+                                <include reference="Uid-Oa-EFb"/>
+                                <include reference="ujs-ca-UlC"/>
+                                <exclude reference="F5q-iS-kXw"/>
                             </mask>
                         </variation>
                     </view>
@@ -1320,7 +1331,7 @@
                     <connections>
                         <outlet property="collectionView" destination="trf-zn-uR5" id="16t-Fv-bTH"/>
                         <outlet property="imageInfoView" destination="3eW-zi-Hk0" id="nya-I5-6xp"/>
-                        <outlet property="indicator" destination="2BP-CB-Li5" id="qLv-YP-UvI"/>
+                        <outlet property="indicator" destination="fxn-bb-4PP" id="COd-4l-kY4"/>
                         <outlet property="infoLabel" destination="owB-0s-utY" id="DcJ-SC-TGX"/>
                         <outlet property="map" destination="XEv-yh-2mi" id="ZTZ-Ir-mXR"/>
                         <outlet property="selectViewSegmentedControl" destination="E7k-am-313" id="kvS-HQ-3Ni"/>

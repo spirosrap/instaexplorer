@@ -238,7 +238,7 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
     
         //MARK: New Collection Button
         //Generate a new collection
-        func newCollection() -> Bool { //I added a return value to exit when there is no connection
+    func newCollection() -> Bool { //I added a return value to exit when there is no connection
     
 //            var networkReachability = Reachability.reachabilityForInternetConnection()
 //            var networkStatus = networkReachability.currentReachabilityStatus()
@@ -251,7 +251,7 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
             let applicationDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)//the appdelegate keeps a "Statistics" instance.
             informationBox("Connecting to Instagram",animate:true)
             newCollectionButton.enabled = false
-
+            indicator.startAnimating()
             InstaClient.sharedInstance().getMedia(Double(location.latitude), longitude: Double(location.longitude), distance: 100) { (result, error) -> Void in
                 
                 if error == nil {
@@ -273,6 +273,7 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
                                dispatch_async(dispatch_get_main_queue(), {
                                 self.tableView.reloadData()
                                 self.collectionView.reloadData()
+                                self.indicator.stopAnimating()
                                 self.newCollectionButton.enabled = true
 
                         })
