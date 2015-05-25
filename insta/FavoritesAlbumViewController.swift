@@ -91,6 +91,11 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
         self.collectionView.reloadData()
 
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tableView.reloadData() //There was a bug with properly displaying the rounded profile images. It needed to hide and redisplay the view to display properly. With reloading data, it displays correctly
+    }
 
     
     
@@ -262,10 +267,8 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCellWithIdentifier("tablecell", forIndexPath: indexPath) as! MediaTableViewCell
-        var frame = cell.profileIm.frame
-        frame.size.height = cell.profileIm.frame.size.width
-        frame.size.width  = cell.profileIm.frame.size.width
-        cell.profileIm.frame = frame
+        
+        
         cell.profileIm.layer.cornerRadius = cell.profileIm.frame.size.width / 2.0
         cell.profileIm.clipsToBounds = true
 
@@ -301,6 +304,7 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
 
         
     }
+    
      func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         return true
     }
