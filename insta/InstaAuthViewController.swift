@@ -71,13 +71,6 @@ class InstaAuthViewController: UIViewController, UIWebViewDelegate {
             }
         }
         
-        //In case of logout the return URL is https://instagram.com/ and if we get back such URL it means that we have logged out.
-        if (request.URL!.absoluteString! == "https://instagram.com/"){
-            self.dismissViewControllerAnimated(false, completion: { () -> Void in
-                self.completionHandler!(success: true,accessToken: nil,errorString: nil)
-            })
-        }
-        
         return true
     }
     
