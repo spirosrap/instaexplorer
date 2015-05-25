@@ -40,10 +40,15 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         self.tableView.reloadData()
         self.resultSearchController.searchBar.barTintColor = UIColor.blackColor()
         self.resultSearchController.searchBar.tintColor = UIColor.whiteColor()
+        
+        
+        var frame:CGRect = self.tableView.bounds;
+        frame.origin.y = -frame.size.height;
+        var blackView:UIView = UIView(frame: frame)
+        blackView.backgroundColor = UIColor.blackColor()
+        self.tableView.addSubview(blackView)
 
-        
-        
-        
+
         
         editButton = UIBarButtonItem(title: "Edit", style: .Done, target: self, action: "edit")
         logoutButton = UIBarButtonItem(barButtonSystemItem: .Stop, target: self, action: "logout")
@@ -65,6 +70,12 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         self.navigationController?.navigationBarHidden = false
         self.tableView.reloadData()
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        self.tableView.reloadData() //There was a bug with properly displaying the rounded profile images. It needed to hide and redisplay the view to display properly. With reloading data, it displays correctly
+    }
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -233,7 +244,6 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
     func updateSearchResultsForSearchController(searchController: UISearchController)
     {
         filteredTableData.removeAll(keepCapacity: false)
-        
         let searchPredicate = NSPredicate(format: "SELF CONTAINS[c]%@", searchController.searchBar.text)
         
         var array = [Tag]()
