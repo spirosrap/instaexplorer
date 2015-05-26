@@ -38,15 +38,7 @@ class ViewController: UIViewController {
                 let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController")! as! UITabBarController
                 
                 appDelegateTemp!.window!!.rootViewController = detailController
-                
-//                dispatch_async(dispatch_get_main_queue()) {
-//                    self.navigationController!.presentViewController(detailController, animated: false) {
-//                        self.navigationController?.popViewControllerAnimated(true)
-//                        return ()
-//                    }
-//
-//                }
-                
+                                
                 
             }else{
                 println(errorString)

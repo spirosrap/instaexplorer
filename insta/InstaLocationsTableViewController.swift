@@ -68,13 +68,11 @@ class InstaLocationsTableViewController: UITableViewController {
                 let paController = self.storyboard!.instantiateViewControllerWithIdentifier("LocationPhotoAlbumViewController")! as! LocationPhotoAlbumViewController
                 paController.title = self.instaLocations[indexPath.row].name
                 
-//                paController.location = self.instaLocations[indexPath.row]
-                
                 dispatch_async(dispatch_get_main_queue()) {
                     self.navigationController!.pushViewController(paController, animated: true)
                 }
             }else{
-                println(error)
+                self.displayMessageBox("Could not retrieve images for the location")
             }
 
         })
@@ -82,49 +80,11 @@ class InstaLocationsTableViewController: UITableViewController {
     }
 
 
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
+    //A simple Alert view with an OK Button
+    func displayMessageBox(message:String){
+        var alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

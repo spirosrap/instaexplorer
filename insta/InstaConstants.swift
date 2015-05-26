@@ -15,7 +15,6 @@ extension InstaClient {
         static let ApiKey : String = "066cb1a895d1a55b958a6317a5bba53a"
         
         // MARK: URLs
-        static let BaseURL : String = "http://api.themoviedb.org/3/"
         static let BaseURLSecure : String = "https://api.instagram.com/v1/"
 
         static let ClientID: String = "bd0da3c658554f279ec783ddc9c5f71a"
@@ -63,10 +62,6 @@ extension InstaClient {
         
         static let MediaType = "media_type"
         static let MediaID = "media_id"
-        static let Favorite = "favorite"
-        static let Watchlist = "watchlist"
-        
-        static let ratingValue = "value"
     }
 
     // MARK: - JSON Response Keys
@@ -83,30 +78,7 @@ extension InstaClient {
         // MARK: Account
         static let UserID = "id"
         
-        // MARK: Config
-        static let ConfigBaseImageURL = "base_url"
-        static let ConfigSecureBaseImageURL = "secure_base_url"
-        static let ConfigImages = "images"
-        static let ConfigPosterSizes = "poster_sizes"
-        static let ConfigProfileSizes = "profile_sizes"
-        
-        // MARK: Movies
-        static let MovieID = "id"
-        static let MovieTitle = "title"        
-        static let MoviePosterPath = "poster_path"
-        static let MovieReleaseDate = "release_date"
-        static let MovieReleaseYear = "release_year"
-        static let MovieResults = "results"
-        static let MovieRating = "rating"
-        
     }
     
-    // MARK: - Poster Sizes
-    struct PosterSizes {
-//        
-//        static let RowPoster = InstaClient.sharedInstance().config.posterSizes[2]
-//        static let DetailPoster = InstaClient.sharedInstance().config.posterSizes[4]
-        
-    }
 
 }
