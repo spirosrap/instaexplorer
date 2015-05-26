@@ -200,7 +200,7 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
                                     self.navigationController!.pushViewController(detailController, animated: true)
                                 })
                             }else{
-                                displayMessageBox("Could not get Images")
+                                self.displayMessageBox("Could not get Images")
                                 self.indicator.stopAnimating()
                             }
                         })
