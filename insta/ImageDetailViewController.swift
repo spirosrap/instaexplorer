@@ -31,9 +31,21 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.navigationBarHidden = true
+        self.indicator.stopAnimating() //Sometimes indicator delays hiding, due to the asynchronous call to API.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.navigationBarHidden = false
         fetchedResultsController.performFetch(nil)
         let sectionInfo = fetchedResultsController.sections![0] as! NSFetchedResultsSectionInfo
-
+        
         scrollView.delegate = self
         
         if let userComment = userComment{
@@ -49,13 +61,10 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
             
         }
         
-        
-        
-        
         if  !sectionInfo.objects.isEmpty{
             instaMedia = sectionInfo.objects[0] as! InstaMedia
             
-            var usernameAttr  = NSMutableAttributedString(string: instaMedia.username!, attributes: [NSForegroundColorAttributeName:UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00), NSFontAttributeName:UIFont(name: "HelveticaNeue-Bold", size: 17)!])
+            var usernameAttr  = NSMutableAttributedString(string: instaMedia.username!, attributes: [NSForegroundColorAttributeName:UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00), NSFontAttributeName:UIFont(name: "HelveticaNeue", size: 17)!])
             var range = NSString(string: instaMedia.username!).rangeOfString(instaMedia.username!)
             usernameAttr.replaceCharactersInRange(range, withAttributedString: usernameAttr)
             
@@ -64,23 +73,17 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
             profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 10
             profileImageView.clipsToBounds = true
             
-            var utv = UITextView(frame: usernameTextView.alignmentRectForFrame(usernameTextView.frame))
-            utv.attributedText = usernameAttr
             
-            
-            usernameTextView.addSubview(utv)
-            utv.editable = false
-            utv.selectable = false
+            usernameTextView.attributedText = usernameAttr
+            usernameTextView.editable = false
+            usernameTextView.selectable = false
             
             
             if let locationName = instaMedia.instaLocation?.name {
-                var locationAttr  = NSMutableAttributedString(string: locationName, attributes: [NSForegroundColorAttributeName:UIColor(red: 0.051, green: 0.494, blue: 0.839, alpha: 1.00), NSFontAttributeName:UIFont(name: "HelveticaNeue-Thin", size: 17)!])
+                var locationAttr  = NSMutableAttributedString(string: locationName, attributes: [NSForegroundColorAttributeName:UIColor(red: 0.051, green: 0.494, blue: 0.839, alpha: 1.00), NSFontAttributeName:UIFont(name: "HelveticaNeue", size: 17)!])
                 var range = NSString(string: locationName).rangeOfString(locationName)
                 locationAttr.replaceCharactersInRange(range, withAttributedString: locationAttr)
                 
-                
-                var ltv = UITextView(frame: usernameTextView.alignmentRectForFrame(LocationTextView.frame))
-                ltv.attributedText = locationAttr
                 LocationTextView.attributedText = locationAttr
             }
             
@@ -101,23 +104,11 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
             }
             
         }
-
+        
         shareButton = UIBarButtonItem(barButtonSystemItem: .Action, target: self, action: "share")
         flexiblespace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
         
         self.navigationItem.rightBarButtonItem = shareButton
-        
-    }
-    
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.navigationController?.navigationBarHidden = true
-        self.indicator.stopAnimating() //Sometimes indicator delays hiding, due to the asynchronous call to API.
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.navigationBarHidden = false
 
     }
 
