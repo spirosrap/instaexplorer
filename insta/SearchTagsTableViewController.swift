@@ -188,18 +188,25 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
                 indicator.startAnimating()
                 InstaClient.sharedInstance().getMediaFromTag(selectedTag, completionHandler: { (result, error) -> Void in
                     if error == nil{
-                        dispatch_async(dispatch_get_main_queue(), {
-                            detailController.prefetchedPhotos = result! as [InstaMedia]
-                            for r in result!{
-                                r.tag = savedTag
+                        if result! != []{
+                            dispatch_async(dispatch_get_main_queue(), {
+                                detailController.prefetchedPhotos = result! as [InstaMedia]
+                                for r in result!{
+                                    r.tag = savedTag
+                                }
+                                self.resultSearchController.active = false
+                                CoreDataStackManager.sharedInstance().saveContext()
+                                detailController.navigationController?.navigationBar.hidden = false
+                                detailController.navigationItem.title =   "#" + selectedTag
+                                self.indicator.stopAnimating()
+                                self.navigationController!.pushViewController(detailController, animated: true)
+                            })
+                        }else{
+                            dispatch_async(dispatch_get_main_queue()) {
+                                self.indicator.stopAnimating()
+                                self.displayMessageBox("No images for that hashtag found")
                             }
-                            self.resultSearchController.active = false
-                            CoreDataStackManager.sharedInstance().saveContext()
-                            detailController.navigationController?.navigationBar.hidden = false
-                            detailController.navigationItem.title =   "#" + selectedTag
-                            self.indicator.stopAnimating()
-                            self.navigationController!.pushViewController(detailController, animated: true)
-                        })
+                        }
                     }
                 })
             }else{
@@ -274,6 +281,11 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
                         self.tableView.reloadData()
                         
                     })
+                }else{
+                    dispatch_async(dispatch_get_main_queue(), {
+                        self.displayMessageBox("Error searching for tags")
+                    })
+
                 }
             })
         }
@@ -304,6 +316,12 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
 
     }
 
+    //A simple Alert view with an OK Button
+    func displayMessageBox(message:String){
+        var alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
 
 
 }

@@ -255,42 +255,49 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                 //Create the new Location and save it to the variable selectedLocation
                 selectedLocation = Location(dictionary: ["latitude":self.annotation.coordinate.latitude,"longitude":self.annotation.coordinate.longitude], context: sharedContext)
                 InstaClient.sharedInstance().getMedia(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 100, completionHandler: { (result, error) -> Void in
-                    if(result! != []){
-                        self.annotation.title = " "
-                        for il in result!{
-                            il.location = self.selectedLocation
-                        }
-                        
-                        CoreDataStackManager.sharedInstance().saveContext()
-                        
-                        
-                        let paController = self.storyboard!.instantiateViewControllerWithIdentifier("LocationPhotoAlbumViewController")! as! LocationPhotoAlbumViewController
-                        paController.location = self.selectedLocation
-                        
-                        dispatch_async(dispatch_get_main_queue()) {
-                            self.tabBarController!.tabBar.hidden = true;
-                            self.indicator.stopAnimating()
-                            self.navigationController!.pushViewController(paController, animated: true)
-                        }
-                        
-                        self.annotationsLocations[self.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
-                        var view = self.mapView.viewForAnnotation(self.annotation)
-                        var imv = UIImageView(frame: view!.frame)
-                        var im = result![0] as InstaMedia
-                        InstaClient.sharedInstance().setImage(im.imagePath!, imageView: imv)
-                        
-                        self.mapView.viewForAnnotation(self.annotation).leftCalloutAccessoryView = imv //It will display the first image as the accecory view but it's really a random image. It will be changed in subsequent runs.
-                        self.mapView.viewForAnnotation(self.annotation).rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
-                        self.mapView.deselectAnnotation(self.annotation, animated: false)
-                        self.annotationsToRemove = []
-                        
-                    }else{
-                        dispatch_async(dispatch_get_main_queue()) {
-                            self.indicator.stopAnimating()
+                    if error == nil{
+                        if(result! != []){
+                            self.annotation.title = " "
+                            for il in result!{
+                                il.location = self.selectedLocation
+                            }
+                            
+                            CoreDataStackManager.sharedInstance().saveContext()
+                            
+                            
+                            let paController = self.storyboard!.instantiateViewControllerWithIdentifier("LocationPhotoAlbumViewController")! as! LocationPhotoAlbumViewController
+                            paController.location = self.selectedLocation
+                            
+                            dispatch_async(dispatch_get_main_queue()) {
+                                self.tabBarController!.tabBar.hidden = true;
+                                self.indicator.stopAnimating()
+                                self.navigationController!.pushViewController(paController, animated: true)
+                            }
+                            
+                            self.annotationsLocations[self.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
+                            var view = self.mapView.viewForAnnotation(self.annotation)
+                            var imv = UIImageView(frame: view!.frame)
+                            var im = result![0] as InstaMedia
+                            InstaClient.sharedInstance().setImage(im.imagePath!, imageView: imv)
+                            
+                            self.mapView.viewForAnnotation(self.annotation).leftCalloutAccessoryView = imv //It will display the first image as the accecory view but it's really a random image. It will be changed in subsequent runs.
+                            self.mapView.viewForAnnotation(self.annotation).rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
                             self.mapView.deselectAnnotation(self.annotation, animated: false)
-                            self.mapView.removeAnnotation(self.annotation)
-                            CoreDataStackManager.sharedInstance().deleteObject(self.selectedLocation)
+                            self.annotationsToRemove = []
+                            
+                        }else{
+                            dispatch_async(dispatch_get_main_queue()) {
+                                self.indicator.stopAnimating()
+                                self.mapView.deselectAnnotation(self.annotation, animated: false)
+                                self.mapView.removeAnnotation(self.annotation)
+                                CoreDataStackManager.sharedInstance().deleteObject(self.selectedLocation)
+                            }
                         }
+                    }else{
+                        self.displayMessageBox("Error retrieving images for location: \(error!.userInfo)")
+                        self.mapView.deselectAnnotation(self.annotation, animated: false)
+                        self.mapView.removeAnnotation(self.annotation)
+                        CoreDataStackManager.sharedInstance().deleteObject(self.selectedLocation)
                     }
                 })
             }
@@ -316,24 +323,31 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                         InstaClient.sharedInstance().getMedia(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 100) { (result, error) -> Void in
                             
                             if error == nil {
-                                dispatch_async(dispatch_get_main_queue()) {
-                                    //                                self.informationBox(nil,animate:false)
-                                    //instantiate the controller and pass the parameter location.
-                                    detailController.location = l
-                                    
-                                    for il in result!{
-                                        il.location = self.selectedLocation
+                                if(result! != []){
+                                    dispatch_async(dispatch_get_main_queue()) {
+                                        //                                self.informationBox(nil,animate:false)
+                                        //instantiate the controller and pass the parameter location.
+                                        detailController.location = l
+                                        
+                                        for il in result!{
+                                            il.location = self.selectedLocation
+                                        }
+                                        
+                                        CoreDataStackManager.sharedInstance().saveContext()
+                                        self.tabBarController!.tabBar.hidden = true;
+                                        self.indicator.stopAnimating()
+                                        self.navigationController!.pushViewController(detailController, animated: true)
                                     }
-                                    
-                                    CoreDataStackManager.sharedInstance().saveContext()
-                                    self.tabBarController!.tabBar.hidden = true;
-                                    self.indicator.stopAnimating()
-                                    self.navigationController!.pushViewController(detailController, animated: true)
+                                }else{
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        self.indicator.stopAnimating()
+                                        self.displayMessageBox("No images for that location")//Its appropriate at this point to display an Alert
+                                    })
                                 }
                             } else {
                                 dispatch_async(dispatch_get_main_queue(), {
                                     //                                self.informationBox(nil,animate:false)
-                                    self.displayMessageBox("No available Photos Found")//Its appropriate at this point to display an Alert
+                                    self.displayMessageBox("Error retrieving images: \(error!.userInfo)")//Its appropriate at this point to display an Alert
                                     self.mapView.removeAnnotation(annotationView.annotation)
                                     self.indicator.stopAnimating()
                                     CoreDataStackManager.sharedInstance().deleteObject(self.selectedLocation)
@@ -347,7 +361,6 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                     }
                 }
             }
-
         }
     }
 
@@ -447,12 +460,20 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                             self.navigationController!.pushViewController(paController, animated: true)
                         }
                     }else{
-                        self.indicator.stopAnimating()
-                        self.displayMessageBox("No results found")
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.indicator.stopAnimating()
+                            self.displayMessageBox("No results found")
+                            self.mapView.deselectAnnotation(view.annotation, animated: false)
+                            self.mapView.removeAnnotation(view.annotation)
+                            CoreDataStackManager.sharedInstance().deleteObject(self.selectedLocation)
+                            CoreDataStackManager.sharedInstance().saveContext()
+                        }
                     }
                 }else{
-                    self.indicator.stopAnimating()
-                    self.displayMessageBox("Network error")
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.indicator.stopAnimating()
+                        self.displayMessageBox("Network error")
+                    }
                 }
             })
         }

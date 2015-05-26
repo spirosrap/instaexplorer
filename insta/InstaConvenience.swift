@@ -59,12 +59,6 @@ extension InstaClient {
     
     func webLogout(hostViewController: UIViewController, completionHandler: (success: Bool,accessToken:String?, errorString: String?) -> Void) {
         
-//        let logoutURL = NSURL(string: "https://instagram.com/accounts/logout")
-//        let request = NSURLRequest(URL: logoutURL!)
-//        let webAuthViewController = hostViewController.storyboard!.instantiateViewControllerWithIdentifier("InstaAuthViewController") as! InstaAuthViewController
-//        webAuthViewController.urlRequest = request
-//        webAuthViewController.completionHandler = completionHandler
-//        hostViewController.navigationController!.pushViewController(webAuthViewController, animated: false)
 
     }
     
@@ -82,15 +76,6 @@ extension InstaClient {
         
         hostViewController.navigationController?.popViewControllerAnimated(false)
 
-//        InstaClient.sharedInstance().webLogout(hostViewController) { (success, accessToken, errorString) -> Void in
-//            
-//            if success{
-//                
-//            }else{
-//                println(errorString)
-//            }
-//            hostViewController.navigationController?.dismissViewControllerAnimated(false, completion: nil)
-//        }
     }
 
     
