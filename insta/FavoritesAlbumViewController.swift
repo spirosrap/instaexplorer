@@ -72,11 +72,9 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
     }
     
     override func viewWillDisappear(animated: Bool) {
-//        self.navigationController?.navigationBarHidden = true
-//        self.navigationController?.toolbarHidden = true
-//        for p in prefetchedPhotos{
-//            CoreDataStackManager.sharedInstance().deleteObject(p)
-//        }
+        if self.tableView.editing{
+            edit()
+        }
     }
     
 
