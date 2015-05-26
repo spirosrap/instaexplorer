@@ -18,7 +18,7 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
     var temporaryContext: NSManagedObjectContext!
     var editButton:UIBarButtonItem!
     var logoutButton = UIBarButtonItem()
-    
+    var indicator:UIActivityIndicatorView!
     
     @IBOutlet var searchBar: UISearchBar!
     override func viewDidLoad() {
@@ -57,7 +57,13 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         
         self.editing = false
         self.tableView.editing = false
-
+        
+        indicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.WhiteLarge)
+        indicator.color = UIColor.blackColor()
+        indicator.backgroundColor = UIColor.whiteColor()
+        indicator.center = self.tableView.center
+        indicator.hidesWhenStopped = true
+        self.tableView.addSubview(indicator)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -179,7 +185,7 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
 
                 var savedTag = Tag(dictionary: dictionary, context: CoreDataStackManager.sharedInstance().managedObjectContext!)
                 CoreDataStackManager.sharedInstance().saveContext()
-                
+                indicator.startAnimating()
                 InstaClient.sharedInstance().getMediaFromTag(selectedTag, completionHandler: { (result, error) -> Void in
                     if error == nil{
                         dispatch_async(dispatch_get_main_queue(), {
@@ -191,7 +197,7 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
                             CoreDataStackManager.sharedInstance().saveContext()
                             detailController.navigationController?.navigationBar.hidden = false
                             detailController.navigationItem.title =   "#" + selectedTag
-
+                            self.indicator.stopAnimating()
                             self.navigationController!.pushViewController(detailController, animated: true)
                         })
                     }
@@ -254,24 +260,26 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
 
         temporaryContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType)
         temporaryContext.parentContext = sharedContext
-        
-        InstaClient.sharedInstance().getTags(searchController.searchBar.text,context: temporaryContext, completionHandler: { (result, error) -> Void in
-            if error == nil{
-                
-                dispatch_async(dispatch_get_main_queue(), {
-                    for r in result!{
-                        array += [r as Tag]
-                    }
-
-                      self.filteredTableData = array
-                      self.tableView.reloadData()
+        if(searchController.searchBar.text != ""){
+            indicator.startAnimating()
+            InstaClient.sharedInstance().getTags(searchController.searchBar.text,context: temporaryContext, completionHandler: { (result, error) -> Void in
+                if error == nil{
                     
-                })
-            }
-        })
+                    dispatch_async(dispatch_get_main_queue(), {
+                        for r in result!{
+                            array += [r as Tag]
+                        }
+                        self.indicator.stopAnimating()
+                        self.filteredTableData = array
+                        self.tableView.reloadData()
+                        
+                    })
+                }
+            })
+        }
         
 //        let array = (tableData as NSArray).filteredArrayUsingPredicate(searchPredicate)
-        
+
         self.tableView.reloadData()
         
     }

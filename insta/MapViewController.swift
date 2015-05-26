@@ -184,12 +184,15 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         if let address = searchBar.text{
             var geocoder = CLGeocoder()
 //            informationBox("Gecoding...", animate: true) // The information box displays while geocoding
+            self.indicator.startAnimating()
             geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
                 if let error = error {
+                    self.indicator.stopAnimating()
                     var alert = UIAlertController(title: "", message: "Geocoding failed", preferredStyle: UIAlertControllerStyle.Alert)
                     alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
 //                    self.informationBox(nil, animate: false)
                 } else {
+                    self.indicator.stopAnimating()
                     if let placemark = placemarks?[0] as? CLPlacemark {
                         //Center the map
                         let p = MKPlacemark(placemark: placemark)
@@ -248,7 +251,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                 
             } else if (sender.state == .Ended){//The user has lifted the finger.
                 firstDrop = false
-                
+                indicator.startAnimating()
                 //Create the new Location and save it to the variable selectedLocation
                 selectedLocation = Location(dictionary: ["latitude":self.annotation.coordinate.latitude,"longitude":self.annotation.coordinate.longitude], context: sharedContext)
                 InstaClient.sharedInstance().getMedia(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 100, completionHandler: { (result, error) -> Void in
@@ -266,6 +269,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                         
                         dispatch_async(dispatch_get_main_queue()) {
                             self.tabBarController!.tabBar.hidden = true;
+                            self.indicator.stopAnimating()
                             self.navigationController!.pushViewController(paController, animated: true)
                         }
                         
@@ -279,21 +283,20 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                         self.mapView.viewForAnnotation(self.annotation).rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
                         self.mapView.deselectAnnotation(self.annotation, animated: false)
                         self.annotationsToRemove = []
+                        
                     }else{
                         dispatch_async(dispatch_get_main_queue()) {
-                            
+                            self.indicator.stopAnimating()
                             self.mapView.deselectAnnotation(self.annotation, animated: false)
                             self.mapView.removeAnnotation(self.annotation)
                             CoreDataStackManager.sharedInstance().deleteObject(self.selectedLocation)
                         }
                     }
                 })
-                
             }
         }else{
             self.displayMessageBox("You are in Edit Mode! Tap Done.")
         }
-        
         return true
     }
     
@@ -309,6 +312,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                 if let p = l.instaMedia{
                     if p.isEmpty{ //If all the photos of the album were deleted we fetch another batch of Photos.
                         //                    informationBox("Connecting to Flickr",animate:true)
+                        indicator.startAnimating()
                         InstaClient.sharedInstance().getMedia(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 100) { (result, error) -> Void in
                             
                             if error == nil {
@@ -323,6 +327,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                                     
                                     CoreDataStackManager.sharedInstance().saveContext()
                                     self.tabBarController!.tabBar.hidden = true;
+                                    self.indicator.stopAnimating()
                                     self.navigationController!.pushViewController(detailController, animated: true)
                                 }
                             } else {
@@ -330,6 +335,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                                     //                                self.informationBox(nil,animate:false)
                                     self.displayMessageBox("No available Photos Found")//Its appropriate at this point to display an Alert
                                     self.mapView.removeAnnotation(annotationView.annotation)
+                                    self.indicator.stopAnimating()
                                     CoreDataStackManager.sharedInstance().deleteObject(self.selectedLocation)
                                     println(error)
                                 })
@@ -411,35 +417,42 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
             //Create the new Location and save it to the variable selectedLocation
             selectedLocation = Location(dictionary: ["latitude":view.annotation.coordinate.latitude,"longitude":view.annotation.coordinate.longitude], context: sharedContext)
             annotationsLocations[view.annotation.hash] = selectedLocation
-            
+            indicator.startAnimating()
             InstaClient.sharedInstance().getMedia(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 100, completionHandler: { (result, error) -> Void in
-                if(result! != []){
-                    self.annotation.title = " "
-                    for il in result!{
-                        il.location = self.selectedLocation
-                    }
-                    
-                    CoreDataStackManager.sharedInstance().saveContext()
-                    
-                    
-                    let paController = self.storyboard!.instantiateViewControllerWithIdentifier("LocationPhotoAlbumViewController")! as! LocationPhotoAlbumViewController
-                    paController.location = self.selectedLocation
-                    
-                    dispatch_async(dispatch_get_main_queue()) {
-//                        self.tabBarController!.tabBar.hidden = true;
-                        self.annotationsLocations[view.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
-                        var view = self.mapView.viewForAnnotation(view.annotation)
-                        var imv = UIImageView(frame: view!.frame)
-                        var im = result![0] as InstaMedia
-                        InstaClient.sharedInstance().setImage(im.imagePath!, imageView: imv)
+                if(error == nil){
+                    if(result! != []){
+                        self.annotation.title = " "
+                        for il in result!{
+                            il.location = self.selectedLocation
+                        }
                         
-                        self.mapView.viewForAnnotation(view.annotation).leftCalloutAccessoryView = imv //It will display the first image as the accecory view but it's really a random image. It will be changed in subsequent runs.
-                        self.mapView.viewForAnnotation(view.annotation).rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
-                        self.mapView.deselectAnnotation(view.annotation, animated: false)
+                        CoreDataStackManager.sharedInstance().saveContext()
                         
-                        self.navigationController!.pushViewController(paController, animated: true)
+                        
+                        let paController = self.storyboard!.instantiateViewControllerWithIdentifier("LocationPhotoAlbumViewController")! as! LocationPhotoAlbumViewController
+                        paController.location = self.selectedLocation
+                        
+                        dispatch_async(dispatch_get_main_queue()) {
+                            //                        self.tabBarController!.tabBar.hidden = true;
+                            self.annotationsLocations[view.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
+                            var view = self.mapView.viewForAnnotation(view.annotation)
+                            var imv = UIImageView(frame: view!.frame)
+                            var im = result![0] as InstaMedia
+                            InstaClient.sharedInstance().setImage(im.imagePath!, imageView: imv)
+                            
+                            self.mapView.viewForAnnotation(view.annotation).leftCalloutAccessoryView = imv //It will display the first image as the accecory view but it's really a random image. It will be changed in subsequent runs.
+                            self.mapView.viewForAnnotation(view.annotation).rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
+                            self.mapView.deselectAnnotation(view.annotation, animated: false)
+                            self.indicator.stopAnimating()
+                            self.navigationController!.pushViewController(paController, animated: true)
+                        }
+                    }else{
+                        self.indicator.stopAnimating()
+                        self.displayMessageBox("No results found")
                     }
-                    
+                }else{
+                    self.indicator.stopAnimating()
+                    self.displayMessageBox("Network error")
                 }
             })
         }

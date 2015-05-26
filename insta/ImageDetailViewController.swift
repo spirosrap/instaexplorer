@@ -18,6 +18,7 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
     @IBOutlet var star: UIButton!
     @IBOutlet var scrollView: UIScrollView!
     
+    @IBOutlet var indicator: UIActivityIndicatorView!
     var shareButton = UIBarButtonItem()
     var flexiblespace = UIBarButtonItem()
     var imageToShare = UIImage()
@@ -124,14 +125,13 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         self.navigationController?.navigationBarHidden = true
-
+        self.indicator.stopAnimating() //Sometimes indicator delays hiding, due to the asynchronous call to API.
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = false
-        
-        
+
     }
 
     
@@ -189,14 +189,19 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
                     if t.rangeOfString("#") != nil {
                         let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("displayTaggedMedia")! as! PhotoAlbumViewController
                         var tag = t.substringWithRange(Range<String.Index>(start: t.rangeOfString("#")!.endIndex, end: t.endIndex))
+
+                        indicator.startAnimating()
                         InstaClient.sharedInstance().getMediaFromTag(tag, completionHandler: { (result, error) -> Void in
                             if error == nil{
                                 dispatch_async(dispatch_get_main_queue(), {
-
+                                    self.indicator.stopAnimating()
                                     detailController.prefetchedPhotos = result! as [InstaMedia]
                                     detailController.navigationController?.navigationBar.hidden = false
                                     self.navigationController!.pushViewController(detailController, animated: true)
                                 })
+                            }else{
+                                displayMessageBox("Could not get Images")
+                                self.indicator.stopAnimating()
                             }
                         })
                     }
@@ -271,6 +276,12 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
         self.presentViewController(activity, animated: true, completion:nil)
     }
 
-    
+    //A simple Alert view with an OK Button
+    func displayMessageBox(message:String){
+        var alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
+    }
+
     
 }
