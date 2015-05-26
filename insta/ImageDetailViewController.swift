@@ -27,7 +27,6 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
     var favoritedMedia:InstaMedia!
     var userComment:String!
     var attributedString = NSMutableAttributedString(string: "")
-//    var ct:UITextView!
     
     
     override func viewDidLoad() {
@@ -36,8 +35,6 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
         let sectionInfo = fetchedResultsController.sections![0] as! NSFetchedResultsSectionInfo
 
         scrollView.delegate = self
-//        scrollView.contentSize = CGSizeMake(400, self.view.frame.height);
-//        scrollView.contentSize = self.view.frame.size
         
         if let userComment = userComment{
             
@@ -50,15 +47,6 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
             clickableText.editable = false
             clickableText.selectable = false
             
-//            ct = UITextView(frame: self.clickableText.frame)
-//            ct.attributedText = attributedString
-//
-//            self.clickableText.addSubview(ct)
-//            
-//            var  tap = UITapGestureRecognizer(target: self, action: "clickableTouched:")
-//            ct.addGestureRecognizer(tap)
-//            ct.editable = false
-//            ct.selectable = false
         }
         
         
@@ -66,9 +54,6 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
         
         if  !sectionInfo.objects.isEmpty{
             instaMedia = sectionInfo.objects[0] as! InstaMedia
-            //            UIColor(red: 0.051, green: 0.494, blue: 0.839, alpha: 1.00) //Location
-            //            UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00) //Username
-            //            UIFont boldSystemFontOfSize:fontSize
             
             var usernameAttr  = NSMutableAttributedString(string: instaMedia.username!, attributes: [NSForegroundColorAttributeName:UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00), NSFontAttributeName:UIFont(name: "HelveticaNeue-Bold", size: 17)!])
             var range = NSString(string: instaMedia.username!).rangeOfString(instaMedia.username!)
@@ -105,6 +90,8 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
                 if success{
                     self.imageToShare = self.imageView.image!
                     self.shareButton.enabled = true
+                }else{
+                    println(errorString)
                 }
             })
             if (instaMedia.favorite! == 0){
@@ -155,19 +142,6 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
     
     func clickableTouched(recognizer:UITapGestureRecognizer) -> Void{
         
-//        if(recognizer.state == .Changed){
-//            attributedString  = atex(userComment,fontname: "HelveticaNeue",textColor:UIColor.blackColor(),linkColor: UIColor(red: 0.051, green: 0.494, blue: 0.839, alpha: 1.00),size: 14)
-//            ct.removeFromSuperview()
-//            ct = UITextView(frame: self.view.frame)
-//            ct.attributedText = attributedString
-//            self.clickableText.addSubview(ct)
-//        }else if (recognizer.state == .Ended){
-//            attributedString  = atex(userComment,fontname: "HelveticaNeue",textColor:UIColor.blackColor(),linkColor: UIColor(red: 0.051, green: 0.494, blue: 0.839, alpha: 1.00),size: 14)
-//            ct.removeFromSuperview()
-//            ct = UITextView(frame: self.view.frame)
-//            ct.attributedText = attributedString
-//            self.clickableText.addSubview(ct)
-//        }
 
         var textView = recognizer.view as! UITextView
         var layoutManager = textView.layoutManager
