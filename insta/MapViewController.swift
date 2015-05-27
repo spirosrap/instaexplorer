@@ -37,11 +37,10 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         longPressRecognizer = UILongPressGestureRecognizer(target: self, action: "longPressed:")
         self.view.addGestureRecognizer(longPressRecognizer)
         
-//        // Step 2: invoke fetchedResultsController.performFetch(nil) here
         fetchedResultsController.performFetch(nil)
         let sectionInfo = self.fetchedResultsController.sections![0] as! NSFetchedResultsSectionInfo
-//
-//        //Recreate the saved(from Core Data) annotations
+
+        //Recreate the saved(from Core Data) annotations
         if  !sectionInfo.objects.isEmpty{
             self.locations = sectionInfo.objects as! [Location]
             for l in locations{
@@ -57,7 +56,6 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
         tapRecognizer?.numberOfTapsRequired = 1
         
-//        self.view.backgroundColor = UIColor.blackColor()
         
         segment.items = ["Standard", "Satellite","Hybrid"]
         segment.font = UIFont(name: "Avenir-Black", size: 12)
@@ -179,31 +177,38 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     //MARK: search button(geocoding)
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
+        var networkReachability = Reachability.reachabilityForInternetConnection()
+        var networkStatus = networkReachability.currentReachabilityStatus()
         
-        //Start Geocoding. (Search Button Clicked)
-        if let address = searchBar.text{
-            var geocoder = CLGeocoder()
-//            informationBox("Gecoding...", animate: true) // The information box displays while geocoding
-            self.indicator.startAnimating()
-            geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
-                if let error = error {
-                    self.indicator.stopAnimating()
-                    var alert = UIAlertController(title: "", message: "Geocoding failed", preferredStyle: UIAlertControllerStyle.Alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-//                    self.informationBox(nil, animate: false)
-                } else {
-                    self.indicator.stopAnimating()
-                    if let placemark = placemarks?[0] as? CLPlacemark {
-                        //Center the map
-                        let p = MKPlacemark(placemark: placemark)
-                        let span = MKCoordinateSpanMake(1, 1)
-                        let region = MKCoordinateRegion(center: p.location.coordinate, span: span)
-                        self.mapView.setRegion(region, animated: true)
+        if(networkStatus.value == NotReachable.value){
+            displayMessageBox("No Network Connection")
+        } else{
+            //Start Geocoding. (Search Button Clicked)
+            if let address = searchBar.text{
+                var geocoder = CLGeocoder()
+                //            informationBox("Gecoding...", animate: true) // The information box displays while geocoding
+                self.indicator.startAnimating()
+                geocoder.geocodeAddressString(address, completionHandler: {(placemarks: [AnyObject]!, error: NSError!) -> Void in
+                    if let error = error {
+                        self.indicator.stopAnimating()
+                        var alert = UIAlertController(title: "", message: "Geocoding failed", preferredStyle: UIAlertControllerStyle.Alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+                        //                    self.informationBox(nil, animate: false)
+                    } else {
+                        self.indicator.stopAnimating()
+                        if let placemark = placemarks?[0] as? CLPlacemark {
+                            //Center the map
+                            let p = MKPlacemark(placemark: placemark)
+                            let span = MKCoordinateSpanMake(1, 1)
+                            let region = MKCoordinateRegion(center: p.location.coordinate, span: span)
+                            self.mapView.setRegion(region, animated: true)
+                        }
                     }
-                }
-//                self.informationBox(nil, animate: false) //Dismiss information Box
-            })
+                    //                self.informationBox(nil, animate: false) //Dismiss information Box
+                })
+            }
         }
+        
     }
     
     //MARK: Creating annotations
@@ -220,6 +225,14 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
 //            displayMessageBox("No Network Connection")
 //            return false
 //        }
+        searchBar.resignFirstResponder()
+        var networkReachability = Reachability.reachabilityForInternetConnection()
+        var networkStatus = networkReachability.currentReachabilityStatus()
+        
+        if(networkStatus.value == NotReachable.value){// Before searching fοr Photos in Instagram check if there is an available internet connection
+            displayMessageBox("No network connection")
+            return false
+        }
         
         if(!self.editing){
             let applicationDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)
@@ -251,6 +264,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                 
             } else if (sender.state == .Ended){//The user has lifted the finger.
                 firstDrop = false
+                
                 indicator.startAnimating()
                 //Create the new Location and save it to the variable selectedLocation
                 selectedLocation = Location(dictionary: ["latitude":self.annotation.coordinate.latitude,"longitude":self.annotation.coordinate.longitude], context: sharedContext)
@@ -287,6 +301,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                             
                         }else{
                             dispatch_async(dispatch_get_main_queue()) {
+                                self.displayMessageBox("No images Found")
                                 self.indicator.stopAnimating()
                                 self.mapView.deselectAnnotation(self.annotation, animated: false)
                                 self.mapView.removeAnnotation(self.annotation)
@@ -294,10 +309,13 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                             }
                         }
                     }else{
-                        self.displayMessageBox("Error retrieving images for location: \(error!.userInfo)")
-                        self.mapView.deselectAnnotation(self.annotation, animated: false)
-                        self.mapView.removeAnnotation(self.annotation)
-                        CoreDataStackManager.sharedInstance().deleteObject(self.selectedLocation)
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.displayMessageBox("Error retrieving images for location: \(error!.userInfo)")
+                            self.indicator.stopAnimating()
+                            self.mapView.deselectAnnotation(self.annotation, animated: false)
+                            self.mapView.removeAnnotation(self.annotation)
+                            CoreDataStackManager.sharedInstance().deleteObject(self.selectedLocation)
+                        }
                     }
                 })
             }
@@ -311,6 +329,10 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     func mapView(mapView: MKMapView!, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         
         if control == annotationView.rightCalloutAccessoryView {
+            var networkReachability = Reachability.reachabilityForInternetConnection()
+            var networkStatus = networkReachability.currentReachabilityStatus()
+            
+
             let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("LocationPhotoAlbumViewController")! as! LocationPhotoAlbumViewController
             if let l = annotationsLocations[annotationView.annotation.hash]{//Determine the location instance from the hash of selected annotation
                 detailController.location = l
@@ -318,43 +340,47 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                 
                 if let p = l.instaMedia{
                     if p.isEmpty{ //If all the photos of the album were deleted we fetch another batch of Photos.
-                        //                    informationBox("Connecting to Flickr",animate:true)
-                        indicator.startAnimating()
-                        InstaClient.sharedInstance().getMedia(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 100) { (result, error) -> Void in
-                            
-                            if error == nil {
-                                if(result! != []){
-                                    dispatch_async(dispatch_get_main_queue()) {
-                                        //                                self.informationBox(nil,animate:false)
-                                        //instantiate the controller and pass the parameter location.
-                                        detailController.location = l
-                                        
-                                        for il in result!{
-                                            il.location = self.selectedLocation
+                        if(networkStatus.value == NotReachable.value){
+                            displayMessageBox("No network connection")
+                        } else{
+                            indicator.startAnimating()
+                            InstaClient.sharedInstance().getMedia(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 100) { (result, error) -> Void in
+                                
+                                if error == nil {
+                                    if(result! != []){
+                                        dispatch_async(dispatch_get_main_queue()) {
+                                            //                                self.informationBox(nil,animate:false)
+                                            //instantiate the controller and pass the parameter location.
+                                            detailController.location = l
+                                            
+                                            for il in result!{
+                                                il.location = self.selectedLocation
+                                            }
+                                            
+                                            CoreDataStackManager.sharedInstance().saveContext()
+                                            self.tabBarController!.tabBar.hidden = true;
+                                            self.indicator.stopAnimating()
+                                            self.navigationController!.pushViewController(detailController, animated: true)
                                         }
-                                        
-                                        CoreDataStackManager.sharedInstance().saveContext()
-                                        self.tabBarController!.tabBar.hidden = true;
-                                        self.indicator.stopAnimating()
-                                        self.navigationController!.pushViewController(detailController, animated: true)
+                                    }else{
+                                        dispatch_async(dispatch_get_main_queue(), {
+                                            self.indicator.stopAnimating()
+                                            self.displayMessageBox("No images for that location")//Its appropriate at this point to display an Alert
+                                        })
                                     }
-                                }else{
+                                } else {
                                     dispatch_async(dispatch_get_main_queue(), {
+                                        //                                self.informationBox(nil,animate:false)
+                                        self.displayMessageBox("Error retrieving images: \(error!.userInfo)")//Its appropriate at this point to display an Alert
+                                        self.mapView.removeAnnotation(annotationView.annotation)
                                         self.indicator.stopAnimating()
-                                        self.displayMessageBox("No images for that location")//Its appropriate at this point to display an Alert
+                                        CoreDataStackManager.sharedInstance().deleteObject(self.selectedLocation)
+                                        println(error)
                                     })
                                 }
-                            } else {
-                                dispatch_async(dispatch_get_main_queue(), {
-                                    //                                self.informationBox(nil,animate:false)
-                                    self.displayMessageBox("Error retrieving images: \(error!.userInfo)")//Its appropriate at this point to display an Alert
-                                    self.mapView.removeAnnotation(annotationView.annotation)
-                                    self.indicator.stopAnimating()
-                                    CoreDataStackManager.sharedInstance().deleteObject(self.selectedLocation)
-                                    println(error)
-                                })
                             }
                         }
+
                     }else{
                         self.tabBarController!.tabBar.hidden = true;
                         self.navigationController!.pushViewController(detailController, animated: true)
@@ -414,12 +440,11 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         }
 
     }
-
     
-    
-
     func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
-
+        
+        
+        
         if(newState == .Starting){
             self.deleteLocationAnnotationImages(view.annotation)
         }
@@ -430,52 +455,65 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
             //Create the new Location and save it to the variable selectedLocation
             selectedLocation = Location(dictionary: ["latitude":view.annotation.coordinate.latitude,"longitude":view.annotation.coordinate.longitude], context: sharedContext)
             annotationsLocations[view.annotation.hash] = selectedLocation
-            indicator.startAnimating()
-            InstaClient.sharedInstance().getMedia(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 100, completionHandler: { (result, error) -> Void in
-                if(error == nil){
-                    if(result! != []){
-                        self.annotation.title = " "
-                        for il in result!{
-                            il.location = self.selectedLocation
-                        }
-                        
-                        CoreDataStackManager.sharedInstance().saveContext()
-                        
-                        
-                        let paController = self.storyboard!.instantiateViewControllerWithIdentifier("LocationPhotoAlbumViewController")! as! LocationPhotoAlbumViewController
-                        paController.location = self.selectedLocation
-                        
-                        dispatch_async(dispatch_get_main_queue()) {
-                            //                        self.tabBarController!.tabBar.hidden = true;
-                            self.annotationsLocations[view.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
-                            var view = self.mapView.viewForAnnotation(view.annotation)
-                            var imv = UIImageView(frame: view!.frame)
-                            var im = result![0] as InstaMedia
-                            InstaClient.sharedInstance().setImage(im.imagePath!, imageView: imv)
+            
+            var networkReachability = Reachability.reachabilityForInternetConnection()
+            var networkStatus = networkReachability.currentReachabilityStatus()
+            if(networkStatus.value == NotReachable.value){
+                displayMessageBox("No network connection")
+                self.mapView.deselectAnnotation(view.annotation, animated: false)
+                self.mapView.removeAnnotation(view.annotation)
+                CoreDataStackManager.sharedInstance().deleteObject(self.selectedLocation)
+                CoreDataStackManager.sharedInstance().saveContext()
+            }else{
+                indicator.startAnimating()
+                InstaClient.sharedInstance().getMedia(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 100, completionHandler: { (result, error) -> Void in
+                    if(error == nil){
+                        if(result! != []){
+                            self.annotation.title = " "
+                            for il in result!{
+                                il.location = self.selectedLocation
+                            }
                             
-                            self.mapView.viewForAnnotation(view.annotation).leftCalloutAccessoryView = imv //It will display the first image as the accecory view but it's really a random image. It will be changed in subsequent runs.
-                            self.mapView.viewForAnnotation(view.annotation).rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
-                            self.mapView.deselectAnnotation(view.annotation, animated: false)
-                            self.indicator.stopAnimating()
-                            self.navigationController!.pushViewController(paController, animated: true)
+                            CoreDataStackManager.sharedInstance().saveContext()
+                            
+                            
+                            let paController = self.storyboard!.instantiateViewControllerWithIdentifier("LocationPhotoAlbumViewController")! as! LocationPhotoAlbumViewController
+                            paController.location = self.selectedLocation
+                            
+                            dispatch_async(dispatch_get_main_queue()) {
+                                //                        self.tabBarController!.tabBar.hidden = true;
+                                self.annotationsLocations[view.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
+                                var view = self.mapView.viewForAnnotation(view.annotation)
+                                var imv = UIImageView(frame: view!.frame)
+                                var im = result![0] as InstaMedia
+                                InstaClient.sharedInstance().setImage(im.imagePath!, imageView: imv)
+                                
+                                self.mapView.viewForAnnotation(view.annotation).leftCalloutAccessoryView = imv //It will display the first image as the accecory view but it's really a random image. It will be changed in subsequent runs.
+                                self.mapView.viewForAnnotation(view.annotation).rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
+                                self.mapView.deselectAnnotation(view.annotation, animated: false)
+                                self.indicator.stopAnimating()
+                                self.navigationController!.pushViewController(paController, animated: true)
+                            }
+                        }else{
+                            dispatch_async(dispatch_get_main_queue()) {
+                                self.indicator.stopAnimating()
+                                self.displayMessageBox("No results found")
+                                self.mapView.deselectAnnotation(view.annotation, animated: false)
+                                self.mapView.removeAnnotation(view.annotation)
+                                CoreDataStackManager.sharedInstance().deleteObject(self.selectedLocation)
+                                CoreDataStackManager.sharedInstance().saveContext()
+                            }
                         }
                     }else{
                         dispatch_async(dispatch_get_main_queue()) {
                             self.indicator.stopAnimating()
-                            self.displayMessageBox("No results found")
-                            self.mapView.deselectAnnotation(view.annotation, animated: false)
-                            self.mapView.removeAnnotation(view.annotation)
-                            CoreDataStackManager.sharedInstance().deleteObject(self.selectedLocation)
-                            CoreDataStackManager.sharedInstance().saveContext()
+                            self.displayMessageBox("Network error")
                         }
                     }
-                }else{
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.indicator.stopAnimating()
-                        self.displayMessageBox("Network error")
-                    }
-                }
-            })
+                })
+            }
+
+            
         }
     }
     
@@ -586,21 +624,6 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         }
     }
     
-    //A custom made info box.
-//    func informationBox(var msg:String?,let animate:Bool){
-//        if let m = msg{
-//            if(animate){
-//                indicator.startAnimating()
-//            }
-//            imageInfoView.hidden = false
-//            infoLabel.hidden = false
-//            infoLabel.text = msg
-//        }else{
-//            imageInfoView.hidden = true
-//            infoLabel.hidden = true
-//            indicator.stopAnimating() //It doesn't hurt to stop animation in case it didn't start before
-//        }
-//    }
     
     //MARK: Core Data related
     //variable to fetch the ,existing saved in core data,locations

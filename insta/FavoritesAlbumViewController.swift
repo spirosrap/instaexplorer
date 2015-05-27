@@ -11,10 +11,6 @@ import CoreData
 
 class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UITableViewDataSource,UITableViewDelegate,NSFetchedResultsControllerDelegate,UICollectionViewDelegateFlowLayout {
     @IBOutlet var collectionView: UICollectionView!
-
-//    @IBOutlet var indicator: UIActivityIndicatorView! //The activity Indicator for the informationBox(not an alert view)
-//    @IBOutlet var imageInfoView: UIImageView!
-//    @IBOutlet var infoLabel: UILabel!
     
     @IBOutlet weak var selectViewSegmentedControl: ADVSegmentedControl!
     @IBOutlet weak var tableView: UITableView!
@@ -36,9 +32,6 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
         fetchedResultsController.performFetch(nil)
         fetchedResultsController.delegate = self
         
-//        imageInfoView?.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.70)
-//        imageInfoView.hidden = true
-//        infoLabel.hidden = true
         tableView.hidden = true
         tableView.delegate = self
         selectViewSegmentedControl.items = ["Collection", "Table"]
@@ -247,17 +240,11 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
     
     
      func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
         return 1
     }
     
      func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        
         self.prefetchedPhotos = self.fetchedResultsController.fetchedObjects as! [InstaMedia]
-
         return prefetchedPhotos!.count
     }
     
@@ -345,22 +332,6 @@ class FavoritesAlbumViewController: UIViewController,UICollectionViewDelegate,UI
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
-    
-    //Custom Made information Box using alpha value to create a black transparent background.
-    func informationBox(var msg:String?,let animate:Bool){
-        if let m = msg{
-//            if(animate){
-//                indicator.startAnimating()
-//            }
-//            imageInfoView.hidden = false
-//            infoLabel.hidden = false
-//            infoLabel.text = msg
-        }else{
-//            imageInfoView.hidden = true
-//            infoLabel.hidden = true
-//            indicator.stopAnimating() //It doesn't hurt to stop animation in case it didn't start before
-        }
-    }
     
     @IBAction func switchViews(sender: ADVSegmentedControl) {
         switch (sender.selectedIndex) {
