@@ -374,11 +374,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "insta/InstaAuthViewController.swift"
-            timestampString = "454254989.026696"
+            timestampString = "454425397.014692"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "74"
-            endingLineNumber = "74"
+            startingLineNumber = "66"
+            endingLineNumber = "66"
             landmarkName = "webView(_:shouldStartLoadWithRequest:navigationType:)"
             landmarkType = "5">
          </BreakpointContent>
