@@ -1,6 +1,6 @@
 //
 //  TableViewController.swift
-//  instaplaces
+//  instaexplorer
 //
 //  Created by Spiros Raptis on 15/05/2015.
 //  Copyright (c) 2015 Spiros Raptis. All rights reserved.

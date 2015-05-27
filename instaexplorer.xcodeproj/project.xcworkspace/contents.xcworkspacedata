@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:instaplaces.xcodeproj">
+      location = "self:/Users/spirosrap/Desktop/insta/instaexplorer.xcodeproj">
    </FileRef>
 </Workspace>

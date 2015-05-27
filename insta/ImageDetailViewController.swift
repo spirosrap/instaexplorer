@@ -1,6 +1,6 @@
 //
 //  ImageDetailViewController.swift
-//  instaplaces
+//  instaexplorer
 //
 //  Created by Spiros Raptis on 09/05/2015.
 //  Copyright (c) 2015 Spiros Raptis. All rights reserved.

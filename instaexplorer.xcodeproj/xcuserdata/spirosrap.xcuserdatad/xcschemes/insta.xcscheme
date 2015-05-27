@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D471B8661AF6870900651865"
                BuildableName = "instaplaces.app"
-               BlueprintName = "instaplaces"
-               ReferencedContainer = "container:instaplaces.xcodeproj">
+               BlueprintName = "instaexplorer"
+               ReferencedContainer = "container:instaexplorer.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -30,8 +30,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D471B87E1AF6870900651865"
                BuildableName = "instaplacesTests.xctest"
-               BlueprintName = "instaplacesTests"
-               ReferencedContainer = "container:instaplaces.xcodeproj">
+               BlueprintName = "instaexplorerTests"
+               ReferencedContainer = "container:instaexplorer.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -48,8 +48,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "D471B87E1AF6870900651865"
                BuildableName = "instaplacesTests.xctest"
-               BlueprintName = "instaplacesTests"
-               ReferencedContainer = "container:instaplaces.xcodeproj">
+               BlueprintName = "instaexplorerTests"
+               ReferencedContainer = "container:instaexplorer.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -58,8 +58,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D471B8661AF6870900651865"
             BuildableName = "instaplaces.app"
-            BlueprintName = "instaplaces"
-            ReferencedContainer = "container:instaplaces.xcodeproj">
+            BlueprintName = "instaexplorer"
+            ReferencedContainer = "container:instaexplorer.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -78,8 +78,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D471B8661AF6870900651865"
             BuildableName = "instaplaces.app"
-            BlueprintName = "instaplaces"
-            ReferencedContainer = "container:instaplaces.xcodeproj">
+            BlueprintName = "instaexplorer"
+            ReferencedContainer = "container:instaexplorer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -97,8 +97,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D471B8661AF6870900651865"
             BuildableName = "instaplaces.app"
-            BlueprintName = "instaplaces"
-            ReferencedContainer = "container:instaplaces.xcodeproj">
+            BlueprintName = "instaexplorer"
+            ReferencedContainer = "container:instaexplorer.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

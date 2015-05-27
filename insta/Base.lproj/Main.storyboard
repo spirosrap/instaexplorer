@@ -7,10 +7,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Instaplaces-->
+        <!--instaexplorer-->
         <scene sceneID="W2U-5w-zU0">
             <objects>
-                <viewController storyboardIdentifier="MapViewController" id="YsU-ak-0hI" customClass="MapViewController" customModule="instaplaces" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MapViewController" id="YsU-ak-0hI" customClass="MapViewController" customModule="instaexplorer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="4Sg-n8-pjR"/>
                         <viewControllerLayoutGuide type="bottom" id="zjq-mg-8e6"/>
@@ -36,7 +36,7 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3gw-bI-J8Y" customClass="ADVSegmentedControl" customModule="instaplaces" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3gw-bI-J8Y" customClass="ADVSegmentedControl" customModule="instaexplorer" customModuleProvider="target">
                                 <rect key="frame" x="46" y="53" width="508" height="45"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -128,7 +128,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Instaplaces" id="N6Z-pP-Ph3"/>
+                    <navigationItem key="navigationItem" title="instaexplorer" id="N6Z-pP-Ph3"/>
                     <connections>
                         <outlet property="indicator" destination="u3x-nb-bF9" id="e8G-hB-aJp"/>
                         <outlet property="mapView" destination="wxO-6M-MK7" id="ku3-vo-ei8"/>
@@ -143,7 +143,7 @@
         <!--Search Tags-->
         <scene sceneID="mae-TA-9cv">
             <objects>
-                <tableViewController storyboardIdentifier="InstaLocationsTableViewController" id="UrX-VX-DYh" customClass="InstaLocationsTableViewController" customModule="instaplaces" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="InstaLocationsTableViewController" id="UrX-VX-DYh" customClass="InstaLocationsTableViewController" customModule="instaexplorer" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="61" sectionHeaderHeight="22" sectionFooterHeight="22" id="8RH-uF-rY5">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -186,7 +186,7 @@
         <!--Tab Bar Controller View Controller-->
         <scene sceneID="zv2-pQ-Hv3">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarController" id="U4c-oJ-f77" customClass="TabBarControllerViewController" customModule="instaplaces" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" id="U4c-oJ-f77" customClass="TabBarControllerViewController" customModule="instaexplorer" customModuleProvider="target" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="S5Z-N2-SAH">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -206,7 +206,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="LoginViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="instaplaces" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="instaexplorer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -224,7 +224,7 @@
                                     <action selector="login:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xnz-4g-J4X"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to instaplaces" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VMg-kb-rlZ">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome to instaexplorer" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VMg-kb-rlZ">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="95" id="ij0-gZ-Zwa"/>
@@ -289,7 +289,7 @@
         <!--Insta Auth View Controller-->
         <scene sceneID="1ol-JM-CsP">
             <objects>
-                <viewController storyboardIdentifier="InstaAuthViewController" id="Nbc-3N-AMF" customClass="InstaAuthViewController" customModule="instaplaces" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="InstaAuthViewController" id="Nbc-3N-AMF" customClass="InstaAuthViewController" customModule="instaexplorer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="zAD-gr-b5G"/>
                         <viewControllerLayoutGuide type="bottom" id="5S3-rg-25X"/>
@@ -397,7 +397,7 @@
         <!--Virtual Tourist-->
         <scene sceneID="ZY9-CF-ty6">
             <objects>
-                <viewController storyboardIdentifier="PhotoAlbumViewController3" id="VGd-ew-hXx" customClass="PhotoAlbumViewController" customModule="instaplaces" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PhotoAlbumViewController3" id="VGd-ew-hXx" customClass="PhotoAlbumViewController" customModule="instaexplorer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="LC8-6v-AD0"/>
                         <viewControllerLayoutGuide type="bottom" id="qZL-2V-uh7"/>
@@ -438,7 +438,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="Gsf-UR-1Xd" customClass="CollectionViewCell" customModule="instaplaces" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="Gsf-UR-1Xd" customClass="CollectionViewCell" customModule="instaexplorer" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -546,7 +546,7 @@
         <!-- imagedetail-->
         <scene sceneID="6tb-Ex-wcd">
             <objects>
-                <viewController storyboardIdentifier="ImageDetailViewController1" title=" imagedetail" id="q3X-tS-jAy" customClass="ImageDetailViewController" customModule="instaplaces" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImageDetailViewController1" title=" imagedetail" id="q3X-tS-jAy" customClass="ImageDetailViewController" customModule="instaexplorer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="RUm-dw-hSm"/>
                         <viewControllerLayoutGuide type="bottom" id="jBm-VT-Y1g"/>
@@ -870,7 +870,7 @@
         <!--Photos-->
         <scene sceneID="R4j-NF-VKg">
             <objects>
-                <viewController storyboardIdentifier="LocationPhotoAlbumViewController" id="vKk-ki-mnR" customClass="LocationPhotoAlbumViewController" customModule="instaplaces" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LocationPhotoAlbumViewController" id="vKk-ki-mnR" customClass="LocationPhotoAlbumViewController" customModule="instaexplorer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="UlX-tu-xaK"/>
                         <viewControllerLayoutGuide type="bottom" id="Sht-oO-o9t"/>
@@ -923,7 +923,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="ocb-11-n3W" customClass="CollectionViewCell" customModule="instaplaces" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="ocb-11-n3W" customClass="CollectionViewCell" customModule="instaexplorer" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -972,7 +972,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="tablecell" selectionStyle="default" indentationWidth="10" reuseIdentifier="tablecell" rowHeight="167" id="09j-XP-LnB" customClass="MediaTableViewCell" customModule="instaplaces" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="tablecell" selectionStyle="default" indentationWidth="10" reuseIdentifier="tablecell" rowHeight="167" id="09j-XP-LnB" customClass="MediaTableViewCell" customModule="instaexplorer" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="09j-XP-LnB" id="kCu-Xl-LWt">
@@ -1192,7 +1192,7 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E7k-am-313" customClass="ADVSegmentedControl" customModule="instaplaces" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E7k-am-313" customClass="ADVSegmentedControl" customModule="instaexplorer" customModuleProvider="target">
                                 <rect key="frame" x="46" y="53" width="508" height="45"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1363,7 +1363,7 @@
         <!--Image Detail View Controller-->
         <scene sceneID="o7m-FX-R0X">
             <objects>
-                <viewController storyboardIdentifier="ImageDetailViewController2" automaticallyAdjustsScrollViewInsets="NO" id="93Y-UV-bcs" customClass="ImageDetailViewController" customModule="instaplaces" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImageDetailViewController2" automaticallyAdjustsScrollViewInsets="NO" id="93Y-UV-bcs" customClass="ImageDetailViewController" customModule="instaexplorer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="IVd-tp-ceL"/>
                         <viewControllerLayoutGuide type="bottom" id="boq-XE-5va"/>
@@ -1688,7 +1688,7 @@
         <!--Tagged Photos-->
         <scene sceneID="epM-R1-hxq">
             <objects>
-                <viewController storyboardIdentifier="displayTaggedMedia" id="A3x-oD-L4n" customClass="PhotoAlbumViewController" customModule="instaplaces" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="displayTaggedMedia" id="A3x-oD-L4n" customClass="PhotoAlbumViewController" customModule="instaexplorer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SuR-KT-z59"/>
                         <viewControllerLayoutGuide type="bottom" id="i6C-Go-9Us"/>
@@ -1707,7 +1707,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="NrN-nr-Pgg" customClass="CollectionViewCell" customModule="instaplaces" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="NrN-nr-Pgg" customClass="CollectionViewCell" customModule="instaexplorer" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -1759,7 +1759,7 @@
                                 </constraints>
                                 <inset key="separatorInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="tablecell" selectionStyle="default" indentationWidth="10" reuseIdentifier="tablecell" rowHeight="167" id="6ak-1K-QgT" customClass="MediaTableViewCell" customModule="instaplaces" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="tablecell" selectionStyle="default" indentationWidth="10" reuseIdentifier="tablecell" rowHeight="167" id="6ak-1K-QgT" customClass="MediaTableViewCell" customModule="instaexplorer" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6ak-1K-QgT" id="1Ow-1O-8MZ">
@@ -1989,7 +1989,7 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a5g-27-8NV" customClass="ADVSegmentedControl" customModule="instaplaces" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a5g-27-8NV" customClass="ADVSegmentedControl" customModule="instaexplorer" customModuleProvider="target">
                                 <rect key="frame" x="46" y="53" width="508" height="45"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -2109,7 +2109,7 @@
         <!--Favorites-->
         <scene sceneID="jVI-uo-lQv">
             <objects>
-                <viewController storyboardIdentifier="displayFavorites" id="lOH-hl-UfJ" customClass="FavoritesAlbumViewController" customModule="instaplaces" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="displayFavorites" id="lOH-hl-UfJ" customClass="FavoritesAlbumViewController" customModule="instaexplorer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="pkj-qr-6zJ"/>
                         <viewControllerLayoutGuide type="bottom" id="bGe-Gr-dyY"/>
@@ -2128,7 +2128,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="Jim-Ek-ugx" customClass="CollectionViewCell" customModule="instaplaces" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="Jim-Ek-ugx" customClass="CollectionViewCell" customModule="instaexplorer" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -2207,7 +2207,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="tablecell" selectionStyle="default" indentationWidth="10" reuseIdentifier="tablecell" rowHeight="167" id="26d-Us-iEF" customClass="MediaTableViewCell" customModule="instaplaces" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" restorationIdentifier="tablecell" selectionStyle="default" indentationWidth="10" reuseIdentifier="tablecell" rowHeight="167" id="26d-Us-iEF" customClass="MediaTableViewCell" customModule="instaexplorer" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="26d-Us-iEF" id="EYT-wc-gPf">
@@ -2427,7 +2427,7 @@
                                     </mask>
                                 </variation>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7rO-ZZ-hZ2" customClass="ADVSegmentedControl" customModule="instaplaces" customModuleProvider="target">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7rO-ZZ-hZ2" customClass="ADVSegmentedControl" customModule="instaexplorer" customModuleProvider="target">
                                 <rect key="frame" x="46" y="53" width="508" height="45"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -2532,7 +2532,7 @@
         <!--Image Detail View Controller-->
         <scene sceneID="55K-cR-TgC">
             <objects>
-                <viewController storyboardIdentifier="ImageDetailViewController5" automaticallyAdjustsScrollViewInsets="NO" id="UoP-hw-j6n" customClass="ImageDetailViewController" customModule="instaplaces" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImageDetailViewController5" automaticallyAdjustsScrollViewInsets="NO" id="UoP-hw-j6n" customClass="ImageDetailViewController" customModule="instaexplorer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="zAG-tj-ni9"/>
                         <viewControllerLayoutGuide type="bottom" id="Wr6-Yb-mxN"/>
@@ -2938,7 +2938,7 @@
         <!--Image Detail View Controller-->
         <scene sceneID="uPD-X6-4ei">
             <objects>
-                <viewController storyboardIdentifier="ImageDetailViewController4" automaticallyAdjustsScrollViewInsets="NO" id="pnz-hD-P2k" customClass="ImageDetailViewController" customModule="instaplaces" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImageDetailViewController4" automaticallyAdjustsScrollViewInsets="NO" id="pnz-hD-P2k" customClass="ImageDetailViewController" customModule="instaexplorer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Wsr-Jz-MPA"/>
                         <viewControllerLayoutGuide type="bottom" id="C6V-4g-ZmB"/>
@@ -3305,7 +3305,7 @@
         <!--Image Detail View Controller-->
         <scene sceneID="CqA-x3-2MR">
             <objects>
-                <viewController storyboardIdentifier="ImageDetailViewController6" automaticallyAdjustsScrollViewInsets="NO" id="Ebk-8S-VHK" customClass="ImageDetailViewController" customModule="instaplaces" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImageDetailViewController6" automaticallyAdjustsScrollViewInsets="NO" id="Ebk-8S-VHK" customClass="ImageDetailViewController" customModule="instaexplorer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1CR-Mz-BiF"/>
                         <viewControllerLayoutGuide type="bottom" id="Url-Cv-3sg"/>
@@ -3633,7 +3633,7 @@
         <!--Image Detail View Controller-->
         <scene sceneID="cuN-S6-qQx">
             <objects>
-                <viewController storyboardIdentifier="ImageDetailViewController" automaticallyAdjustsScrollViewInsets="NO" id="gIN-EC-QIL" customClass="ImageDetailViewController" customModule="instaplaces" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImageDetailViewController" automaticallyAdjustsScrollViewInsets="NO" id="gIN-EC-QIL" customClass="ImageDetailViewController" customModule="instaexplorer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8J4-2A-bxw"/>
                         <viewControllerLayoutGuide type="bottom" id="4Lp-dR-8F3"/>
@@ -3893,14 +3893,14 @@
                                 <exclude reference="tfX-0B-fFd"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="PZW-KF-s8V"/>
+                                <exclude reference="vrt-Ux-Lx5"/>
                                 <exclude reference="abI-Sm-Qzd"/>
                                 <exclude reference="exb-XL-Vz3"/>
                                 <exclude reference="f8W-Rs-3UW"/>
                                 <exclude reference="fJg-0E-CEt"/>
                                 <exclude reference="muy-jW-9aw"/>
                                 <exclude reference="rX6-9c-QbX"/>
-                                <exclude reference="PZW-KF-s8V"/>
-                                <exclude reference="vrt-Ux-Lx5"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -3909,14 +3909,14 @@
                                 <include reference="tfX-0B-fFd"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="PZW-KF-s8V"/>
+                                <include reference="vrt-Ux-Lx5"/>
                                 <include reference="abI-Sm-Qzd"/>
                                 <exclude reference="exb-XL-Vz3"/>
                                 <include reference="f8W-Rs-3UW"/>
                                 <include reference="fJg-0E-CEt"/>
                                 <include reference="muy-jW-9aw"/>
                                 <include reference="rX6-9c-QbX"/>
-                                <include reference="PZW-KF-s8V"/>
-                                <include reference="vrt-Ux-Lx5"/>
                             </mask>
                         </variation>
                     </view>
@@ -3958,7 +3958,7 @@
         <!--search for Hashtag-->
         <scene sceneID="K1J-Sw-fnf">
             <objects>
-                <tableViewController storyboardIdentifier="SearchTagsTableViewController" title="search for Hashtag" id="rD9-A1-6s7" customClass="SearchTagsTableViewController" customModule="instaplaces" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="SearchTagsTableViewController" title="search for Hashtag" id="rD9-A1-6s7" customClass="SearchTagsTableViewController" customModule="instaexplorer" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gBo-1P-2xC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
