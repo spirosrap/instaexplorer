@@ -3695,6 +3695,29 @@
                                             </mask>
                                         </variation>
                                     </imageView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tOX-xa-G79">
+                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                        <color key="backgroundColor" red="0.96078431369999995" green="0.32751392109999999" blue="0.40510138080000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="400" id="LgI-d1-2ed"/>
+                                            <constraint firstAttribute="width" constant="400" id="bcU-06-t7y"/>
+                                            <constraint firstAttribute="width" secondItem="tOX-xa-G79" secondAttribute="height" multiplier="1:1" id="xvi-11-oF6"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="LgI-d1-2ed"/>
+                                                <exclude reference="bcU-06-t7y"/>
+                                                <exclude reference="xvi-11-oF6"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular-widthClass=compact">
+                                            <mask key="constraints">
+                                                <include reference="LgI-d1-2ed"/>
+                                                <include reference="bcU-06-t7y"/>
+                                                <include reference="xvi-11-oF6"/>
+                                            </mask>
+                                        </variation>
+                                    </imageView>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" alwaysBounceHorizontal="YES" scrollEnabled="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z48-vL-Ssw">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3765,29 +3788,11 @@
                                             </mask>
                                         </variation>
                                     </textView>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tOX-xa-G79">
-                                        <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                        <color key="backgroundColor" red="0.96078431369999995" green="0.32751392109999999" blue="0.40510138080000002" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="400" id="LgI-d1-2ed"/>
-                                            <constraint firstAttribute="width" constant="400" id="bcU-06-t7y"/>
-                                            <constraint firstAttribute="width" secondItem="tOX-xa-G79" secondAttribute="height" multiplier="1:1" id="xvi-11-oF6"/>
-                                        </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="LgI-d1-2ed"/>
-                                                <exclude reference="bcU-06-t7y"/>
-                                                <exclude reference="xvi-11-oF6"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=compact">
-                                            <mask key="constraints">
-                                                <include reference="LgI-d1-2ed"/>
-                                                <include reference="bcU-06-t7y"/>
-                                                <include reference="xvi-11-oF6"/>
-                                            </mask>
-                                        </variation>
-                                    </imageView>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="nvN-fm-Dov">
+                                        <rect key="frame" x="-10" y="-10" width="20" height="20"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="color" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </activityIndicatorView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="bottom" secondItem="Z48-vL-Ssw" secondAttribute="bottom" constant="236" id="0Ff-Sk-d0l"/>
@@ -3801,6 +3806,7 @@
                                     <constraint firstItem="SQ5-5g-aWy" firstAttribute="bottom" secondItem="tOX-xa-G79" secondAttribute="bottom" constant="-408" id="KXm-42-WNh"/>
                                     <constraint firstAttribute="bottom" secondItem="Z48-vL-Ssw" secondAttribute="bottom" id="L5Z-Wb-dIM"/>
                                     <constraint firstItem="tOX-xa-G79" firstAttribute="leading" secondItem="MFO-cI-WUy" secondAttribute="leading" id="MNb-Qm-6HX"/>
+                                    <constraint firstItem="tOX-xa-G79" firstAttribute="centerY" secondItem="nvN-fm-Dov" secondAttribute="centerY" id="N36-mU-oae"/>
                                     <constraint firstItem="lwN-UY-S4B" firstAttribute="top" secondItem="h7c-3J-CY5" secondAttribute="top" id="NvE-O9-Y8z"/>
                                     <constraint firstAttribute="trailing" secondItem="Z48-vL-Ssw" secondAttribute="trailing" constant="5" id="OOq-sq-enR"/>
                                     <constraint firstItem="lwN-UY-S4B" firstAttribute="top" secondItem="MFO-cI-WUy" secondAttribute="top" constant="10" id="P0R-sa-iGe"/>
@@ -3811,6 +3817,7 @@
                                     <constraint firstAttribute="bottom" secondItem="tOX-xa-G79" secondAttribute="bottom" constant="272" id="TKE-8R-EG5"/>
                                     <constraint firstItem="SQ5-5g-aWy" firstAttribute="leading" secondItem="h7c-3J-CY5" secondAttribute="trailing" constant="8" id="TXU-Zz-STO"/>
                                     <constraint firstItem="8Mw-0D-wIv" firstAttribute="top" secondItem="MFO-cI-WUy" secondAttribute="top" constant="8" id="UAj-09-e8v"/>
+                                    <constraint firstItem="tOX-xa-G79" firstAttribute="centerX" secondItem="nvN-fm-Dov" secondAttribute="centerX" constant="7" id="YVE-6a-QeQ"/>
                                     <constraint firstItem="SQ5-5g-aWy" firstAttribute="bottom" secondItem="tOX-xa-G79" secondAttribute="bottom" constant="-408" id="drJ-7X-cRp"/>
                                     <constraint firstAttribute="trailing" secondItem="tOX-xa-G79" secondAttribute="trailing" id="fL9-dh-TOW"/>
                                     <constraint firstItem="tOX-xa-G79" firstAttribute="centerX" secondItem="MFO-cI-WUy" secondAttribute="centerX" id="iMb-lD-0lw"/>
@@ -3821,10 +3828,11 @@
                                     <mask key="subviews">
                                         <exclude reference="8Mw-0D-wIv"/>
                                         <exclude reference="h7c-3J-CY5"/>
+                                        <exclude reference="tOX-xa-G79"/>
                                         <exclude reference="Z48-vL-Ssw"/>
                                         <exclude reference="lwN-UY-S4B"/>
                                         <exclude reference="SQ5-5g-aWy"/>
-                                        <exclude reference="tOX-xa-G79"/>
+                                        <exclude reference="nvN-fm-Dov"/>
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="SKR-Iv-Ue3"/>
@@ -3832,8 +3840,10 @@
                                         <exclude reference="9CS-7l-C9X"/>
                                         <exclude reference="Fv5-Gc-uJz"/>
                                         <exclude reference="MNb-Qm-6HX"/>
+                                        <exclude reference="N36-mU-oae"/>
                                         <exclude reference="QCz-FT-hXR"/>
                                         <exclude reference="TKE-8R-EG5"/>
+                                        <exclude reference="YVE-6a-QeQ"/>
                                         <exclude reference="fL9-dh-TOW"/>
                                         <exclude reference="iMb-lD-0lw"/>
                                         <exclude reference="sU9-5h-8LC"/>
@@ -3859,10 +3869,11 @@
                                     <mask key="subviews">
                                         <include reference="8Mw-0D-wIv"/>
                                         <include reference="h7c-3J-CY5"/>
+                                        <include reference="tOX-xa-G79"/>
                                         <include reference="Z48-vL-Ssw"/>
                                         <include reference="lwN-UY-S4B"/>
                                         <include reference="SQ5-5g-aWy"/>
-                                        <include reference="tOX-xa-G79"/>
+                                        <include reference="nvN-fm-Dov"/>
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="SKR-Iv-Ue3"/>
@@ -3870,8 +3881,10 @@
                                         <exclude reference="9CS-7l-C9X"/>
                                         <include reference="Fv5-Gc-uJz"/>
                                         <include reference="MNb-Qm-6HX"/>
+                                        <include reference="N36-mU-oae"/>
                                         <exclude reference="QCz-FT-hXR"/>
                                         <exclude reference="TKE-8R-EG5"/>
+                                        <include reference="YVE-6a-QeQ"/>
                                         <include reference="fL9-dh-TOW"/>
                                         <include reference="iMb-lD-0lw"/>
                                         <exclude reference="sU9-5h-8LC"/>
@@ -3951,6 +3964,7 @@
                     <connections>
                         <outlet property="LocationTextView" destination="SQ5-5g-aWy" id="AH0-Ee-3cA"/>
                         <outlet property="clickableText" destination="Z48-vL-Ssw" id="bMD-z1-Y41"/>
+                        <outlet property="imageIndicator" destination="nvN-fm-Dov" id="Ts2-JX-JBy"/>
                         <outlet property="imageView" destination="tOX-xa-G79" id="2UW-x9-OtE"/>
                         <outlet property="indicator" destination="tfX-0B-fFd" id="5zK-bg-FJJ"/>
                         <outlet property="profileImageView" destination="h7c-3J-CY5" id="aJ6-sE-p7w"/>

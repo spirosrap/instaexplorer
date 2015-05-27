@@ -19,7 +19,7 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
     var editButton:UIBarButtonItem!
     var logoutButton = UIBarButtonItem()
     var indicator:UIActivityIndicatorView!
-    
+    var alert:UIAlertController!
     @IBOutlet var searchBar: UISearchBar!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -175,40 +175,41 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         
         if (self.resultSearchController.active) {
             if let name = filteredTableData[indexPath.row].name,let media_count = filteredTableData[indexPath.row].media_count {
-                println(filteredTableData[indexPath.row])
-                let selectedTag = filteredTableData[indexPath.row].name!
-                
-                var dictionary = [String:AnyObject]()
-                
-                dictionary["name"] = filteredTableData[indexPath.row].name!
-                dictionary["media_count"] = filteredTableData[indexPath.row].media_count!
 
-                var savedTag = Tag(dictionary: dictionary, context: CoreDataStackManager.sharedInstance().managedObjectContext!)
-                CoreDataStackManager.sharedInstance().saveContext()
-                indicator.startAnimating()
-                InstaClient.sharedInstance().getMediaFromTag(selectedTag, completionHandler: { (result, error) -> Void in
-                    if error == nil{
-                        if result! != []{
-                            dispatch_async(dispatch_get_main_queue(), {
-                                detailController.prefetchedPhotos = result! as [InstaMedia]
-                                for r in result!{
-                                    r.tag = savedTag
+                    let selectedTag = filteredTableData[indexPath.row].name!
+                    
+                    var dictionary = [String:AnyObject]()
+                    
+                    dictionary["name"] = filteredTableData[indexPath.row].name!
+                    dictionary["media_count"] = filteredTableData[indexPath.row].media_count!
+                    
+                    var savedTag = Tag(dictionary: dictionary, context: CoreDataStackManager.sharedInstance().managedObjectContext!)
+                    CoreDataStackManager.sharedInstance().saveContext()
+                    indicator.startAnimating()
+
+                        InstaClient.sharedInstance().getMediaFromTag(selectedTag, completionHandler: { (result, error) -> Void in
+                            if error == nil{
+                                if result! != []{
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        detailController.prefetchedPhotos = result! as [InstaMedia]
+                                        for r in result!{
+                                            r.tag = savedTag
+                                        }
+                                        CoreDataStackManager.sharedInstance().saveContext()
+                                        detailController.navigationController?.navigationBar.hidden = false
+                                        detailController.navigationItem.title =   "#" + selectedTag
+                                        self.indicator.stopAnimating()
+                                        self.navigationController!.pushViewController(detailController, animated: true)
+                                    })
+                                }else{
+                                    dispatch_async(dispatch_get_main_queue()) {
+                                        self.indicator.stopAnimating()
+                                        self.displayMessageBox("No images for that hashtag found")
+                                    }
                                 }
-                                self.resultSearchController.active = false
-                                CoreDataStackManager.sharedInstance().saveContext()
-                                detailController.navigationController?.navigationBar.hidden = false
-                                detailController.navigationItem.title =   "#" + selectedTag
-                                self.indicator.stopAnimating()
-                                self.navigationController!.pushViewController(detailController, animated: true)
-                            })
-                        }else{
-                            dispatch_async(dispatch_get_main_queue()) {
-                                self.indicator.stopAnimating()
-                                self.displayMessageBox("No images for that hashtag found")
                             }
-                        }
-                    }
-                })
+                        })
+                
             }else{
                 tableView.deselectRowAtIndexPath(indexPath, animated: true)
             }
@@ -256,43 +257,56 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
     
     func updateSearchResultsForSearchController(searchController: UISearchController)
     {
-        filteredTableData.removeAll(keepCapacity: false)
-        let searchPredicate = NSPredicate(format: "SELF CONTAINS[c]%@", searchController.searchBar.text)
-        
-        var array = [Tag]()
-        
-        // Set the temporary context
-        // When getting any tags we don't need them for the main context and we create a temporary one
-        let sharedContext = CoreDataStackManager.sharedInstance().managedObjectContext!
-
-        temporaryContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType)
-        temporaryContext.parentContext = sharedContext
-        if(searchController.searchBar.text != ""){
-            indicator.startAnimating()
-            InstaClient.sharedInstance().getTags(searchController.searchBar.text,context: temporaryContext, completionHandler: { (result, error) -> Void in
-                if error == nil{
-                    
-                    dispatch_async(dispatch_get_main_queue(), {
-                        for r in result!{
-                            array += [r as Tag]
-                        }
-                        self.indicator.stopAnimating()
-                        self.filteredTableData = array
-                        self.tableView.reloadData()
+        var networkReachability = Reachability.reachabilityForInternetConnection()
+        var networkStatus = networkReachability.currentReachabilityStatus()
+        if(networkStatus.value == NotReachable.value){// Before searching fοr  additional Photos in instagram check if there is an available internet connection
+            displayMessageBox("No Network Connection")
+            searchController.active = false
+            self.tableView.reloadData()
+        }else{
+            filteredTableData.removeAll(keepCapacity: false)
+            let searchPredicate = NSPredicate(format: "SELF CONTAINS[c]%@", searchController.searchBar.text)
+            
+            var array = [Tag]()
+            
+            // Set the temporary context
+            // When getting any tags we don't need them for the main context and we create a temporary one
+            let sharedContext = CoreDataStackManager.sharedInstance().managedObjectContext!
+            
+            temporaryContext = NSManagedObjectContext(concurrencyType: NSManagedObjectContextConcurrencyType.PrivateQueueConcurrencyType)
+            temporaryContext.parentContext = sharedContext
+            if(searchController.searchBar.text != ""){
+                indicator.startAnimating()
+                
+                
+                InstaClient.sharedInstance().getTags(searchController.searchBar.text,context: temporaryContext, completionHandler: { (result, error) -> Void in
+                    if error == nil{
                         
-                    })
-                }else{
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.displayMessageBox("Error searching for tags")
-                    })
+                        dispatch_async(dispatch_get_main_queue(), {
+                            for r in result!{
+                                array += [r as Tag]
+                            }
+                            self.indicator.stopAnimating()
+                            self.filteredTableData = array
+                            self.tableView.reloadData()
+                            
+                        })
+                    }else{
+                        dispatch_async(dispatch_get_main_queue(), {
+                            self.displayMessageBox("Error searching for tags")
+                            self.indicator.stopAnimating()
 
-                }
-            })
+                        })
+                        
+                    }
+                })
+                self.tableView.reloadData()
         }
+
+    }
         
 //        let array = (tableData as NSArray).filteredArrayUsingPredicate(searchPredicate)
 
-        self.tableView.reloadData()
         
     }
     
@@ -316,11 +330,20 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
 
     }
 
-    //A simple Alert view with an OK Button
+    //MARK: Other: alert view and a custom made information Box
+    //An alert message box with an OK Button
+    var isAlertPresented = false //Don't show another alert view if this one is already presenting
     func displayMessageBox(message:String){
-        var alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alert, animated: true, completion: nil)
+        if(!isAlertPresented){
+            isAlertPresented = true
+            alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: {
+                alert in
+                self.isAlertPresented = false
+                
+            }))
+            self.presentViewController(self.alert, animated: true, completion: nil)
+        }
     }
 
 

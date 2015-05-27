@@ -96,7 +96,7 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
         return CoreDataStackManager.sharedInstance().managedObjectContext!
     }
     
-    //Add the lazy fetchedResultsController property. Photos are already fetched(from flickr) and saved in Core data before this screen, but we fetch them again to use the NSFetchedResultsControllerDelegate methods
+    //Add the lazy fetchedResultsController property. Photos are already fetched(from instagram) and saved in Core data before this screen, but we fetch them again to use the NSFetchedResultsControllerDelegate methods
     lazy var fetchedResultsController: NSFetchedResultsController = {
         
         let fetchRequest = NSFetchRequest(entityName: "InstaMedia")
@@ -240,13 +240,13 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
         //Generate a new collection
     func newCollection() -> Bool { //I added a return value to exit when there is no connection
     
-//            var networkReachability = Reachability.reachabilityForInternetConnection()
-//            var networkStatus = networkReachability.currentReachabilityStatus()
-//    
-//            if(networkStatus.value == NotReachable.value){// Before searching fοr an additonal Photos in Flickr check if there is an available internet connection
-//                displayMessageBox("No Network Connection")
-//                return false
-//            }
+            var networkReachability = Reachability.reachabilityForInternetConnection()
+            var networkStatus = networkReachability.currentReachabilityStatus()
+    
+            if(networkStatus.value == NotReachable.value){// Before searching fοr  additional Photos in instagram check if there is an available internet connection
+                displayMessageBox("No Network Connection")
+                return false
+            }
     
             let applicationDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)//the appdelegate keeps a "Statistics" instance.
             informationBox("Connecting to Instagram",animate:true)
@@ -282,6 +282,8 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
                     dispatch_async(dispatch_get_main_queue(), {
                         //                                self.informationBox(nil,animate:false)
                         self.displayMessageBox("No available Photos Found")//Its appropriate at this point to display an Alert
+                        self.indicator.stopAnimating()
+                        self.newCollectionButton.enabled = true
                     })
                 }
             }

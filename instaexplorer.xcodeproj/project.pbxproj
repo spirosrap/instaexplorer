@@ -10,8 +10,6 @@
 		D40496B91AF9251A003E8BD2 /* InstaLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D40496B81AF9251A003E8BD2 /* InstaLocation.swift */; };
 		D41C243F1B05F8E600FCE12C /* SearchTagsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41C243E1B05F8E600FCE12C /* SearchTagsTableViewController.swift */; };
 		D41C24411B06007100FCE12C /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41C24401B06007100FCE12C /* Tag.swift */; };
-		D41C24441B06115100FCE12C /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41C24421B06115100FCE12C /* TableViewController.swift */; };
-		D41C24451B06115100FCE12C /* TableViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D41C24431B06115100FCE12C /* TableViewController.xib */; };
 		D424C9A71AFB7383003E7B8A /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D424C9A61AFB7383003E7B8A /* MapViewController.swift */; };
 		D424C9AB1AFB9BEA003E7B8A /* CoreDataStackManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D424C9AA1AFB9BEA003E7B8A /* CoreDataStackManager.swift */; };
 		D424C9AE1AFB9C0E003E7B8A /* Model.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D424C9AC1AFB9C0E003E7B8A /* Model.xcdatamodeld */; };
@@ -67,8 +65,6 @@
 		D40496B81AF9251A003E8BD2 /* InstaLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaLocation.swift; sourceTree = "<group>"; };
 		D41C243E1B05F8E600FCE12C /* SearchTagsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTagsTableViewController.swift; sourceTree = "<group>"; };
 		D41C24401B06007100FCE12C /* Tag.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
-		D41C24421B06115100FCE12C /* TableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
-		D41C24431B06115100FCE12C /* TableViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TableViewController.xib; sourceTree = "<group>"; };
 		D424C9A61AFB7383003E7B8A /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		D424C9AA1AFB9BEA003E7B8A /* CoreDataStackManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataStackManager.swift; sourceTree = "<group>"; };
 		D424C9AD1AFB9C0E003E7B8A /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
@@ -124,6 +120,7 @@
 		D424C9A91AFB937C003E7B8A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D471B88F1AF74C6500651865 /* InstaAuthViewController.swift */,
 				D471B8711AF6870900651865 /* LoginViewController.swift */,
 				D424C9A61AFB7383003E7B8A /* MapViewController.swift */,
 				D45167B21AFCBD8E00C78A19 /* InstaLocationsTableViewController.swift */,
@@ -150,6 +147,7 @@
 		D45F786B1B01122C00A534CA /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				D47C5E171B15CB880085C8EE /* Clients */,
 				D424C9AA1AFB9BEA003E7B8A /* CoreDataStackManager.swift */,
 				D40496B81AF9251A003E8BD2 /* InstaLocation.swift */,
 				D45167AF1AFCAEF700C78A19 /* Location.swift */,
@@ -185,18 +183,12 @@
 				D45F786B1B01122C00A534CA /* Model */,
 				D424C9A91AFB937C003E7B8A /* Controllers */,
 				D471B86C1AF6870900651865 /* AppDelegate.swift */,
-				D471B8911AF7539D00651865 /* InstaConstants.swift */,
 				D47C5E161B15B5840085C8EE /* Reachabiltiy */,
-				D471B8931AF753C300651865 /* InstaClient.swift */,
-				D471B88F1AF74C6500651865 /* InstaAuthViewController.swift */,
-				D4C8A30C1AF90F17000D9F54 /* InstaConvenience.swift */,
 				D471B8731AF6870900651865 /* Main.storyboard */,
 				D471B8761AF6870900651865 /* Images.xcassets */,
 				D471B8781AF6870900651865 /* LaunchScreen.xib */,
 				D471B8821AF6870900651865 /* instaTests */,
 				D471B86A1AF6870900651865 /* Supporting Files */,
-				D41C24421B06115100FCE12C /* TableViewController.swift */,
-				D41C24431B06115100FCE12C /* TableViewController.xib */,
 			);
 			name = instaexplorer;
 			path = insta;
@@ -235,6 +227,16 @@
 				D47C5E121B15B57A0085C8EE /* instaexplorer-Bridging-Header.h */,
 			);
 			name = Reachabiltiy;
+			sourceTree = "<group>";
+		};
+		D47C5E171B15CB880085C8EE /* Clients */ = {
+			isa = PBXGroup;
+			children = (
+				D471B8931AF753C300651865 /* InstaClient.swift */,
+				D471B8911AF7539D00651865 /* InstaConstants.swift */,
+				D4C8A30C1AF90F17000D9F54 /* InstaConvenience.swift */,
+			);
+			name = Clients;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -321,7 +323,6 @@
 			files = (
 				D471B8751AF6870900651865 /* Main.storyboard in Resources */,
 				D471B87A1AF6870900651865 /* LaunchScreen.xib in Resources */,
-				D41C24451B06115100FCE12C /* TableViewController.xib in Resources */,
 				D471B8771AF6870900651865 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -341,7 +342,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D47C5E151B15B57B0085C8EE /* Reachability.m in Sources */,
-				D41C24441B06115100FCE12C /* TableViewController.swift in Sources */,
 				D4C8A30D1AF90F17000D9F54 /* InstaConvenience.swift in Sources */,
 				D45167B51AFCDCC500C78A19 /* PhotoAlbumViewController.swift in Sources */,
 				D41C24411B06007100FCE12C /* Tag.swift in Sources */,

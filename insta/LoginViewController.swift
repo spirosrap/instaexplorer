@@ -28,20 +28,23 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func login(sender: AnyObject) {
+        var networkReachability = Reachability.reachabilityForInternetConnection()
+        var networkStatus = networkReachability.currentReachabilityStatus()
 
-        
-        InstaClient.sharedInstance().loginWithToken(self){
-            success,errorString in
-            
-            if success{
-                var appDelegateTemp = UIApplication.sharedApplication().delegate
-                let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController")! as! UITabBarController
-                
-                appDelegateTemp!.window!!.rootViewController = detailController
-                                
-                
-            }else{
-                println(errorString)
+        if(networkStatus.value == NotReachable.value){
+            displayMessageBox("No Network Connection")
+        }else{
+            InstaClient.sharedInstance().loginWithToken(self){
+                success,errorString in
+                if success{
+                    var appDelegateTemp = UIApplication.sharedApplication().delegate
+                    let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController")! as! UITabBarController
+                    
+                    appDelegateTemp!.window!!.rootViewController = detailController
+
+                }else{
+                    println(errorString)
+                }
             }
         }
     }
@@ -51,6 +54,13 @@ class LoginViewController: UIViewController {
         // Dispose of any resources that can be recreated.
         
         
+    }
+    
+    //A simple Alert view with an OK Button
+    func displayMessageBox(message:String){
+        var alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 
 }
