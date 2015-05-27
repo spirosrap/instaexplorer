@@ -25,13 +25,13 @@ Every favorited image is shown in the Favorites tab in collection view and table
 in the detail view's star or by simply by deleting in collection view and table view. The edit button can be used to delete images 
 in collection view or table view.
 
-#3d tab (search)
+3d tab (search)
 -----------------
 Like searching on a map, the user can search by a hashtag. After displaying a hastag an album for that hashtag is created
 and saved. the user can see tha saved hashtags, delete them, add new ones and see the saved related images.
 Deletion can be done simply by the usual left swipe in table view or by tapping at edit in top left corner.
 
-#Image detail view
+Image detail view
 -----------------
 For each image there is an image detail view. Which presents the images pretty much like the instagram (by exactly like it)
 User can favorite an image and also see the comment the originator of the image has created.
@@ -39,5 +39,6 @@ If the user has left a comment with hastags in it. the user can click on the has
 The image can also be shared to social media and also saved to disk Unlike instagram which only alows to share it and copy
 link's image.
 
-#Limitations:
+Limitations:
 ------------
+As of April 2015 instagram api doesn't allow posting so functionality that would post data to instagram was not created.
