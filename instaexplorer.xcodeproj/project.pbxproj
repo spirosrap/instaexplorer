@@ -27,7 +27,7 @@
 		D45F8E911B0656EF0084E815 /* LocationPhotoAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F8E901B0656EF0084E815 /* LocationPhotoAlbumViewController.swift */; };
 		D45F8E931B08975F0084E815 /* FavoritesAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D45F8E921B08975F0084E815 /* FavoritesAlbumViewController.swift */; };
 		D471B86D1AF6870900651865 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471B86C1AF6870900651865 /* AppDelegate.swift */; };
-		D471B8721AF6870900651865 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471B8711AF6870900651865 /* ViewController.swift */; };
+		D471B8721AF6870900651865 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471B8711AF6870900651865 /* LoginViewController.swift */; };
 		D471B8751AF6870900651865 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D471B8731AF6870900651865 /* Main.storyboard */; };
 		D471B8771AF6870900651865 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D471B8761AF6870900651865 /* Images.xcassets */; };
 		D471B87A1AF6870900651865 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D471B8781AF6870900651865 /* LaunchScreen.xib */; };
@@ -86,7 +86,7 @@
 		D471B8671AF6870900651865 /* instaexplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = instaexplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D471B86B1AF6870900651865 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D471B86C1AF6870900651865 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D471B8711AF6870900651865 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		D471B8711AF6870900651865 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		D471B8741AF6870900651865 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D471B8761AF6870900651865 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		D471B8791AF6870900651865 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -124,7 +124,7 @@
 		D424C9A91AFB937C003E7B8A /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				D471B8711AF6870900651865 /* ViewController.swift */,
+				D471B8711AF6870900651865 /* LoginViewController.swift */,
 				D424C9A61AFB7383003E7B8A /* MapViewController.swift */,
 				D45167B21AFCBD8E00C78A19 /* InstaLocationsTableViewController.swift */,
 				D45167B61AFCDE9200C78A19 /* CollectionViewCell.swift */,
@@ -357,7 +357,7 @@
 				D424C9A71AFB7383003E7B8A /* MapViewController.swift in Sources */,
 				D41C243F1B05F8E600FCE12C /* SearchTagsTableViewController.swift in Sources */,
 				D43600D11B0A5A6E00CA6DF9 /* ADVSegmentedControl.swift in Sources */,
-				D471B8721AF6870900651865 /* ViewController.swift in Sources */,
+				D471B8721AF6870900651865 /* LoginViewController.swift in Sources */,
 				D471B86D1AF6870900651865 /* AppDelegate.swift in Sources */,
 				D471B8941AF753C300651865 /* InstaClient.swift in Sources */,
 				D471B8921AF7539D00651865 /* InstaConstants.swift in Sources */,

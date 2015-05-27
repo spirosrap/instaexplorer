@@ -610,7 +610,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         
         var appDelegateTemp = UIApplication.sharedApplication().delegate
         
-        var rootController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LoginViewController")! as! ViewController
+        var rootController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LoginViewController")! as! LoginViewController
         appDelegateTemp!.window!!.rootViewController = rootController;
         
     }

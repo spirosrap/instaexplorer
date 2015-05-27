@@ -203,10 +203,10 @@
             </objects>
             <point key="canvasLocation" x="270" y="-467"/>
         </scene>
-        <!--View Controller-->
+        <!--Login View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="LoginViewController" id="BYZ-38-t0r" customClass="ViewController" customModule="instaexplorer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginViewController" id="BYZ-38-t0r" customClass="LoginViewController" customModule="instaexplorer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -2086,7 +2086,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uTx-X7-A32" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7638" y="-171"/>
+            <point key="canvasLocation" x="6906" y="-252"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="4uD-Tx-3MB">
@@ -2104,7 +2104,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QCL-jA-Ze7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6994.5" y="-90"/>
+            <point key="canvasLocation" x="6262.5" y="-171"/>
         </scene>
         <!--Favorites-->
         <scene sceneID="jVI-uo-lQv">
@@ -2933,7 +2933,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y0F-56-KbP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8121" y="1375.5"/>
+            <point key="canvasLocation" x="8196" y="1332"/>
         </scene>
         <!--Image Detail View Controller-->
         <scene sceneID="uPD-X6-4ei">
