@@ -42,6 +42,8 @@ link's image.
 Limitations:
 ------------
 As of April 2015 instagram api doesn't allow posting so functionality that would post data to instagram was not created.
+
+
 ![alt tag](https://raw.githubusercontent.com/spirosrap/insta/master/sc1.png)
 ![alt tag](https://raw.githubusercontent.com/spirosrap/insta/master/sc2.png)
 ![alt tag](https://raw.githubusercontent.com/spirosrap/insta/master/sc3.png)
