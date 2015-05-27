@@ -83,9 +83,11 @@ extension InstaClient {
     func getTags(var string:String,let context:NSManagedObjectContext,completionHandler: (result: [Tag]?, error: NSError?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
+        
+        //method could have a tag with an accent like "Atatürk". We need to escape such characters.
+        string = string.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
         let parameters = ["q":string]
         var mutableMethod : String = Methods.TagsSearch
-        
         
         /* 2. Make the request */
         taskForGETMethod(mutableMethod, parameters: parameters ) { JSONResult, error in
@@ -137,6 +139,10 @@ extension InstaClient {
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         let parameters = [String : AnyObject]()
         var mutableMethod : String = Methods.MediaTag
+        /* 2/3. Build the URL and configure the request */
+        //method could have a tag with an accent like "Atatürk". We need to escape such characters.
+        tag = tag.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
+
         mutableMethod = InstaClient.subtituteKeyInMethod(mutableMethod, key: "tag-name", value: tag)!
         
         /* 2. Make the request */
