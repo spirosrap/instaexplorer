@@ -80,7 +80,7 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
             
             
             if let locationName = instaMedia.instaLocation?.name {
-                var locationAttr  = NSMutableAttributedString(string: locationName, attributes: [NSForegroundColorAttributeName:UIColor(red: 0.051, green: 0.494, blue: 0.839, alpha: 1.00), NSFontAttributeName:UIFont(name: "HelveticaNeue", size: 17)!])
+                var locationAttr  = NSMutableAttributedString(string: locationName, attributes: [NSForegroundColorAttributeName:UIColor(red: 0.051, green: 0.494, blue: 0.839, alpha: 1.00), NSFontAttributeName:UIFont(name: "HelveticaNeue", size: 14)!])
                 var range = NSString(string: locationName).rangeOfString(locationName)
                 locationAttr.replaceCharactersInRange(range, withAttributedString: locationAttr)
                 

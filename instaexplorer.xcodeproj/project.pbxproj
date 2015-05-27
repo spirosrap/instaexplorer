@@ -164,7 +164,7 @@
 		D471B85E1AF6870900651865 = {
 			isa = PBXGroup;
 			children = (
-				D471B8691AF6870900651865 /* instaplaces */,
+				D471B8691AF6870900651865 /* instaexplorer */,
 				D471B8681AF6870900651865 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -178,7 +178,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D471B8691AF6870900651865 /* instaplaces */ = {
+		D471B8691AF6870900651865 /* instaexplorer */ = {
 			isa = PBXGroup;
 			children = (
 				D42B3FA91B0B4BA700A868D4 /* View */,
@@ -198,7 +198,7 @@
 				D41C24421B06115100FCE12C /* TableViewController.swift */,
 				D41C24431B06115100FCE12C /* TableViewController.xib */,
 			);
-			name = instaplaces;
+			name = instaexplorer;
 			path = insta;
 			sourceTree = "<group>";
 		};
