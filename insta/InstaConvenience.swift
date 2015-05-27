@@ -214,6 +214,7 @@ extension InstaClient {
 
     
     //http://stackoverflow.com/questions/15945497/merge-two-uiimageview-into-single-a-single-uiimageview-in-ios
+    //It blends 2 images. When I need to display a delete icon in front of an image I use this function
     func imageWithView(imageView:UIView) -> UIImage{
         UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, CGFloat(1.0))
         imageView.layer.renderInContext(UIGraphicsGetCurrentContext())

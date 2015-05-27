@@ -1,7 +1,7 @@
 //
 //  MapViewController.swift
 //  instaexplorer
-//
+//  Handles the Map (1st tab)
 //  Created by Spiros Raptis on 07/05/2015.
 //  Copyright (c) 2015 Spiros Raptis. All rights reserved.
 //
@@ -14,6 +14,8 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     @IBOutlet weak var segment: ADVSegmentedControl!
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet var indicator: UIActivityIndicatorView!
+    
     var alert:UIAlertController!
     var tapRecognizer: UITapGestureRecognizer? = nil //Recognizer for the search bar
     var locations = [Location]() // Array of locations in map view.
@@ -26,7 +28,6 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     var editButton:UIBarButtonItem!
     var logoutButton = UIBarButtonItem()
     
-    @IBOutlet var indicator: UIActivityIndicatorView!
     
     //MARK: ViewDidLoad,ViewWillAppear,viewWillDisappear
     override func viewDidLoad() {
@@ -56,7 +57,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
         tapRecognizer?.numberOfTapsRequired = 1
         
-        
+        //setup custom segmented control
         segment.items = ["Standard", "Satellite","Hybrid"]
         segment.font = UIFont(name: "Avenir-Black", size: 12)
         segment.borderColor = UIColor(white: 1.0, alpha: 0.3)
@@ -72,7 +73,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         
         self.editing = false
     }
-    
+    //change the label to indicate when we are in edit mode
     func edit(){
         if editButton.title! == "Done"{
             editButton.title = "Delete"
@@ -93,6 +94,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         return UIStatusBarStyle.LightContent
     }
     
+    //Select type of map
     func switchSegmented(sender: ADVSegmentedControl) {
 
         switch (sender.selectedIndex) {
@@ -129,9 +131,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
             self.locations = sectionInfo.objects as! [Location]
         }
         
-//        imageInfoView?.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.70)
-//        imageInfoView.hidden = true
-//        infoLabel.hidden = true
+
         self.addKeyboardDismissRecognizer()
     }
     
@@ -217,14 +217,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     var annotation = MKPointAnnotation()
     func longPressed(sender: UILongPressGestureRecognizer) -> Bool//I added a return value to exit when there is no connection
     {
-        // Before initiating the searching for photos and creating the annotation check
-        // For available internet connection
-//        var networkReachability = Reachability.reachabilityForInternetConnection()
-//        var networkStatus = networkReachability.currentReachabilityStatus()
-//        if(networkStatus.value == NotReachable.value){
-//            displayMessageBox("No Network Connection")
-//            return false
-//        }
+
         searchBar.resignFirstResponder()
         var networkReachability = Reachability.reachabilityForInternetConnection()
         var networkStatus = networkReachability.currentReachabilityStatus()
@@ -272,7 +265,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                     if error == nil{
                         if(result! != []){
                             self.annotation.title = " "
-                            for il in result!{
+                            for il in result!{ //associate all the returned objects with the selected location
                                 il.location = self.selectedLocation
                             }
                             
@@ -289,6 +282,8 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                             }
                             
                             self.annotationsLocations[self.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
+                            
+                            //set the first image for annotation view
                             var view = self.mapView.viewForAnnotation(self.annotation)
                             var imv = UIImageView(frame: view!.frame)
                             var im = result![0] as InstaMedia
@@ -344,6 +339,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                             displayMessageBox("No network connection")
                         } else{
                             indicator.startAnimating()
+                            
                             InstaClient.sharedInstance().getMedia(Double(selectedLocation.latitude), longitude: Double(selectedLocation.longitude), distance: 100) { (result, error) -> Void in
                                 
                                 if error == nil {
@@ -353,7 +349,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                                             //instantiate the controller and pass the parameter location.
                                             detailController.location = l
                                             
-                                            for il in result!{
+                                            for il in result!{//associate all the returned objects with the selected location
                                                 il.location = self.selectedLocation
                                             }
                                             
@@ -399,9 +395,8 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
             pinView!.pinColor = .Purple
             pinView!.canShowCallout = true
             pinView!.draggable = true
-//            pinView!.rightCalloutAccessoryView = UIButton.buttonWithType(.DetailDisclosure) as! UIButton
             var imv = UIImageView(frame: pinView!.frame)
-            if let location = annotationsLocations[annotation.hash]{
+            if let location = annotationsLocations[annotation.hash]{ //find the location for the specific annotation and fetch the first image
                 var frcf = instaMediafetchedResultsController(annotationsLocations[annotation.hash]!)
                 frcf.performFetch(nil)
                 let sectionInfo = frcf.sections![0] as! NSFetchedResultsSectionInfo
@@ -423,6 +418,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         return pinView
     }
     
+    // Selecting is used when the user pressed the delete button to delete an annotation
     func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
         if(self.editing){
             mapView.deselectAnnotation(view.annotation, animated: false)
@@ -441,9 +437,8 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
 
     }
     
+    //Dragging an image
     func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, didChangeDragState newState: MKAnnotationViewDragState, fromOldState oldState: MKAnnotationViewDragState) {
-        
-        
         
         if(newState == .Starting){
             self.deleteLocationAnnotationImages(view.annotation)
@@ -470,7 +465,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                     if(error == nil){
                         if(result! != []){
                             self.annotation.title = " "
-                            for il in result!{
+                            for il in result!{ //associate all the returned objects with the selected location
                                 il.location = self.selectedLocation
                             }
                             
@@ -483,6 +478,8 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
                             dispatch_async(dispatch_get_main_queue()) {
                                 //                        self.tabBarController!.tabBar.hidden = true;
                                 self.annotationsLocations[view.annotation.hash] = self.selectedLocation //add to dictionary of annotations with Locations.
+                                
+                                //set the first image for annotation view
                                 var view = self.mapView.viewForAnnotation(view.annotation)
                                 var imv = UIImageView(frame: view!.frame)
                                 var im = result![0] as InstaMedia
@@ -517,6 +514,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         }
     }
     
+    //Delete the images associated with the selected location
     func deleteLocationAnnotationImages(annotation:MKAnnotation){
         var frcf = instaMediafetchedResultsController(annotationsLocations[annotation.hash]!)
         frcf.performFetch(nil)
@@ -525,7 +523,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         if  !sectionInfo.objects.isEmpty{
             var im  = sectionInfo.objects as! [InstaMedia]
             for p in im{
-                if(p.favorite != 1){
+                if(p.favorite != 1){ //Delete all except the favorited ones
                     CoreDataStackManager.sharedInstance().deleteObject(p)
                     CoreDataStackManager.sharedInstance().saveContext()
                 }else{
@@ -563,8 +561,6 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         
         // Archive the dictionary into the filePath
         NSKeyedArchiver.archiveRootObject(dictionary, toFile: filePath)
-        
-        
         
     }
     
@@ -608,7 +604,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     }
     
     
-    //MARK: Other: alert view and a custom made information Box
+    //MARK: Other:
     //An alert message box with an OK Button
     var isAlertPresented = false //Don't show another alert view if this one is already presenting
     func displayMessageBox(message:String){
@@ -625,8 +621,6 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     }
     
     
-    //MARK: Core Data related
-    //variable to fetch the ,existing saved in core data,locations
     
     func logout(){
         InstaClient.sharedInstance().logout(self)

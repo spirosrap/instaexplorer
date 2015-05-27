@@ -1,8 +1,7 @@
 //
 //  CoreDataStackManager.swift
-//  FavoriteActors
+//  instaexplorer
 //
-//  Created by Jason on 3/10/15.
 //  Copyright (c) 2015 Udacity. All rights reserved.
 //
 
@@ -202,11 +201,12 @@ class CoreDataStackManager {
             
             var error: NSError? = nil
             
-            var changedThumbnailPath = photo.thumbnailPath!.stringByReplacingOccurrencesOfString("/", withString: "")
+            var changedThumbnailPath = photo.thumbnailPath!.stringByReplacingOccurrencesOfString("/", withString: "")//Because instagram returns the same lastpathcomponent for images and thumbnails I introduced this hack(replaced all "/" characters) to enable different paths for the same lastpathcomponents.
             var changedImagePath = photo.imagePath!.stringByReplacingOccurrencesOfString("/", withString: "")
             var changedProfileImagePath = photo.profileImagePath!.stringByReplacingOccurrencesOfString("/", withString: "")
             
-
+            
+            //Deleting all image assets for that media
             deleteFile(InstaClient.sharedInstance().imagePath(changedThumbnailPath))
             deleteFile(InstaClient.sharedInstance().imagePath(changedImagePath))
             deleteFile(InstaClient.sharedInstance().imagePath(changedProfileImagePath))

@@ -1,7 +1,7 @@
 //
 //  LoginViewController.swift
-//  insta
-//
+//  instaexplorer
+//  The login controller to handle the request for login to instagram to use the app
 //  Created by Spiros Raptis on 03/05/2015.
 //  Copyright (c) 2015 Spiros Raptis. All rights reserved.
 //
@@ -12,7 +12,6 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         if(NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().accessTokenfilePath) != nil){
             let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController")! as! UITabBarController
             
@@ -40,7 +39,8 @@ class LoginViewController: UIViewController {
                     var appDelegateTemp = UIApplication.sharedApplication().delegate
                     let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController")! as! UITabBarController
                     
-                    appDelegateTemp!.window!!.rootViewController = detailController
+                    appDelegateTemp!.window!!.rootViewController = detailController //Set the tabbar as the root controller for the next time the user will login to avoid a unnecessary segway from login controller when already logged in
+                    
 
                 }else{
                     println(errorString)

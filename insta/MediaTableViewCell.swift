@@ -1,5 +1,5 @@
 //
-//  TableViewCell.swift
+//  MediaTableViewCell.swift
 //  instaexplorer
 //
 //  Created by Spiros Raptis on 13/05/2015.

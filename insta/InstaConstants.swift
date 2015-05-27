@@ -1,6 +1,6 @@
 //
-//  TMDBConstants.swift
-//  TheMovieManager
+//  InstaConstants.swift
+//  instaexplorer
 //
 //  Created by Jarrod Parkes on 2/11/15.
 //  Copyright (c) 2015 Jarrod Parkes. All rights reserved.

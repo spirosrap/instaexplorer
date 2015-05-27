@@ -1,9 +1,9 @@
 //
-//  TMDBAuthViewController.swift
-//  TheMovieManager
-//
-//  Created by Jarrod Parkes on 2/11/15.
-//  Copyright (c) 2015 Jarrod Parkes. All rights reserved.
+//  InstaAuthViewController.swift
+//  instaexplorer
+//  Controller for the authentication view
+//  Created by Spiros Raptis
+//  Copyright (c) 2015 Spiros Raptis. All rights reserved.
 //
 
 import UIKit
@@ -39,16 +39,8 @@ class InstaAuthViewController: UIViewController, UIWebViewDelegate {
     // MARK: - UIWebViewDelegate
     
     func webViewDidFinishLoad(webView: UIWebView) {
-        
-        //        if(webView.request!.URL!.absoluteString! == "\(TMDBClient.Constants.AuthorizationURL)\(requestToken!)/allow") {
-        //
-        //            self.dismissViewControllerAnimated(true, completion: { () -> Void in
-        //                self.completionHandler!(success: true, errorString: nil)
-        //            })
-        //        }
-//           println(webView.request!.URL!.absoluteString!)
+
         if (urlRequest!.URL!.scheme == "instaplaces"){
-//            println(webView.request!.URL!.absoluteString!)
             self.dismissViewControllerAnimated(true, completion: nil)
         }
 
@@ -60,7 +52,7 @@ class InstaAuthViewController: UIViewController, UIWebViewDelegate {
             var urlString = request.URL?.absoluteString
             var accessToken = urlString!.rangeOfString("#access_token=")
             if(accessToken != nil){
-                let logoutRequest = NSURLRequest(URL: NSURL(string: "https://instagram.com/accounts/logout")!)
+                let logoutRequest = NSURLRequest(URL: NSURL(string: "https://instagram.com/accounts/logout")!)//logout from webview browser
                 self.webView.loadRequest(logoutRequest)
 
                 self.dismissViewControllerAnimated(true, completion: { () -> Void in

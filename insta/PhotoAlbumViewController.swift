@@ -1,6 +1,6 @@
 //
 //  PhotoAlbumViewController.swift
-//
+//  instaexplorer
 //  Created by Spiros Raptis on 19/04/2015.
 //  Copyright (c) 2015 Spiros Raptis. All rights reserved.
 //
@@ -131,7 +131,7 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
         
         //If the photo image(imagepaths and titles are saved in Core Data) is saved using NSKeyedArchiver / NSKeyedUnarchiver we display it right away else we download it using its imagepath
-        var changedPath = prefetchedPhotos![indexPath.row].thumbnailPath!.stringByReplacingOccurrencesOfString("/", withString: "")
+        var changedPath = prefetchedPhotos![indexPath.row].thumbnailPath!.stringByReplacingOccurrencesOfString("/", withString: "")//Because instagram returns the same lastpathcomponent for images and thumbnails I introduced this hack(replaced all "/" characters) to enable different paths for the same lastpathcomponents.
 
         
         

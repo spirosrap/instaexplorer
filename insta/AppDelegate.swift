@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  insta
+//  instaexplorer
 //
 //  Created by Spiros Raptis on 03/05/2015.
 //  Copyright (c) 2015 Spiros Raptis. All rights reserved.
@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.setStatusBarStyle(UIStatusBarStyle.LightContent, animated: true)
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
+        //the following handles the root controller for the next time the user will login to avoid an unnecessary segway from login controller when already logged in
         if (NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().accessTokenfilePath) != nil)
         {
             InstaClient.sharedInstance().accessToken = NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().accessTokenfilePath) as? String

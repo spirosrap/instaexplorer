@@ -1,7 +1,7 @@
 //
 //  InstaMedia.swift
 //  instaexplorer
-//
+//  THe object for the images of instagram
 //  Created by Spiros Raptis on 06/05/2015.
 //  Copyright (c) 2015 Spiros Raptis. All rights reserved.
 //

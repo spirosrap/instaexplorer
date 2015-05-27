@@ -1,5 +1,5 @@
 //
-//  SearcbTagsTableViewController.swift
+//  SearchTagsTableViewController.swift
 //  instaexplorer
 //
 //  Created by Spiros Raptis on 15/05/2015.
@@ -305,11 +305,9 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
 
     }
         
-//        let array = (tableData as NSArray).filteredArrayUsingPredicate(searchPredicate)
-
-        
     }
     
+    //change the label to indicate when we are in edit mode
     func edit(){
         if editButton.title! == "Edit"{
             editButton.title = "Done"

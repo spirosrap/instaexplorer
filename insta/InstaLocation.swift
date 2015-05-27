@@ -1,7 +1,8 @@
 //
 //  InstaLocation.swift
 //  instaexplorer
-//
+//  This is for the specific location object the api sometimes associates with an images
+//  It is not used in the project, but it can be used later for more advanced location based searching.
 //  Created by Spiros Raptis on 05/05/2015.
 //  Copyright (c) 2015 Spiros Raptis. All rights reserved.
 //

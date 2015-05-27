@@ -1,7 +1,7 @@
 //
 //  Location.swift
-//  Virtual Tourist
-//
+//  instaexplorer
+//  The location I need to associate with a set of media. It can be associated with an InstaLocation as well.
 //  Created by Spiros Raptis on 19/04/2015.
 //  Copyright (c) 2015 Spiros Raptis. All rights reserved.
 //

@@ -1,6 +1,6 @@
 //
-//  File.swift
-//  FavoriteActors
+//  ImageCache.swift
+//  instaexplorer
 //
 //  Created by Jason on 1/31/15.
 //  Copyright (c) 2015 Udacity. All rights reserved.
