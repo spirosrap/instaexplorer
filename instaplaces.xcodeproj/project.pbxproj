@@ -35,6 +35,7 @@
 		D471B8901AF74C6500651865 /* InstaAuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471B88F1AF74C6500651865 /* InstaAuthViewController.swift */; };
 		D471B8921AF7539D00651865 /* InstaConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471B8911AF7539D00651865 /* InstaConstants.swift */; };
 		D471B8941AF753C300651865 /* InstaClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D471B8931AF753C300651865 /* InstaClient.swift */; };
+		D47C5E151B15B57B0085C8EE /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = D47C5E141B15B57B0085C8EE /* Reachability.m */; };
 		D4B4BB5E1AFE396700B281B2 /* ImageDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4B4BB5D1AFE396700B281B2 /* ImageDetailViewController.swift */; };
 		D4C8A30D1AF90F17000D9F54 /* InstaConvenience.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C8A30C1AF90F17000D9F54 /* InstaConvenience.swift */; };
 /* End PBXBuildFile section */
@@ -95,6 +96,9 @@
 		D471B88F1AF74C6500651865 /* InstaAuthViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaAuthViewController.swift; sourceTree = "<group>"; };
 		D471B8911AF7539D00651865 /* InstaConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaConstants.swift; sourceTree = "<group>"; };
 		D471B8931AF753C300651865 /* InstaClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaClient.swift; sourceTree = "<group>"; };
+		D47C5E121B15B57A0085C8EE /* instaplaces-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "instaplaces-Bridging-Header.h"; sourceTree = "<group>"; };
+		D47C5E131B15B57B0085C8EE /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		D47C5E141B15B57B0085C8EE /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		D4B4BB5D1AFE396700B281B2 /* ImageDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageDetailViewController.swift; sourceTree = "<group>"; };
 		D4C8A30C1AF90F17000D9F54 /* InstaConvenience.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InstaConvenience.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -182,6 +186,7 @@
 				D424C9A91AFB937C003E7B8A /* Controllers */,
 				D471B86C1AF6870900651865 /* AppDelegate.swift */,
 				D471B8911AF7539D00651865 /* InstaConstants.swift */,
+				D47C5E161B15B5840085C8EE /* Reachabiltiy */,
 				D471B8931AF753C300651865 /* InstaClient.swift */,
 				D471B88F1AF74C6500651865 /* InstaAuthViewController.swift */,
 				D4C8A30C1AF90F17000D9F54 /* InstaConvenience.swift */,
@@ -220,6 +225,16 @@
 				D471B8841AF6870900651865 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D47C5E161B15B5840085C8EE /* Reachabiltiy */ = {
+			isa = PBXGroup;
+			children = (
+				D47C5E131B15B57B0085C8EE /* Reachability.h */,
+				D47C5E141B15B57B0085C8EE /* Reachability.m */,
+				D47C5E121B15B57A0085C8EE /* instaplaces-Bridging-Header.h */,
+			);
+			name = Reachabiltiy;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -325,6 +340,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D47C5E151B15B57B0085C8EE /* Reachability.m in Sources */,
 				D41C24441B06115100FCE12C /* TableViewController.swift in Sources */,
 				D4C8A30D1AF90F17000D9F54 /* InstaConvenience.swift in Sources */,
 				D45167B51AFCDCC500C78A19 /* PhotoAlbumViewController.swift in Sources */,
@@ -478,6 +494,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				IBC_NOTICES = YES;
@@ -488,6 +505,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = instaplaces;
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "insta/instaplaces-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -496,6 +515,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				IBC_NOTICES = YES;
@@ -506,6 +526,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = instaplaces;
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "insta/instaplaces-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
