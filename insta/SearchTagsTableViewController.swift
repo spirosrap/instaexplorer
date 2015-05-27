@@ -199,6 +199,7 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
                                         detailController.navigationController?.navigationBar.hidden = false
                                         detailController.navigationItem.title =   "#" + selectedTag
                                         self.indicator.stopAnimating()
+                                        self.resultSearchController.active = false
                                         self.navigationController!.pushViewController(detailController, animated: true)
                                     })
                                 }else{
@@ -300,9 +301,9 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
                         
                     }
                 })
-                self.tableView.reloadData()
+         
         }
-
+       self.tableView.reloadData()
     }
         
     }
