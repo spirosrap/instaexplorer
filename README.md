@@ -1,7 +1,7 @@
 # Instaexplorer
 
-Insta explorer is an app that allows a user explore images on instagram on a map, searching for related hastags and 
-create favorite, without notifying users of that. Also the user can see these photos in a detail view and then share these photos in social media or save them to 
+Insta explorer is an app that allows a user to explore images on instagram using a map, searching for related hastags and 
+create favorites without notifying users of that. Also the user can see these photos in a detail view and then share these photos in social media or save them to 
 the device.
 
 The app consists of 3 tabs:
@@ -14,7 +14,7 @@ The app consists of 3 tabs:
 2) Delete annotations(pins). In left top there is the button delete which allows the user to delete existing albums and it's 
    associated images. When the user has deleted an annotation they can press return to the mode of adding new annotations by
    long press again.
-3) Dragging annotations. All annotation can be moved around the map(by long press). When moved the previous albums is erased and a new
+3) Dragging annotations. All annotation can be moved around the map(by long press). When moved the previous album is erased and a new
    one is created. When a pin is placed somewhere where there are no images around the pin is deleted.
 4) The user also ,besides zooming,panning,pinching, can go to any location by geocoding in the search bar.
 5) The map is can be shown in standard, satellite and hybrid mode
@@ -33,9 +33,9 @@ Deletion can be done simply by the usual left swipe in table view or by tapping 
 
 Image detail view
 -----------------
-For each image there is an image detail view. Which presents the images pretty much like the instagram (by exactly like it)
+For each image there is an image detail view. Which presents the images pretty much like the instagram (but not exactly like it)
 User can favorite an image and also see the comment the originator of the image has created.
-If the user has left a comment with hastags in it. the user can click on the hashtag like a link and see associated images.
+If the image originator has left a comment with hastags in it, they can click on the hashtag like a link and see associated images.
 The image can also be shared to social media and also saved to disk Unlike instagram which only alows to share it and copy
 link's image.
 
