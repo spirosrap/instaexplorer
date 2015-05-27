@@ -28,6 +28,7 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
     var userComment:String!
     var attributedString = NSMutableAttributedString(string: "")
     
+    @IBOutlet var imageIndicator: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -89,11 +90,18 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
             
             InstaClient.sharedInstance().setImage(instaMedia.profileImagePath!,imageView: profileImageView)
             shareButton.enabled = false
+            imageIndicator.startAnimating()
             InstaClient.sharedInstance().downloadImageAndSetCell(instaMedia.imagePath!, photo: imageView, completionHandler: { (success, errorString) -> Void in
                 if success{
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.imageIndicator.stopAnimating()
+                    }
                     self.imageToShare = self.imageView.image!
                     self.shareButton.enabled = true
                 }else{
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.imageIndicator.stopAnimating()
+                    }
                     println(errorString)
                 }
             })

@@ -297,6 +297,7 @@ class InstaClient : NSObject {
         var changedPath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "")
         if let p = NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().imagePath(changedPath)) as? UIImage {
             photo.image = p
+            completionHandler(success: true, errorString: nil)
         }else{
             let imgURL = NSURL(string: imagePath)
             let request: NSURLRequest = NSURLRequest(URL: imgURL!)
