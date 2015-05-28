@@ -27,8 +27,8 @@ class Tag:NSManagedObject {
         let entity =  NSEntityDescription.entityForName("Tag", inManagedObjectContext: context)!
         super.init(entity: entity, insertIntoManagedObjectContext: context)
         
-        name = dictionary["name"] as? String
-        media_count = dictionary["media_count"] as? NSNumber
+        name = dictionary[InstaClient.DictionaryKeys.Name] as? String
+        media_count = dictionary[InstaClient.DictionaryKeys.MediaCount] as? NSNumber
     }
 
     static func tagsFromResults(results: [[String : AnyObject]],context: NSManagedObjectContext) -> [Tag] {
@@ -36,8 +36,8 @@ class Tag:NSManagedObject {
         for result in results {
             var dictionary = [String:AnyObject]()
             
-            dictionary["name"] = result["name"]!
-            dictionary["media_count"] = result["media_count"]!
+            dictionary[InstaClient.DictionaryKeys.Name] = result[InstaClient.JSONResponseKeys.Name]!
+            dictionary[InstaClient.DictionaryKeys.MediaCount] = result[InstaClient.JSONResponseKeys.MediaCount]!
             tags.append(Tag(dictionary: dictionary,context: context))
         }
 

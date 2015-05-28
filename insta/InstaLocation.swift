@@ -31,10 +31,10 @@ class InstaLocation: NSManagedObject{
         let entity =  NSEntityDescription.entityForName("InstaLocation", inManagedObjectContext: context)!
         super.init(entity: entity, insertIntoManagedObjectContext: context)
 
-        name = dictionary["name"] as! String
-        id = dictionary["id"] as! String
-        longitude = dictionary["longitude"] as! Double
-        latitude = dictionary["latitude"] as! Double
+        name = dictionary[InstaClient.DictionaryKeys.Name] as! String
+        id = dictionary[InstaClient.DictionaryKeys.id] as! String
+        longitude = dictionary[InstaClient.DictionaryKeys.Longitude] as! Double
+        latitude = dictionary[InstaClient.DictionaryKeys.Latitude] as! Double
         
     }
 

@@ -63,10 +63,51 @@ extension InstaClient {
         static let MediaType = "media_type"
         static let MediaID = "media_id"
     }
+    
+    struct DictionaryKeys {
+        static let Favorite = "favorite"
+        static let ProfileImagePath = "profileImagePath"
+        static let ThumbnailPath = "thumbnailPath"
+        static let Link = "link"
+        static let UserID = "userID"
+        static let MediaID = "mediaID"
+        static let Text = "text"
+        static let Fullname = "fullname"
+        static let InstaLocation = "instaLocation"
+        static let ImagePath = "imagePath"
+        static let Username = "username"
+        static let Name = "name"
+        static let id = "id"
+        static let Longitude = "longitude"
+        static let Latitude = "latitude"
+        static let MediaCount = "media_count"
+        
+    }
 
     // MARK: - JSON Response Keys
     struct JSONResponseKeys {
       
+        static let Type = "type"
+        static let Username = "username"
+        static let User = "user"
+        static let Images = "images"
+        static let Thumbnail = "thumbnail"
+        static let Url = "url"
+        static let standardResolution = "standard_resolution"
+        static let Link = "link"
+        static let id = "id"
+        static let Caption = "caption"
+        static let Text = "text"
+        static let From = "from"
+        static let Fullname = "full_name"
+        static let Location = "location"
+        static let Latitude = "latitude"
+        static let Longitude = "longitude"
+        static let Name = "name"
+        static let Image = "image"
+        static let ProfilePicture = "profile_picture"
+        static let MediaCount = "media_count"
+        
         // MARK: General
         static let StatusMessage = "status_message"
         static let StatusCode = "status_code"
