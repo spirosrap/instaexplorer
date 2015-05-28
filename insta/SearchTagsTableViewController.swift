@@ -65,7 +65,7 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         indicator.center = self.tableView.center
         indicator.hidesWhenStopped = true
         self.tableView.addSubview(indicator)
-        //Hide keyboard when scroll UITableView http://stackoverflow.com/questions/4399357/hide-keyboard-when-scroll-uitableview
+        //hide keyboard when scrolling in table view http://stackoverflow.com/questions/4399357/hide-keyboard-when-scroll-uitableview
         tableView.keyboardDismissMode = UIScrollViewKeyboardDismissMode.OnDrag
     }
     
