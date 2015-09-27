@@ -226,24 +226,31 @@ class InstaClient : NSObject {
         }else{
             let imgURL = NSURL(string: imagePath)
             let request: NSURLRequest = NSURLRequest(URL: imgURL!)
-            let mainQueue = NSOperationQueue.mainQueue()
+            _ = NSOperationQueue.mainQueue()
             photo.image = UIImage(named: "PlaceHolder")
-            NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
+
+            let task = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
                 if error == nil {
                     // Convert the downloaded data in to a UIImage object
                     let image = UIImage(data: data!)
                     let changedPath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "")//Because instagram returns the same lastpathcomponent for images and thumbnails I introduced this hack(replaced all "/" characters) to enable different paths for the same lastpathcomponents.
+                    
                     if let im = image{
-                       NSKeyedArchiver.archiveRootObject(im,toFile: InstaClient.sharedInstance().imagePath(changedPath))
+                        NSKeyedArchiver.archiveRootObject(im,toFile: InstaClient.sharedInstance().imagePath(changedPath))
                     }
-                    photo.image = image
+                    dispatch_async(dispatch_get_main_queue()){
+                        photo.image = image
+                    }
                     completionHandler(success: true, errorString: nil)
                 }
                 else {
                     completionHandler(success: false, errorString: "Could not download image \(imagePath)")
                 }
             })
+            
+            task.resume()
         }
+
     }
 
     // MARK: - Shared Image Cache

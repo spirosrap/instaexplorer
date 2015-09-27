@@ -159,7 +159,7 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         
         // 3
         if (self.resultSearchController.active) {
-            if let t = cell.textLabel!.text,let name = filteredTableData[indexPath.row].name, let media_count = filteredTableData[indexPath.row].media_count{
+            if let _ = cell.textLabel!.text,let name = filteredTableData[indexPath.row].name, let media_count = filteredTableData[indexPath.row].media_count{
                     
                     cell.textLabel?.text = "#" + name
                     cell.detailTextLabel?.text = numberFormatter.stringFromNumber(media_count)! + " posts"
@@ -168,7 +168,7 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
             return cell
         }
         else {
-            if let t = cell.textLabel!.text{
+            if let _ = cell.textLabel!.text{
                 cell.textLabel?.text = "#" + tags[indexPath.row].name!
                 cell.detailTextLabel?.text = " "
             }
@@ -180,7 +180,7 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("displayTaggedMedia") as! PhotoAlbumViewController
         
         if (self.resultSearchController.active) {
-            if let name = filteredTableData[indexPath.row].name,let media_count = filteredTableData[indexPath.row].media_count {
+            if let _ = filteredTableData[indexPath.row].name,let _ = filteredTableData[indexPath.row].media_count {
 
                     let selectedTag = filteredTableData[indexPath.row].name!
                     
@@ -189,7 +189,7 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
                     dictionary["name"] = filteredTableData[indexPath.row].name!
                     dictionary["media_count"] = filteredTableData[indexPath.row].media_count!
                     
-                    var savedTag = Tag(dictionary: dictionary, context: CoreDataStackManager.sharedInstance().managedObjectContext!)
+                    let savedTag = Tag(dictionary: dictionary, context: CoreDataStackManager.sharedInstance().managedObjectContext!)
                     CoreDataStackManager.sharedInstance().saveContext()
                     indicator.startAnimating()
 
@@ -227,7 +227,7 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
                 try frc.performFetch()
             } catch _ {
             }
-            var media = frc.fetchedObjects! as! [InstaMedia]
+            let media = frc.fetchedObjects! as! [InstaMedia]
             detailController.prefetchedPhotos = media
             
             detailController.navigationController?.navigationBar.hidden = false

@@ -32,6 +32,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
     //MARK: ViewDidLoad,ViewWillAppear,viewWillDisappear
     override func viewDidLoad() {
         super.viewDidLoad()
+
         self.mapView.delegate = self
         self.navigationItem.hidesBackButton = true
         restoreMapRegion(false) //Remembers where the user scrolled in the map.
@@ -398,7 +399,7 @@ class MapViewController: UIViewController,MKMapViewDelegate,UISearchBarDelegate 
         let pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "myPin")
         if annotation is MKPointAnnotation {
             firstDrop ? (pinView.animatesDrop = true) : (pinView.animatesDrop = false) //If the it is the first time the user makes the longpress use the animateDrop, otherwise don't to create an effect of a moving/draggable annotation.
-            pinView.pinColor = .Purple
+            pinView.pinTintColor = UIColor.purpleColor()
             pinView.canShowCallout = true
             pinView.draggable = true
             let imv = UIImageView(frame: pinView.frame)

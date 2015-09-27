@@ -35,7 +35,7 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
 //        imageInfoView?.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.70)
 //        imageInfoView.hidden = true
 //        infoLabel.hidden = true
-        
+
         tableView.hidden = true
         tableView.delegate = self
         
