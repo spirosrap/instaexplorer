@@ -49,8 +49,8 @@ class InstaAuthViewController: UIViewController, UIWebViewDelegate {
     //http://technet.weblineindia.com/mobile/instagram-api-integration-in-ios-application/2/
     func webView(webView: UIWebView, shouldStartLoadWithRequest request: NSURLRequest, navigationType: UIWebViewNavigationType) -> Bool {
         if (request.URL!.scheme == "instaplaces"){
-            var urlString = request.URL?.absoluteString
-            var accessToken = urlString!.rangeOfString("#access_token=")
+            let urlString = request.URL?.absoluteString
+            let accessToken = urlString!.rangeOfString("#access_token=")
             if(accessToken != nil){
                 let logoutRequest = NSURLRequest(URL: NSURL(string: "https://instagram.com/accounts/logout")!)//logout from webview browser
                 self.webView.loadRequest(logoutRequest)

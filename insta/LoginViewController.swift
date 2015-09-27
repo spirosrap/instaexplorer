@@ -13,7 +13,7 @@ class LoginViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         if(NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().accessTokenfilePath) != nil){
-            let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController")! as! UITabBarController
+            let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
             
             self.navigationController!.presentViewController(detailController, animated: true) {
                 self.navigationController?.popViewControllerAnimated(true)
@@ -27,23 +27,23 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func login(sender: AnyObject) {
-        var networkReachability = Reachability.reachabilityForInternetConnection()
-        var networkStatus = networkReachability.currentReachabilityStatus()
+        let networkReachability = Reachability.reachabilityForInternetConnection()
+        let networkStatus = networkReachability.currentReachabilityStatus()
 
-        if(networkStatus.value == NotReachable.value){
+        if(networkStatus.rawValue == NotReachable.rawValue){
             displayMessageBox("No Network Connection")
         }else{
             InstaClient.sharedInstance().loginWithToken(self){
                 success,errorString in
                 if success{
-                    var appDelegateTemp = UIApplication.sharedApplication().delegate
-                    let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController")! as! UITabBarController
+                    let appDelegateTemp = UIApplication.sharedApplication().delegate
+                    let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("TabBarController") as! UITabBarController
                     
                     appDelegateTemp!.window!!.rootViewController = detailController //Set the tabbar as the root controller for the next time the user will login to avoid a unnecessary segway from login controller when already logged in
                     
 
                 }else{
-                    println(errorString)
+                    print(errorString)
                 }
             }
         }
@@ -58,7 +58,7 @@ class LoginViewController: UIViewController {
     
     //A simple Alert view with an OK Button
     func displayMessageBox(message:String){
-        var alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }

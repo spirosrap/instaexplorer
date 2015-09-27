@@ -42,13 +42,13 @@ class CoreDataStackManager {
         //        println("Instantiating the applicationDocumentsDirectory property")
         
         let urls = NSFileManager.defaultManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask)
-        return urls[urls.count-1] as! NSURL
+        return urls[urls.count-1] 
         }()
     
     lazy var managedObjectModel: NSManagedObjectModel = {
         // The managed object model for the application. This property is not optional. It is a fatal error for the application not to be able to find and load its model.
         
-        println("Instantiating the managedObjectModel property")
+        print("Instantiating the managedObjectModel property")
         
         let modelURL = NSBundle.mainBundle().URLForResource("Model", withExtension: "momd")!
         return NSManagedObjectModel(contentsOfURL: modelURL)!
@@ -70,19 +70,22 @@ class CoreDataStackManager {
         // The persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. This property is optional since there are legitimate error conditions that could cause the creation of the store to fail.
         // Create the coordinator and store
         
-        println("Instantiating the persistentStoreCoordinator property")
+        print("Instantiating the persistentStoreCoordinator property")
         
         var coordinator: NSPersistentStoreCoordinator? = NSPersistentStoreCoordinator(managedObjectModel: self.managedObjectModel)
         let url = self.applicationDocumentsDirectory.URLByAppendingPathComponent(SQLITE_FILE_NAME)
         
-        println("sqlite path: \(url.path!)")
+        print("sqlite path: \(url.path!)")
         
         var error: NSError? = nil
         
-        if coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil, error: &error) == nil {
+        do {
+            try coordinator!.addPersistentStoreWithType(NSSQLiteStoreType, configuration: nil, URL: url, options: nil)
+        } catch var error1 as NSError {
+            error = error1
             coordinator = nil
             // Report any error we got.
-            let dict = NSMutableDictionary()
+            var dict = [NSObject : AnyObject]()
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = "There was an error creating or loading the application's saved data."
             dict[NSUnderlyingErrorKey] = error
@@ -91,6 +94,8 @@ class CoreDataStackManager {
             // Left in for development development.
             NSLog("Unresolved error \(error), \(error!.userInfo)")
             abort()
+        } catch {
+            fatalError()
         }
         
         return coordinator
@@ -98,7 +103,7 @@ class CoreDataStackManager {
     
     lazy var managedObjectContext: NSManagedObjectContext? = {
         
-        println("Instantiating the managedObjectContext property")
+        print("Instantiating the managedObjectContext property")
         
         // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
         let coordinator = self.persistentStoreCoordinator
@@ -112,7 +117,7 @@ class CoreDataStackManager {
     
     lazy var favoritesManagedObjectContext: NSManagedObjectContext? = {
         
-        println("Instantiating the managedObjectContext property")
+        print("Instantiating the managedObjectContext property")
         
         // Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) This property is optional since there are legitimate error conditions that could cause the creation of the context to fail.
         let coordinator = self.persistentStoreCoordinator
@@ -133,9 +138,14 @@ class CoreDataStackManager {
             
             var error: NSError? = nil
             
-            if context.hasChanges && !context.save(&error) {
-                NSLog("Unresolved error \(error), \(error!.userInfo)")
-                abort()
+            if context.hasChanges {
+                do {
+                    try context.save()
+                } catch let error1 as NSError {
+                    error = error1
+                    NSLog("Unresolved error \(error), \(error!.userInfo)")
+                    abort()
+                }
             }
         }
     }
@@ -143,67 +153,92 @@ class CoreDataStackManager {
     func favoritesSaveContext(){
         if let context = self.favoritesManagedObjectContext {
             var error: NSError? = nil
-            if context.hasChanges && !context.save(&error) {
-                NSLog("Unresolved error \(error), \(error!.userInfo)")
-                abort()
+            if context.hasChanges {
+                do {
+                    try context.save()
+                } catch let error1 as NSError {
+                    error = error1
+                    NSLog("Unresolved error \(error), \(error!.userInfo)")
+                    abort()
+                }
             }
         }
     }
     
-    func favoritesdeleteObject(var photo:InstaMedia){
+    func favoritesdeleteObject(photo:InstaMedia){
         if let context = self.favoritesManagedObjectContext {
             var error: NSError? = nil
             deleteFile(InstaClient.sharedInstance().imagePath(photo.imagePath!))
             deleteFile(InstaClient.sharedInstance().imagePath(photo.profileImagePath!))
             context.deleteObject(photo)
-            if context.hasChanges && !context.save(&error) {
-                NSLog("Unresolved error \(error), \(error!.userInfo)")
-                abort()
+            if context.hasChanges {
+                do {
+                    try context.save()
+                } catch let error1 as NSError {
+                    error = error1
+                    NSLog("Unresolved error \(error), \(error!.userInfo)")
+                    abort()
+                }
             }
         }
     }
 
     
-    func deleteObject(var location:Location){
+    func deleteObject(location:Location){
         if let context = self.managedObjectContext {
             
             var error: NSError? = nil
             context.deleteObject(location)
-            if context.hasChanges && !context.save(&error) {
-                NSLog("Unresolved error \(error), \(error!.userInfo)")
-                abort()
+            if context.hasChanges {
+                do {
+                    try context.save()
+                } catch let error1 as NSError {
+                    error = error1
+                    NSLog("Unresolved error \(error), \(error!.userInfo)")
+                    abort()
+                }
             }
         }
     }
     
-    func deleteObject(var tag:Tag){
+    func deleteObject(tag:Tag){
         if let context = self.managedObjectContext {
             
             var error: NSError? = nil
             context.deleteObject(tag)
-            if context.hasChanges && !context.save(&error) {
-                NSLog("Unresolved error \(error), \(error!.userInfo)")
-                abort()
+            if context.hasChanges {
+                do {
+                    try context.save()
+                } catch let error1 as NSError {
+                    error = error1
+                    NSLog("Unresolved error \(error), \(error!.userInfo)")
+                    abort()
+                }
             }
         }
     }
 
     
     //Delete a file(an image in our case) using NSFileManager
-    func deleteFile(let filePath:String) -> Bool {
-        var manager = NSFileManager.defaultManager()
-        return(manager.removeItemAtPath(filePath, error: nil))
+    func deleteFile(let filePath:String) {
+        let manager = NSFileManager.defaultManager()
+        do{
+            try manager.removeItemAtPath(filePath)
+        } catch{
+            print("Not succesfully deleted \(filePath)")
+        }
+        
     }
     
     //Deletes the Photo from context And the underlying image files
-    func deleteObject(var photo:InstaMedia){
+    func deleteObject(photo:InstaMedia){
         if let context = self.managedObjectContext {
             
             var error: NSError? = nil
             
-            var changedThumbnailPath = photo.thumbnailPath!.stringByReplacingOccurrencesOfString("/", withString: "")//Because instagram returns the same lastpathcomponent for images and thumbnails I introduced this hack(replaced all "/" characters) to enable different paths for the same lastpathcomponents.
-            var changedImagePath = photo.imagePath!.stringByReplacingOccurrencesOfString("/", withString: "")
-            var changedProfileImagePath = photo.profileImagePath!.stringByReplacingOccurrencesOfString("/", withString: "")
+            let changedThumbnailPath = photo.thumbnailPath!.stringByReplacingOccurrencesOfString("/", withString: "")//Because instagram returns the same lastpathcomponent for images and thumbnails I introduced this hack(replaced all "/" characters) to enable different paths for the same lastpathcomponents.
+            let changedImagePath = photo.imagePath!.stringByReplacingOccurrencesOfString("/", withString: "")
+            let changedProfileImagePath = photo.profileImagePath!.stringByReplacingOccurrencesOfString("/", withString: "")
             
             
             //Deleting all image assets for that media
@@ -213,9 +248,14 @@ class CoreDataStackManager {
             
             
             context.deleteObject(photo)
-            if context.hasChanges && !context.save(&error) {
-                NSLog("Unresolved error \(error), \(error!.userInfo)")
-                abort()
+            if context.hasChanges {
+                do {
+                    try context.save()
+                } catch let error1 as NSError {
+                    error = error1
+                    NSLog("Unresolved error \(error), \(error!.userInfo)")
+                    abort()
+                }
             }
         }
     }

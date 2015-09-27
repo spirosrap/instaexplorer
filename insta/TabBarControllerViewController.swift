@@ -35,17 +35,17 @@ class TabBarControllerViewController: UITabBarController {
     */
     
     func selectedImage() -> UIImage{
-        var  count:CGFloat    = CGFloat(self.viewControllers!.count)
-        var tabBarSize:CGSize = self.tabBar.frame.size
-        var padding:CGFloat = CGFloat(0);
-        var buttonSize = CGSizeMake( tabBarSize.width / count, tabBarSize.height );
+        let  count:CGFloat    = CGFloat(self.viewControllers!.count)
+        let tabBarSize:CGSize = self.tabBar.frame.size
+        let padding:CGFloat = CGFloat(0);
+        let buttonSize = CGSizeMake( tabBarSize.width / count, tabBarSize.height );
         UIGraphicsBeginImageContext( buttonSize );
-        var c:CGContextRef = UIGraphicsGetCurrentContext();
+        _ = UIGraphicsGetCurrentContext()!
         UIColor(white: 0.9, alpha: 0.1).setFill()
-        var roundedRect:UIBezierPath = UIBezierPath(roundedRect: CGRectMake(padding,padding * 2, buttonSize.width - (padding * 2),buttonSize.height - ( padding * 2 ) ), cornerRadius: 4.0)
-        roundedRect.fillWithBlendMode(kCGBlendModeNormal, alpha: 1.0)
+        let roundedRect:UIBezierPath = UIBezierPath(roundedRect: CGRectMake(padding,padding * 2, buttonSize.width - (padding * 2),buttonSize.height - ( padding * 2 ) ), cornerRadius: 4.0)
+        roundedRect.fillWithBlendMode(CGBlendMode.Normal, alpha: 1.0)
         
-        var image:UIImage = UIGraphicsGetImageFromCurrentImageContext();
+        let image:UIImage = UIGraphicsGetImageFromCurrentImageContext();
         
         
         return image;

@@ -43,7 +43,7 @@ class InstaClient : NSObject {
         
         /* 2/3. Build the URL and configure the request */
         let urlString = Constants.BaseURLSecure + method + InstaClient.escapedParameters(mutableParameters)
-        println(urlString)
+        print(urlString)
         let url = NSURL(string: urlString)!
         let request = NSURLRequest(URL: url)
         
@@ -52,10 +52,10 @@ class InstaClient : NSObject {
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
             if let error = downloadError {
-                let newError = InstaClient.errorForData(data, response: response, error: error)
+                _ = InstaClient.errorForData(data, response: response, error: error)
                 completionHandler(result: nil, error: downloadError)
             } else {
-                InstaClient.parseJSONWithCompletionHandler(data, completionHandler: completionHandler)
+                InstaClient.parseJSONWithCompletionHandler(data!, completionHandler: completionHandler)
             }
         }
         
@@ -79,21 +79,24 @@ class InstaClient : NSObject {
         let urlString = Constants.BaseURLSecure + method + InstaClient.escapedParameters(mutableParameters)
         let url = NSURL(string: urlString)!
         let request = NSMutableURLRequest(URL: url)
-        var jsonifyError: NSError? = nil
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = NSJSONSerialization.dataWithJSONObject(jsonBody, options: nil, error: &jsonifyError)
+        do {
+            request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(jsonBody, options: [])
+        } catch  {
+            request.HTTPBody = nil
+        }
         
         /* 4. Make the request */
         let task = session.dataTaskWithRequest(request) {data, response, downloadError in
             
             /* 5/6. Parse the data and use the data (happens in completion handler) */
             if let error = downloadError {
-                let newError = InstaClient.errorForData(data, response: response, error: error)
+                _ = InstaClient.errorForData(data, response: response, error: error)
                 completionHandler(result: nil, error: downloadError)
             } else {
-                InstaClient.parseJSONWithCompletionHandler(data, completionHandler: completionHandler)
+                InstaClient.parseJSONWithCompletionHandler(data!, completionHandler: completionHandler)
             }
         }
         
@@ -118,7 +121,7 @@ class InstaClient : NSObject {
     /* Helper: Given a response with error, see if a status_message is returned, otherwise return the previous error */
     class func errorForData(data: NSData?, response: NSURLResponse?, error: NSError) -> NSError {
         
-        if let parsedResult = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments, error: nil) as? [String : AnyObject] {
+        if let parsedResult = (try? NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.AllowFragments)) as? [String : AnyObject] {
             
             if let errorMessage = parsedResult[InstaClient.JSONResponseKeys.StatusMessage] as? String {
                 
@@ -136,7 +139,13 @@ class InstaClient : NSObject {
         
         var parsingError: NSError? = nil
         
-        let parsedResult: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments, error: &parsingError)
+        let parsedResult: AnyObject?
+        do {
+            parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.AllowFragments)
+        } catch let error as NSError {
+            parsingError = error
+            parsedResult = nil
+        }
         
         if let error = parsingError {
             completionHandler(result: nil, error: error)
@@ -156,7 +165,7 @@ class InstaClient : NSObject {
             let stringValue = "\(value)"
             
             /* Escape it */
-            let escapedValue = stringValue.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
+            _ = stringValue.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())
             
             /* FIX: Replace spaces with '+' */
             let replaceSpaceValue = stringValue.stringByReplacingOccurrencesOfString(" ", withString: "+", options: NSStringCompareOptions.LiteralSearch, range: nil)
@@ -165,7 +174,7 @@ class InstaClient : NSObject {
             urlVars += [key + "=" + "\(replaceSpaceValue)"]
         }
         
-        return (!urlVars.isEmpty ? "?" : "") + join("&", urlVars)
+        return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
     }
     
     // MARK: - Shared Instance
@@ -181,9 +190,9 @@ class InstaClient : NSObject {
     
     //MARK:Saving Related
     //It returns the actual path in the iOS readable format
-    func imagePath(var selectedFilename:String) ->String{
+    func imagePath(let selectedFilename:String) ->String{
         let manager = NSFileManager.defaultManager()
-        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
+        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
         return url.URLByAppendingPathComponent(selectedFilename).path!
     }
     
@@ -191,7 +200,7 @@ class InstaClient : NSObject {
     //It set asynchronously an imageview
     func setImage(let imagePath:String,let imageView:UIImageView){
         
-        var changedPath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "")//Because instagram returns the same lastpathcomponent for images and thumbnails I introduced this hack(replaced all "/" characters) to enable different paths for the same lastpathcomponents.
+        let changedPath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "")//Because instagram returns the same lastpathcomponent for images and thumbnails I introduced this hack(replaced all "/" characters) to enable different paths for the same lastpathcomponents.
         if let p = NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().imagePath(changedPath)) as? UIImage {
             //            cell.indicator.stopAnimating()
             imageView.image = p
@@ -210,7 +219,7 @@ class InstaClient : NSObject {
 
     //It downloads the images from the already saved image paths to be in turn saved too in the CoreData
     func downloadImageAndSetCell(let imagePath:String,let photo:UIImageView,completionHandler: (success: Bool, errorString: String?) -> Void){
-        var changedPath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "") //Because instagram returns the same lastpathcomponent for images and thumbnails I introduced this hack(replaced all "/" characters) to enable different paths for the same lastpathcomponents.
+        let changedPath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "") //Because instagram returns the same lastpathcomponent for images and thumbnails I introduced this hack(replaced all "/" characters) to enable different paths for the same lastpathcomponents.
         if let p = NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().imagePath(changedPath)) as? UIImage {
             photo.image = p
             completionHandler(success: true, errorString: nil)
@@ -222,8 +231,8 @@ class InstaClient : NSObject {
             NSURLConnection.sendAsynchronousRequest(request, queue: mainQueue, completionHandler: { (response, data, error) -> Void in
                 if error == nil {
                     // Convert the downloaded data in to a UIImage object
-                    let image = UIImage(data: data)
-                    var changedPath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "")//Because instagram returns the same lastpathcomponent for images and thumbnails I introduced this hack(replaced all "/" characters) to enable different paths for the same lastpathcomponents.
+                    let image = UIImage(data: data!)
+                    let changedPath = imagePath.stringByReplacingOccurrencesOfString("/", withString: "")//Because instagram returns the same lastpathcomponent for images and thumbnails I introduced this hack(replaced all "/" characters) to enable different paths for the same lastpathcomponents.
                     if let im = image{
                        NSKeyedArchiver.archiveRootObject(im,toFile: InstaClient.sharedInstance().imagePath(changedPath))
                     }

@@ -31,8 +31,11 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
         self.navigationController?.navigationBarHidden = false
         self.navigationController?.toolbarHidden = false
         
-        //We invoke a performfetch for already fetched sets of image urls(the first stage) to be able to use it's delegate functionality
-        fetchedResultsController.performFetch(nil)
+        do {
+            //We invoke a performfetch for already fetched sets of image urls(the first stage) to be able to use it's delegate functionality
+            try fetchedResultsController.performFetch()
+        } catch _ {
+        }
         fetchedResultsController.delegate = self
         
         imageInfoView?.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.70)
@@ -50,19 +53,19 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
 
         //"New Collection" Button and it's color
         newCollectionButton = UIBarButtonItem(title: "New Collection", style: .Plain, target: self, action: "newCollection")
-        var flexSpace = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
+        _ = UIBarButtonItem(barButtonSystemItem: .FlexibleSpace, target: self, action: nil)
         newCollectionButton.tintColor =  UIColor(red: (255/255.0), green: (0/255.0), blue: (132/255.0), alpha: 1.0)
                 self.navigationItem.rightBarButtonItem = newCollectionButton
 
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        var kCellsPerRow:CGFloat = 3
+        let kCellsPerRow:CGFloat = 3
         
         
-        var flowLayout:UICollectionViewFlowLayout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        var availableWidthForCells:CGFloat = CGRectGetWidth(self.collectionView.frame) - flowLayout.sectionInset.left - flowLayout.sectionInset.right - flowLayout.minimumInteritemSpacing * (kCellsPerRow - 1);
-        var cellWidth:CGFloat = availableWidthForCells / kCellsPerRow;
+        let flowLayout:UICollectionViewFlowLayout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        let availableWidthForCells:CGFloat = CGRectGetWidth(self.collectionView.frame) - flowLayout.sectionInset.left - flowLayout.sectionInset.right - flowLayout.minimumInteritemSpacing * (kCellsPerRow - 1);
+        let cellWidth:CGFloat = availableWidthForCells / kCellsPerRow;
         flowLayout.itemSize = CGSizeMake(flowLayout.itemSize.height, cellWidth);
         flowLayout.itemSize.width = flowLayout.itemSize.height
         
@@ -124,22 +127,19 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
     // This is the most interesting method. Take particular note of way the that newIndexPath
     // parameter gets unwrapped and put into an array literal: [newIndexPath!]
     //
-    func controller(controller: NSFetchedResultsController,
-        didChangeObject anObject: AnyObject,
-        atIndexPath indexPath: NSIndexPath?,
-        forChangeType type: NSFetchedResultsChangeType,
-        newIndexPath: NSIndexPath?) {
-            
-            switch type {
-            case .Delete:
-                self.collectionView.deleteItemsAtIndexPaths([indexPath!])
-            case .Update:
-                let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! CollectionViewCell
-                let photo = controller.objectAtIndexPath(indexPath!) as! InstaMedia
-                cell.photo.image = photo.thumbnail
-            default:
-                return
-            }
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        switch type {
+        case .Delete:
+            self.collectionView.deleteItemsAtIndexPaths([indexPath!])
+        case .Update:
+            let cell = self.collectionView.cellForItemAtIndexPath(indexPath!) as! CollectionViewCell
+            let photo = controller.objectAtIndexPath(indexPath!) as! InstaMedia
+            cell.photo.image = photo.thumbnail
+        default:
+            return
+        }
+
     }
     
     //MARK: Collection View Related
@@ -154,7 +154,7 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
         
         //If the photo image(imagepaths and titles are saved in Core Data) is saved using NSKeyedArchiver / NSKeyedUnarchiver we display it right away else we download it using its imagepath
-        var changedPath = prefetchedPhotos![indexPath.row].thumbnailPath!.stringByReplacingOccurrencesOfString("/", withString: "")//Because instagram returns the same lastpathcomponent for images and thumbnails I introduced this hack(replaced all "/" characters) to enable different paths for the same lastpathcomponents.
+        let changedPath = prefetchedPhotos![indexPath.row].thumbnailPath!.stringByReplacingOccurrencesOfString("/", withString: "")//Because instagram returns the same lastpathcomponent for images and thumbnails I introduced this hack(replaced all "/" characters) to enable different paths for the same lastpathcomponents.
         
         if let photo = NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().imagePath(changedPath)) as? UIImage {
             cell.indicator.stopAnimating()
@@ -183,15 +183,15 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
     //It is used for deleting the image from the collection view and the underlying core data context
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath:NSIndexPath){
         let photo = fetchedResultsController.objectAtIndexPath(indexPath) as! InstaMedia
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
-        let paController = self.storyboard!.instantiateViewControllerWithIdentifier("ImageDetailViewController")! as! ImageDetailViewController
+        _ = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
+        let paController = self.storyboard!.instantiateViewControllerWithIdentifier("ImageDetailViewController") as! ImageDetailViewController
         
         if let t = photo.text{
             paController.userComment = t
         }
         paController.mediaID = photo.mediaID!
         paController.instaMedia = photo
-        var a = paController.view//Important. fatal error if not present. We need to first allocate the view.(Whole view be present in memory)
+        _ = paController.view//Important. fatal error if not present. We need to first allocate the view.(Whole view be present in memory)
         
         
         
@@ -226,10 +226,10 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
     //Set the region of the small map on top of the collection view using the location.
     func setRegion(){
         let span = MKCoordinateSpanMake(2, 2)
-        var coordinates = CLLocationCoordinate2D(latitude: Double(location.latitude), longitude: Double(location.longitude))
+        let coordinates = CLLocationCoordinate2D(latitude: Double(location.latitude), longitude: Double(location.longitude))
         let region = MKCoordinateRegion(center: coordinates, span: span)
-        var annotation = MKPointAnnotation() //We need to create a local variable to not mess up the global
-        var tapPoint:CLLocationCoordinate2D = coordinates
+        let annotation = MKPointAnnotation() //We need to create a local variable to not mess up the global
+        let tapPoint:CLLocationCoordinate2D = coordinates
         annotation.coordinate = tapPoint
         
         self.map.addAnnotation(annotation)
@@ -240,15 +240,15 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
         //Generate a new collection
     func newCollection() -> Bool { //I added a return value to exit when there is no connection
     
-            var networkReachability = Reachability.reachabilityForInternetConnection()
-            var networkStatus = networkReachability.currentReachabilityStatus()
+            let networkReachability = Reachability.reachabilityForInternetConnection()
+            let networkStatus = networkReachability.currentReachabilityStatus()
     
-            if(networkStatus.value == NotReachable.value){// Before searching fοr  additional Photos in instagram check if there is an available internet connection
+            if(networkStatus.rawValue == NotReachable.rawValue){// Before searching fοr  additional Photos in instagram check if there is an available internet connection
                 displayMessageBox("No Network Connection")
                 return false
             }
     
-            let applicationDelegate = (UIApplication.sharedApplication().delegate as! AppDelegate)//the appdelegate keeps a "Statistics" instance.
+            _ = (UIApplication.sharedApplication().delegate as! AppDelegate)//the appdelegate keeps a "Statistics" instance.
             informationBox("Connecting to Instagram",animate:true)
             newCollectionButton.enabled = false
             indicator.startAnimating()
@@ -334,14 +334,14 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         let photo = fetchedResultsController.objectAtIndexPath(indexPath) as! InstaMedia
-        let paController = self.storyboard!.instantiateViewControllerWithIdentifier("ImageDetailViewController")! as! ImageDetailViewController
+        let paController = self.storyboard!.instantiateViewControllerWithIdentifier("ImageDetailViewController") as! ImageDetailViewController
         
         if let t = photo.text{
             paController.userComment = t
         }
         paController.mediaID = photo.mediaID!
         paController.instaMedia = photo
-        var a = paController.view//Important. fatal error if not present. We need to first allocate the view.(Whole view be present in memory)
+        _ = paController.view//Important. fatal error if not present. We need to first allocate the view.(Whole view be present in memory)
         
         dispatch_async(dispatch_get_main_queue()) {
             self.navigationController!.pushViewController(paController, animated: true)
@@ -354,15 +354,15 @@ class LocationPhotoAlbumViewController: UIViewController,UICollectionViewDelegat
     
     //A simple Alert view with an OK Button
     func displayMessageBox(message:String){
-        var alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
     
     //Custom Made information Box using alpha value to create a black transparent background.
-    func informationBox(var msg:String?,let animate:Bool){
-        if let m = msg{
+    func informationBox(msg:String?,let animate:Bool){
+        if let _ = msg{
             if(animate){
                 indicator.startAnimating()
             }

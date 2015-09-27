@@ -44,7 +44,7 @@ class InstaLocationsTableViewController: UITableViewController {
 
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) 
 
         // Configure the cell...
         
@@ -65,7 +65,7 @@ class InstaLocationsTableViewController: UITableViewController {
                     (m as InstaMedia).instaLocation = self.instaLocations[indexPath.row]
                 }
                 CoreDataStackManager.sharedInstance().saveContext()
-                let paController = self.storyboard!.instantiateViewControllerWithIdentifier("LocationPhotoAlbumViewController")! as! LocationPhotoAlbumViewController
+                let paController = self.storyboard!.instantiateViewControllerWithIdentifier("LocationPhotoAlbumViewController") as! LocationPhotoAlbumViewController
                 paController.title = self.instaLocations[indexPath.row].name
                 
                 dispatch_async(dispatch_get_main_queue()) {
@@ -82,7 +82,7 @@ class InstaLocationsTableViewController: UITableViewController {
 
     //A simple Alert view with an OK Button
     func displayMessageBox(message:String){
-        var alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }

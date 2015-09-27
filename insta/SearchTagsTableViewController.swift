@@ -45,7 +45,7 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         
         var frame:CGRect = self.tableView.bounds;
         frame.origin.y = -frame.size.height;
-        var blackView:UIView = UIView(frame: frame)
+        let blackView:UIView = UIView(frame: frame)
         blackView.backgroundColor = UIColor.blackColor()
         self.tableView.addSubview(blackView)
 
@@ -111,7 +111,10 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
             return self.filteredTableData.count
         }
         else {
-            fetchedResultsController.performFetch(nil)
+            do {
+                try fetchedResultsController.performFetch()
+            } catch _ {
+            }
             tags = self.fetchedResultsController.fetchedObjects! as! [Tag]
             return tags.count
         }
@@ -150,7 +153,7 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
     
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) 
         let numberFormatter = NSNumberFormatter()
         numberFormatter.numberStyle = .DecimalStyle
         
@@ -174,7 +177,7 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("displayTaggedMedia")! as! PhotoAlbumViewController
+        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("displayTaggedMedia") as! PhotoAlbumViewController
         
         if (self.resultSearchController.active) {
             if let name = filteredTableData[indexPath.row].name,let media_count = filteredTableData[indexPath.row].media_count {
@@ -220,7 +223,10 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         }else{
             let selectedTag = tags[indexPath.row]
             let frc = fetchedTaggedMediaResultsController(selectedTag)
-            frc.performFetch(nil)
+            do {
+                try frc.performFetch()
+            } catch _ {
+            }
             var media = frc.fetchedObjects! as! [InstaMedia]
             detailController.prefetchedPhotos = media
             
@@ -241,8 +247,11 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         let selectedTag = tags[indexPath.row]
         let frc = fetchedTaggedMediaResultsController(selectedTag)
-        frc.performFetch(nil)
-        var media = frc.fetchedObjects! as! [InstaMedia]
+        do {
+            try frc.performFetch()
+        } catch _ {
+        }
+        let media = frc.fetchedObjects! as! [InstaMedia]
 
         for m in media{
             if m.favorite != 1{
@@ -261,15 +270,15 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
     
     func updateSearchResultsForSearchController(searchController: UISearchController)
     {
-        var networkReachability = Reachability.reachabilityForInternetConnection()
-        var networkStatus = networkReachability.currentReachabilityStatus()
-        if(networkStatus.value == NotReachable.value){// Before searching fοr  additional Photos in instagram check if there is an available internet connection
+        let networkReachability = Reachability.reachabilityForInternetConnection()
+        let networkStatus = networkReachability.currentReachabilityStatus()
+        if(networkStatus.rawValue == NotReachable.rawValue){// Before searching fοr  additional Photos in instagram check if there is an available internet connection
             displayMessageBox("No Network Connection")
             searchController.active = false
             self.tableView.reloadData()
         }else{
             filteredTableData.removeAll(keepCapacity: false)
-            let searchPredicate = NSPredicate(format: "SELF CONTAINS[c]%@", searchController.searchBar.text)
+            _ = NSPredicate(format: "SELF CONTAINS[c]%@", searchController.searchBar.text!)
             
             var array = [Tag]()
             
@@ -283,7 +292,7 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
                 indicator.startAnimating()
                 
                 
-                InstaClient.sharedInstance().getTags(searchController.searchBar.text,context: temporaryContext, completionHandler: { (result, error) -> Void in
+                InstaClient.sharedInstance().getTags(searchController.searchBar.text!,context: temporaryContext, completionHandler: { (result, error) -> Void in
                     if error == nil{
                         
                         dispatch_async(dispatch_get_main_queue(), {
@@ -325,9 +334,9 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
     func logout(){
         InstaClient.sharedInstance().logout(self)
         
-        var appDelegateTemp = UIApplication.sharedApplication().delegate
+        let appDelegateTemp = UIApplication.sharedApplication().delegate
         
-        var rootController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LoginViewController")! as! LoginViewController
+        let rootController = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
         appDelegateTemp!.window!!.rootViewController = rootController;
 
     }

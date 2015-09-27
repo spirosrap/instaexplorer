@@ -15,7 +15,7 @@ extension InstaClient {
     
     var accessTokenfilePath : String {
         let manager = NSFileManager.defaultManager()
-        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
+        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
         return url.URLByAppendingPathComponent("accessToken").path!
     }
 
@@ -39,7 +39,7 @@ extension InstaClient {
     
     func getAccessToken(hostViewController: UIViewController, completionHandler: (success: Bool,accessToken:String?, errorString: String?) -> Void) {
         
-        var modifiedURLString = String(format:"%@?client_id=%@&redirect_uri=%@&response_type=token", InstaClient.Constants.AuthorizationURL,InstaClient.Constants.ClientID,InstaClient.Constants.RedirectURI)
+        let modifiedURLString = String(format:"%@?client_id=%@&redirect_uri=%@&response_type=token", InstaClient.Constants.AuthorizationURL,InstaClient.Constants.ClientID,InstaClient.Constants.RedirectURI)
         
         let authorizationURL = NSURL(string: modifiedURLString)
         
@@ -65,7 +65,7 @@ extension InstaClient {
     func logout(hostViewController: UIViewController){
         
         if (NSKeyedUnarchiver.unarchiveObjectWithFile(InstaClient.sharedInstance().accessTokenfilePath) != nil){
-            println(CoreDataStackManager.sharedInstance().deleteFile(InstaClient.sharedInstance().accessTokenfilePath))
+            print(CoreDataStackManager.sharedInstance().deleteFile(InstaClient.sharedInstance().accessTokenfilePath))
             InstaClient.sharedInstance().accessToken = nil
         }
 
@@ -87,7 +87,7 @@ extension InstaClient {
         //method could have a tag with an accent like "Atatürk". We need to escape such characters.
         string = string.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLHostAllowedCharacterSet())!
         let parameters = ["q":string]
-        var mutableMethod : String = Methods.TagsSearch
+        let mutableMethod : String = Methods.TagsSearch
         
         /* 2. Make the request */
         taskForGETMethod(mutableMethod, parameters: parameters ) { JSONResult, error in
@@ -99,7 +99,7 @@ extension InstaClient {
                 if let results = JSONResult.valueForKey("data") as? [[String : AnyObject]] {
 
                     
-                    var tags = Tag.tagsFromResults(results,context: context)
+                    let tags = Tag.tagsFromResults(results,context: context)
                     completionHandler(result: tags, error: nil)
                 } else {
                     completionHandler(result: nil, error: NSError(domain: "getTags parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getTags"]))
@@ -110,11 +110,11 @@ extension InstaClient {
     }
 
     
-    func getLocations(var latitude:Double,var longitude:Double,var distance:Int,completionHandler: (result: [InstaLocation]?, error: NSError?) -> Void) {
+    func getLocations(latitude:Double,longitude:Double,distance:Int,completionHandler: (result: [InstaLocation]?, error: NSError?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         let parameters = ["lat":latitude,"lng":longitude,"distance":distance]
-        var mutableMethod : String = Methods.Locations
+        let mutableMethod : String = Methods.Locations
         
         /* 2. Make the request */
         taskForGETMethod(mutableMethod, parameters: parameters as! [String : AnyObject]) { JSONResult, error in
@@ -125,7 +125,7 @@ extension InstaClient {
             } else {
                 if let results = JSONResult.valueForKey("data") as? [[String : AnyObject]] {
                     
-                    var locations = InstaLocation.locationsFromResults(results,context:self.sharedContext)
+                    let locations = InstaLocation.locationsFromResults(results,context:self.sharedContext)
                     completionHandler(result: locations, error: nil)
                 } else {
                     completionHandler(result: nil, error: NSError(domain: "getLocations parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getLocations"]))
@@ -154,7 +154,7 @@ extension InstaClient {
             } else {
                 if let results = JSONResult.valueForKey("data") as? [[String : AnyObject]] {
                     
-                    var media = InstaMedia.imagesFromResults(results,context:self.sharedContext)
+                    let media = InstaMedia.imagesFromResults(results,context:self.sharedContext)
                     completionHandler(result: media, error: nil)
                 } else {
                     completionHandler(result: nil, error: NSError(domain: "getMediaFromTag parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getMediaFromTag"]))
@@ -164,7 +164,7 @@ extension InstaClient {
     }
 
     
-    func getMediaFromLocation(var location:InstaLocation,completionHandler: (result: [InstaMedia]?, error: NSError?) -> Void) {
+    func getMediaFromLocation(location:InstaLocation,completionHandler: (result: [InstaMedia]?, error: NSError?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         let parameters = [String : AnyObject]()
@@ -180,7 +180,7 @@ extension InstaClient {
             } else {
                 if let results = JSONResult.valueForKey("data") as? [[String : AnyObject]] {
                     
-                    var media = InstaMedia.imagesFromResults(results,context:self.sharedContext)
+                    let media = InstaMedia.imagesFromResults(results,context:self.sharedContext)
                     completionHandler(result: media, error: nil)
                 } else {
                     completionHandler(result: nil, error: NSError(domain: "getMediaFromLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getMediaFromLocation"]))
@@ -191,11 +191,11 @@ extension InstaClient {
     }
     
     //The default time span is set to 5 days.
-    func getMedia(var latitude:Double,var longitude:Double,var distance:Int,completionHandler: (result: [InstaMedia]?, error: NSError?) -> Void) {
+    func getMedia(latitude:Double,longitude:Double,distance:Int,completionHandler: (result: [InstaMedia]?, error: NSError?) -> Void) {
         
         /* 1. Specify parameters, method (if has {key}), and HTTP body (if POST) */
         let parameters = ["lat":latitude,"lng":longitude,"distance":distance]
-        var mutableMethod : String = Methods.MediaSearch
+        let mutableMethod : String = Methods.MediaSearch
 
         
         /* 2. Make the request */
@@ -207,7 +207,7 @@ extension InstaClient {
             } else {
                 if let results = JSONResult.valueForKey("data") as? [[String : AnyObject]] {
                     
-                    var media = InstaMedia.imagesFromResults(results,context:self.sharedContext)
+                    let media = InstaMedia.imagesFromResults(results,context:self.sharedContext)
                     completionHandler(result: media, error: nil)
                 } else {
                     completionHandler(result: nil, error: NSError(domain: "getMedia parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getMedia"]))
@@ -223,8 +223,8 @@ extension InstaClient {
     //It blends 2 images. When I need to display a delete icon in front of an image I use this function
     func imageWithView(imageView:UIView) -> UIImage{
         UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, CGFloat(1.0))
-        imageView.layer.renderInContext(UIGraphicsGetCurrentContext())
-        var img = UIGraphicsGetImageFromCurrentImageContext()
+        imageView.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        let img = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return img
     }

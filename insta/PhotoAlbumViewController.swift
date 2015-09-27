@@ -49,12 +49,12 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        var kCellsPerRow:CGFloat = 3
+        let kCellsPerRow:CGFloat = 3
 
         
-        var flowLayout:UICollectionViewFlowLayout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        var availableWidthForCells:CGFloat = CGRectGetWidth(self.collectionView.frame) - flowLayout.sectionInset.left - flowLayout.sectionInset.right - flowLayout.minimumInteritemSpacing * (kCellsPerRow - 1);
-        var cellWidth:CGFloat = availableWidthForCells / kCellsPerRow;
+        let flowLayout:UICollectionViewFlowLayout = self.collectionView.collectionViewLayout as! UICollectionViewFlowLayout
+        let availableWidthForCells:CGFloat = CGRectGetWidth(self.collectionView.frame) - flowLayout.sectionInset.left - flowLayout.sectionInset.right - flowLayout.minimumInteritemSpacing * (kCellsPerRow - 1);
+        let cellWidth:CGFloat = availableWidthForCells / kCellsPerRow;
         flowLayout.itemSize = CGSizeMake(flowLayout.itemSize.height, cellWidth);
         flowLayout.itemSize.width = flowLayout.itemSize.height
 
@@ -97,13 +97,9 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
     //
     // This is the most interesting method. Take particular note of way the that newIndexPath
     // parameter gets unwrapped and put into an array literal: [newIndexPath!]
-    //
-    func controller(controller: NSFetchedResultsController,
-        didChangeObject anObject: AnyObject,
-        atIndexPath indexPath: NSIndexPath?,
-        forChangeType type: NSFetchedResultsChangeType,
-        newIndexPath: NSIndexPath?) {
-            
+    //    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+
             switch type {
             case .Delete:
                 self.collectionView.deleteItemsAtIndexPaths([indexPath!])
@@ -114,6 +110,7 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
             default:
                 return
             }
+
     }
     
     //MARK: Collection View Related
@@ -131,7 +128,7 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
         
         //If the photo image(imagepaths and titles are saved in Core Data) is saved using NSKeyedArchiver / NSKeyedUnarchiver we display it right away else we download it using its imagepath
-        var changedPath = prefetchedPhotos![indexPath.row].thumbnailPath!.stringByReplacingOccurrencesOfString("/", withString: "")//Because instagram returns the same lastpathcomponent for images and thumbnails I introduced this hack(replaced all "/" characters) to enable different paths for the same lastpathcomponents.
+        let changedPath = prefetchedPhotos![indexPath.row].thumbnailPath!.stringByReplacingOccurrencesOfString("/", withString: "")//Because instagram returns the same lastpathcomponent for images and thumbnails I introduced this hack(replaced all "/" characters) to enable different paths for the same lastpathcomponents.
 
         
         
@@ -163,15 +160,15 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
     //It is used for deleting the image from the collection view and the underlying core data context
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath:NSIndexPath){
         let photo = prefetchedPhotos[indexPath.row]
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
-        let paController = self.storyboard!.instantiateViewControllerWithIdentifier("ImageDetailViewController")! as! ImageDetailViewController
+        _ = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as! CollectionViewCell
+        let paController = self.storyboard!.instantiateViewControllerWithIdentifier("ImageDetailViewController") as! ImageDetailViewController
         
         if let t = photo.text{
             paController.userComment = t
         }
         paController.mediaID = photo.mediaID!
         paController.instaMedia = photo
-        var a = paController.view//Important. fatal error if not present. We need to first allocate the view.(Whole view be present in memory)
+        _ = paController.view//Important. fatal error if not present. We need to first allocate the view.(Whole view be present in memory)
 
 
 
@@ -252,15 +249,15 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         
         let photo = prefetchedPhotos[indexPath.row]
-        let paController = self.storyboard!.instantiateViewControllerWithIdentifier("ImageDetailViewController")! as! ImageDetailViewController
+        let paController = self.storyboard!.instantiateViewControllerWithIdentifier("ImageDetailViewController") as! ImageDetailViewController
         
         if let t = photo.text{
             paController.userComment = t
-            println("comment1: \(t)")
+            print("comment1: \(t)")
         }
         paController.mediaID = photo.mediaID!
         paController.instaMedia = photo
-        var a = paController.view//Important. fatal error if not present. We need to first allocate the view.(Whole view be present in memory)
+        _ = paController.view//Important. fatal error if not present. We need to first allocate the view.(Whole view be present in memory)
         
         dispatch_async(dispatch_get_main_queue()) {
             self.navigationController!.pushViewController(paController, animated: true)
@@ -273,15 +270,15 @@ class PhotoAlbumViewController: UIViewController,UICollectionViewDelegate,UITabl
     
     //A simple Alert view with an OK Button
     func displayMessageBox(message:String){
-        var alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
     
     
     //Custom Made information Box using alpha value to create a black transparent background.
-    func informationBox(var msg:String?,let animate:Bool){
-        if let m = msg{
+    func informationBox(msg:String?,let animate:Bool){
+        if let _ = msg{
 //            if(animate){
 //                indicator.startAnimating()
 //            }

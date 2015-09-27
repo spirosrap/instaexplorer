@@ -44,8 +44,11 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.navigationBarHidden = false
-        fetchedResultsController.performFetch(nil)
-        let sectionInfo = fetchedResultsController.sections![0] as! NSFetchedResultsSectionInfo
+        do {
+            try fetchedResultsController.performFetch()
+        } catch _ {
+        }
+        let sectionInfo = fetchedResultsController.sections![0] 
         
         scrollView.delegate = self
         
@@ -55,18 +58,18 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
             
             //Bug that prevents to change the font (but not color) of attributed text in xcode 6: http://openradar.appspot.com/radar?id=5117089870249984 forces me to create a text view programmatically on top of the storyboard one.
             self.clickableText.attributedText = attributedString
-            var  tap = UITapGestureRecognizer(target: self, action: "clickableTouched:")
+            let  tap = UITapGestureRecognizer(target: self, action: "clickableTouched:")
             clickableText.addGestureRecognizer(tap)
             clickableText.editable = false
             clickableText.selectable = false
             
         }
         
-        if  !sectionInfo.objects.isEmpty{
-            instaMedia = sectionInfo.objects[0] as! InstaMedia
+        if  !sectionInfo.objects!.isEmpty{
+            instaMedia = sectionInfo.objects![0] as! InstaMedia
             
-            var usernameAttr  = NSMutableAttributedString(string: instaMedia.username!, attributes: [NSForegroundColorAttributeName:UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00), NSFontAttributeName:UIFont(name: "HelveticaNeue", size: 17)!])
-            var range = NSString(string: instaMedia.username!).rangeOfString(instaMedia.username!)
+            let usernameAttr  = NSMutableAttributedString(string: instaMedia.username!, attributes: [NSForegroundColorAttributeName:UIColor(red: 0.000, green: 0.176, blue: 0.467, alpha: 1.00), NSFontAttributeName:UIFont(name: "HelveticaNeue", size: 17)!])
+            let range = NSString(string: instaMedia.username!).rangeOfString(instaMedia.username!)
             usernameAttr.replaceCharactersInRange(range, withAttributedString: usernameAttr)
             
             
@@ -81,8 +84,8 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
             
             
             if let locationName = instaMedia.instaLocation?.name {
-                var locationAttr  = NSMutableAttributedString(string: locationName, attributes: [NSForegroundColorAttributeName:UIColor(red: 0.051, green: 0.494, blue: 0.839, alpha: 1.00), NSFontAttributeName:UIFont(name: "HelveticaNeue", size: 14)!])
-                var range = NSString(string: locationName).rangeOfString(locationName)
+                let locationAttr  = NSMutableAttributedString(string: locationName, attributes: [NSForegroundColorAttributeName:UIColor(red: 0.051, green: 0.494, blue: 0.839, alpha: 1.00), NSFontAttributeName:UIFont(name: "HelveticaNeue", size: 14)!])
+                let range = NSString(string: locationName).rangeOfString(locationName)
                 locationAttr.replaceCharactersInRange(range, withAttributedString: locationAttr)
                 
                 LocationTextView.attributedText = locationAttr
@@ -102,7 +105,7 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
                     dispatch_async(dispatch_get_main_queue()) {
                         self.imageIndicator.stopAnimating()
                     }
-                    println(errorString)
+                    print(errorString)
                 }
             })
             if (instaMedia.favorite! == 0){
@@ -127,11 +130,11 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
     }
     
     func atex(let string:String,let fontname:String,let textColor:UIColor,let linkColor:UIColor,let size:CGFloat) -> NSMutableAttributedString {
-        var attributedString  = NSMutableAttributedString(string: string, attributes: [NSForegroundColorAttributeName:textColor, NSFontAttributeName:UIFont(name: fontname, size: size)!])
+        let attributedString  = NSMutableAttributedString(string: string, attributes: [NSForegroundColorAttributeName:textColor, NSFontAttributeName:UIFont(name: fontname, size: size)!])
         
         for t in tags(string){
-            var tagattributedString:NSAttributedString = NSAttributedString(string: t, attributes: [t:true,NSForegroundColorAttributeName:linkColor,NSFontAttributeName:UIFont(name: "HelveticaNeue", size: 14)!])
-            var range = NSString(string: attributedString.string).rangeOfString(t)
+            let tagattributedString:NSAttributedString = NSAttributedString(string: t, attributes: [t:true,NSForegroundColorAttributeName:linkColor,NSFontAttributeName:UIFont(name: "HelveticaNeue", size: 14)!])
+            let range = NSString(string: attributedString.string).rangeOfString(t)
             attributedString.replaceCharactersInRange(range, withAttributedString: tagattributedString)
         }
         
@@ -142,13 +145,13 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
     func clickableTouched(recognizer:UITapGestureRecognizer) -> Void{
         
 
-        var textView = recognizer.view as! UITextView
-        var layoutManager = textView.layoutManager
+        let textView = recognizer.view as! UITextView
+        let layoutManager = textView.layoutManager
         var location = recognizer.locationInView(textView)
         location.x -= textView.textContainerInset.left
         location.y -= textView.textContainerInset.top
         
-        var characterIndex = layoutManager.characterIndexForPoint(location, inTextContainer: textView.textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        let characterIndex = layoutManager.characterIndexForPoint(location, inTextContainer: textView.textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
         
 
         if (characterIndex < textView.textStorage.length){
@@ -156,12 +159,12 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
                 
                 var range = NSString(string: attributedString.string).rangeOfString(t)
 
-                var value:AnyObject? = textView.textStorage.attribute(t, atIndex: characterIndex, effectiveRange: &range)
+                let value:AnyObject? = textView.textStorage.attribute(t, atIndex: characterIndex, effectiveRange: &range)
                 if(value != nil){
                     
                     if t.rangeOfString("#") != nil {
-                        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("displayTaggedMedia")! as! PhotoAlbumViewController
-                        var tag = t.substringWithRange(Range<String.Index>(start: t.rangeOfString("#")!.endIndex, end: t.endIndex))
+                        let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("displayTaggedMedia") as! PhotoAlbumViewController
+                        let tag = t.substringWithRange(Range<String.Index>(start: t.rangeOfString("#")!.endIndex, end: t.endIndex))
 
                         indicator.startAnimating()
                         InstaClient.sharedInstance().getMediaFromTag(tag, completionHandler: { (result, error) -> Void in
@@ -244,14 +247,14 @@ class ImageDetailViewController: UIViewController,UIScrollViewDelegate {
     }
     
     func share(){
-        let objectsToShare = [UIActivityTypePostToFacebook,UIActivityTypePostToTwitter,UIActivityTypeMessage,UIActivityTypeSaveToCameraRoll]
+        _ = [UIActivityTypePostToFacebook,UIActivityTypePostToTwitter,UIActivityTypeMessage,UIActivityTypeSaveToCameraRoll]
         let activity = UIActivityViewController(activityItems: [instaMedia.link!,imageToShare], applicationActivities: nil)
         self.presentViewController(activity, animated: true, completion:nil)
     }
 
     //A simple Alert view with an OK Button
     func displayMessageBox(message:String){
-        var alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
     }
