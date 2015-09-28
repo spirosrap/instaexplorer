@@ -159,11 +159,13 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         
         // 3
         if (self.resultSearchController.active) {
-            if let _ = cell.textLabel!.text,let name = filteredTableData[indexPath.row].name, let media_count = filteredTableData[indexPath.row].media_count{
+            temporaryContext.performBlockAndWait(){
+            if let _ = cell.textLabel!.text,let name = self.filteredTableData[indexPath.row].name, let media_count = self.filteredTableData[indexPath.row].media_count{
                     
                     cell.textLabel?.text = "#" + name
                     cell.detailTextLabel?.text = numberFormatter.stringFromNumber(media_count)! + " posts"
                     
+            }
             }
             return cell
         }
@@ -180,45 +182,50 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
         let detailController = self.storyboard!.instantiateViewControllerWithIdentifier("displayTaggedMedia") as! PhotoAlbumViewController
         
         if (self.resultSearchController.active) {
-            if let _ = filteredTableData[indexPath.row].name,let _ = filteredTableData[indexPath.row].media_count {
+            
+            temporaryContext.performBlockAndWait(){
+                
+                if let _ = self.filteredTableData[indexPath.row].name,let _ = self.filteredTableData[indexPath.row].media_count {
 
-                    let selectedTag = filteredTableData[indexPath.row].name!
+                        let selectedTag = self.filteredTableData[indexPath.row].name!
+                        
+                        var dictionary = [String:AnyObject]()
+                        
+                        dictionary["name"] = self.filteredTableData[indexPath.row].name!
+                        dictionary["media_count"] = self.filteredTableData[indexPath.row].media_count!
+                        
+                        let savedTag = Tag(dictionary: dictionary, context: CoreDataStackManager.sharedInstance().managedObjectContext!)
                     
-                    var dictionary = [String:AnyObject]()
-                    
-                    dictionary["name"] = filteredTableData[indexPath.row].name!
-                    dictionary["media_count"] = filteredTableData[indexPath.row].media_count!
-                    
-                    let savedTag = Tag(dictionary: dictionary, context: CoreDataStackManager.sharedInstance().managedObjectContext!)
-                    CoreDataStackManager.sharedInstance().saveContext()
-                    indicator.startAnimating()
+                        CoreDataStackManager.sharedInstance().saveContext()
+                        self.indicator.startAnimating()
 
-                        InstaClient.sharedInstance().getMediaFromTag(selectedTag, completionHandler: { (result, error) -> Void in
-                            if error == nil{
-                                if result! != []{
-                                    dispatch_async(dispatch_get_main_queue(), {
-                                        detailController.prefetchedPhotos = result! as [InstaMedia]
-                                        for r in result!{
-                                            r.tag = savedTag
+                            InstaClient.sharedInstance().getMediaFromTag(selectedTag, completionHandler: { (result, error) -> Void in
+                                if error == nil{
+                                    if result! != []{
+                                        dispatch_async(dispatch_get_main_queue(), {
+                                            detailController.prefetchedPhotos = result! as [InstaMedia]
+                                            for r in result!{
+                                                r.tag = savedTag
+                                            }
+                                            CoreDataStackManager.sharedInstance().saveContext()
+                                            detailController.navigationController?.navigationBar.hidden = false
+                                            detailController.navigationItem.title =   "#" + selectedTag
+                                            self.indicator.stopAnimating()
+                                            self.resultSearchController.active = false
+                                            self.navigationController!.pushViewController(detailController, animated: true)
+                                        })
+                                    }else{
+                                        dispatch_async(dispatch_get_main_queue()) {
+                                            self.indicator.stopAnimating()
+                                            self.displayMessageBox("No images for that hashtag found")
                                         }
-                                        CoreDataStackManager.sharedInstance().saveContext()
-                                        detailController.navigationController?.navigationBar.hidden = false
-                                        detailController.navigationItem.title =   "#" + selectedTag
-                                        self.indicator.stopAnimating()
-                                        self.resultSearchController.active = false
-                                        self.navigationController!.pushViewController(detailController, animated: true)
-                                    })
-                                }else{
-                                    dispatch_async(dispatch_get_main_queue()) {
-                                        self.indicator.stopAnimating()
-                                        self.displayMessageBox("No images for that hashtag found")
                                     }
                                 }
-                            }
-                        })
-                
-            }else{
-                tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                            })
+                    
+                }else{
+                    tableView.deselectRowAtIndexPath(indexPath, animated: true)
+                }
             }
         }else{
             let selectedTag = tags[indexPath.row]
@@ -292,7 +299,8 @@ class SearchTagsTableViewController: UITableViewController,UISearchResultsUpdati
                 indicator.startAnimating()
                 
                 
-                InstaClient.sharedInstance().getTags(searchController.searchBar.text!,context: temporaryContext, completionHandler: { (result, error) -> Void in
+
+                InstaClient.sharedInstance().getTags(searchController.searchBar.text!,context: self.temporaryContext, completionHandler: { (result, error) -> Void in
                     if error == nil{
                         
                         dispatch_async(dispatch_get_main_queue(), {

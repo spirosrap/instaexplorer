@@ -98,9 +98,11 @@ extension InstaClient {
             } else {
                 if let results = JSONResult.valueForKey("data") as? [[String : AnyObject]] {
 
-                    
+                    context.performBlockAndWait(){
+
                     let tags = Tag.tagsFromResults(results,context: context)
                     completionHandler(result: tags, error: nil)
+                    }
                 } else {
                     completionHandler(result: nil, error: NSError(domain: "getTags parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getTags"]))
                 }
@@ -124,9 +126,11 @@ extension InstaClient {
                 completionHandler(result: nil, error: error)
             } else {
                 if let results = JSONResult.valueForKey("data") as? [[String : AnyObject]] {
-                    
+                    CoreDataStackManager.sharedInstance().managedObjectContext!.performBlockAndWait(){
+
                     let locations = InstaLocation.locationsFromResults(results,context:self.sharedContext)
                     completionHandler(result: locations, error: nil)
+                    }
                 } else {
                     completionHandler(result: nil, error: NSError(domain: "getLocations parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getLocations"]))
                 }
@@ -153,9 +157,11 @@ extension InstaClient {
                 completionHandler(result: nil, error: error)
             } else {
                 if let results = JSONResult.valueForKey("data") as? [[String : AnyObject]] {
-                    
+                    CoreDataStackManager.sharedInstance().managedObjectContext!.performBlockAndWait(){
+
                     let media = InstaMedia.imagesFromResults(results,context:self.sharedContext)
                     completionHandler(result: media, error: nil)
+                    }
                 } else {
                     completionHandler(result: nil, error: NSError(domain: "getMediaFromTag parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getMediaFromTag"]))
                 }
@@ -179,9 +185,11 @@ extension InstaClient {
                 completionHandler(result: nil, error: error)
             } else {
                 if let results = JSONResult.valueForKey("data") as? [[String : AnyObject]] {
-                    
+                    CoreDataStackManager.sharedInstance().managedObjectContext!.performBlockAndWait(){
+
                     let media = InstaMedia.imagesFromResults(results,context:self.sharedContext)
                     completionHandler(result: media, error: nil)
+                    }
                 } else {
                     completionHandler(result: nil, error: NSError(domain: "getMediaFromLocation parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getMediaFromLocation"]))
                 }
@@ -206,9 +214,11 @@ extension InstaClient {
                 completionHandler(result: nil, error: error)
             } else {
                 if let results = JSONResult.valueForKey("data") as? [[String : AnyObject]] {
-                    
+                    CoreDataStackManager.sharedInstance().managedObjectContext!.performBlockAndWait(){
+
                     let media = InstaMedia.imagesFromResults(results,context:self.sharedContext)
                     completionHandler(result: media, error: nil)
+                    }
                 } else {
                     completionHandler(result: nil, error: NSError(domain: "getMedia parsing", code: 0, userInfo: [NSLocalizedDescriptionKey: "Could not parse getMedia"]))
                 }

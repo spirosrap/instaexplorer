@@ -55,7 +55,6 @@ class InstaMedia: NSManagedObject {
         var images = [InstaMedia]()
         
         for result in results {
-
             var dictionary = [String:AnyObject]()
             
             if ( result[InstaClient.JSONResponseKeys.Type]! as! String == InstaClient.JSONResponseKeys.Image){
@@ -89,7 +88,6 @@ class InstaMedia: NSManagedObject {
             if(dictionary[InstaClient.DictionaryKeys.ImagePath] != nil){ //Don't create and entry to images if the InstaMedia doesn't have an imagePath(deleted image)
                 images.append(InstaMedia(dictionary: dictionary,context: context))
             }
-            
         }
         return images
     }

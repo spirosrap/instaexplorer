@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9046" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="VVo-jE-Uaw">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="VVo-jE-Uaw">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9035"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -176,18 +176,18 @@
                                 <rect key="frame" x="0.0" y="86" width="600" height="61"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="whW-Tg-THV" id="whS-Bu-XjG">
-                                    <rect key="frame" x="0.0" y="0.0" width="567" height="60"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="567" height="60.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MNi-An-HJ7">
-                                            <rect key="frame" x="15" y="13" width="32" height="20"/>
+                                            <rect key="frame" x="15" y="14" width="31.5" height="19.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4s3-eQ-fLo">
-                                            <rect key="frame" x="15" y="33" width="41" height="14"/>
+                                            <rect key="frame" x="15" y="33.5" width="40.5" height="13.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -1003,7 +1003,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="09j-XP-LnB" id="kCu-Xl-LWt">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="166"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="166.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1DV-5N-uty" userLabel="mainIm">
@@ -1791,7 +1791,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="6ak-1K-QgT" id="1Ow-1O-8MZ">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="166"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="166.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ocG-dy-BwE" userLabel="mainIm">
@@ -2067,14 +2067,14 @@
                                 <exclude reference="Vv8-16-3wo"/>
                                 <exclude reference="Y6c-Kd-K2f"/>
                                 <exclude reference="ktM-VL-tQ1"/>
+                                <exclude reference="6XL-L4-7hv"/>
+                                <exclude reference="fQJ-4j-tGx"/>
+                                <exclude reference="qxE-D8-YRc"/>
                                 <exclude reference="8eu-tw-alI"/>
                                 <exclude reference="9qR-7B-csa"/>
                                 <exclude reference="YZH-TV-q9r"/>
                                 <exclude reference="ocE-jC-2Qv"/>
                                 <exclude reference="wcw-GF-uJ9"/>
-                                <exclude reference="6XL-L4-7hv"/>
-                                <exclude reference="fQJ-4j-tGx"/>
-                                <exclude reference="qxE-D8-YRc"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -2091,17 +2091,17 @@
                                 <include reference="Vv8-16-3wo"/>
                                 <include reference="Y6c-Kd-K2f"/>
                                 <include reference="ktM-VL-tQ1"/>
-                                <include reference="8eu-tw-alI"/>
-                                <exclude reference="9qR-7B-csa"/>
-                                <include reference="YZH-TV-q9r"/>
-                                <include reference="ocE-jC-2Qv"/>
-                                <include reference="wcw-GF-uJ9"/>
                                 <exclude reference="2Za-Km-ezc"/>
                                 <include reference="6XL-L4-7hv"/>
                                 <exclude reference="V4K-cK-yPD"/>
                                 <include reference="fQJ-4j-tGx"/>
                                 <include reference="qxE-D8-YRc"/>
                                 <exclude reference="F7K-xe-MwO"/>
+                                <include reference="8eu-tw-alI"/>
+                                <exclude reference="9qR-7B-csa"/>
+                                <include reference="YZH-TV-q9r"/>
+                                <include reference="ocE-jC-2Qv"/>
+                                <include reference="wcw-GF-uJ9"/>
                             </mask>
                         </variation>
                     </view>
@@ -2241,7 +2241,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="26d-Us-iEF" id="EYT-wc-gPf">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="166"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="166.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qht-MQ-r2b" userLabel="mainIm">
@@ -2511,11 +2511,6 @@
                                 <exclude reference="gIU-X5-U1o"/>
                                 <exclude reference="q8r-fH-aC7"/>
                                 <exclude reference="t4P-JF-elh"/>
-                                <exclude reference="Pcv-A0-7aw"/>
-                                <exclude reference="bcP-di-Opy"/>
-                                <exclude reference="oIP-sD-G5k"/>
-                                <exclude reference="qQ7-FP-0Gt"/>
-                                <exclude reference="yUV-dq-mb6"/>
                                 <exclude reference="0jp-hm-4xZ"/>
                                 <exclude reference="OIp-CN-4QW"/>
                                 <exclude reference="P2A-ec-Dgg"/>
@@ -2523,6 +2518,11 @@
                                 <exclude reference="pIm-sn-LGg"/>
                                 <exclude reference="ssG-lb-U3i"/>
                                 <exclude reference="dbV-Ll-Mdw"/>
+                                <exclude reference="Pcv-A0-7aw"/>
+                                <exclude reference="bcP-di-Opy"/>
+                                <exclude reference="oIP-sD-G5k"/>
+                                <exclude reference="qQ7-FP-0Gt"/>
+                                <exclude reference="yUV-dq-mb6"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -2538,11 +2538,6 @@
                                 <include reference="gIU-X5-U1o"/>
                                 <include reference="q8r-fH-aC7"/>
                                 <include reference="t4P-JF-elh"/>
-                                <include reference="Pcv-A0-7aw"/>
-                                <include reference="bcP-di-Opy"/>
-                                <include reference="oIP-sD-G5k"/>
-                                <exclude reference="qQ7-FP-0Gt"/>
-                                <exclude reference="yUV-dq-mb6"/>
                                 <include reference="0jp-hm-4xZ"/>
                                 <include reference="OIp-CN-4QW"/>
                                 <include reference="P2A-ec-Dgg"/>
@@ -2553,6 +2548,11 @@
                                 <include reference="ssG-lb-U3i"/>
                                 <include reference="dbV-Ll-Mdw"/>
                                 <exclude reference="rpF-Jy-Dik"/>
+                                <include reference="Pcv-A0-7aw"/>
+                                <include reference="bcP-di-Opy"/>
+                                <include reference="oIP-sD-G5k"/>
+                                <exclude reference="qQ7-FP-0Gt"/>
+                                <exclude reference="yUV-dq-mb6"/>
                             </mask>
                         </variation>
                     </view>
@@ -4061,11 +4061,11 @@
                                 <rect key="frame" x="0.0" y="130" width="600" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1K6-91-Qe3" id="j3l-V3-n97">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="v6s-9B-xMA">
-                                            <rect key="frame" x="15" y="11" width="34" height="21"/>
+                                            <rect key="frame" x="15" y="12" width="33.5" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -4075,7 +4075,7 @@
                                             </variation>
                                         </label>
                                         <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="TbV-dQ-X5M">
-                                            <rect key="frame" x="541" y="11" width="44" height="21"/>
+                                            <rect key="frame" x="541" y="12" width="44" height="20.5"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="calibratedRGB"/>

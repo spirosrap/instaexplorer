@@ -505,7 +505,7 @@
 				IBSC_NOTICES = YES;
 				IBSC_WARNINGS = YES;
 				INFOPLIST_FILE = insta/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "udacity.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = instaexplorer;
@@ -528,7 +528,7 @@
 				IBSC_NOTICES = YES;
 				IBSC_WARNINGS = YES;
 				INFOPLIST_FILE = insta/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 9.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "udacity.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = instaexplorer;
